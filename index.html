@@ -6,6 +6,10 @@
 <title>Centro de Ortografía de Macarena y Sus Amigos 🐾</title>
 <meta name="description" content="Aprende ortografía en español con Macarena, Catbull, Gaspar, Jack, Lula, Emma, Spock y Sirah. Reglas, juegos, cuaderno interactivo, diploma e historias.">
 
+<!-- Favicon (Icono de la pestaña del navegador) -->
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="alternate icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐾</text></svg>">
+
 <!-- Google Fonts for Modern, Premium Aesthetics -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1190,6 +1194,11 @@ function profileInfo(id){
   };
 }
 function pawsForProfile(id){ return parseInt(localStorage.getItem('multi_paws_'+id)||'0',10); }
+function errorsForProfile(id){ return parseInt(localStorage.getItem('multi_errors_'+id)||'0',10); }
+function recordErrorForProfile(id = currentProfile){
+  const current = errorsForProfile(id);
+  localStorage.setItem('multi_errors_' + id, String(current + 1));
+}
 function ownedForProfile(id){ return JSON.parse(localStorage.getItem('multi_owned_'+id)||'[]'); }
 
 function getProfileRank(paws){
@@ -1707,16 +1716,16 @@ function openRegisterModal(editId = null){
   
   if(editId){
     const p = profileInfo(editId);
-    titleEl.textContent = '✏️ Editar Perfil de ' + p.name;
-    document.getElementById('input-profile-name').value = p.name;
-    document.getElementById('input-profile-pin').value = p.pin || '';
+    if(titleEl) titleEl.textContent = '✏️ Editar Perfil de ' + p.name;
+    const nameEl = document.getElementById('input-profile-name');
+    if(nameEl) nameEl.value = p.name;
     selectedRegisterEmoji = p.emoji || '🌸';
     selectedRegisterMascot = p.mascot || 'macarena';
     selectedRegisterColor = p.themeColor || '#ec4899';
   } else {
-    titleEl.textContent = '🌸 ¡Nueva Jugadora!';
-    document.getElementById('input-profile-name').value = '';
-    document.getElementById('input-profile-pin').value = '';
+    if(titleEl) titleEl.textContent = '🌸 ¡Nueva Jugadora!';
+    const nameEl = document.getElementById('input-profile-name');
+    if(nameEl) nameEl.value = '';
     selectedRegisterEmoji = '🌸';
     selectedRegisterMascot = 'macarena';
     selectedRegisterColor = '#ec4899';
@@ -1725,7 +1734,8 @@ function openRegisterModal(editId = null){
   renderEmojiPicker();
   renderMascotPicker();
   renderColorPicker();
-  document.getElementById('modal-profile-editor').classList.add('active');
+  const modalEl = document.getElementById('modal-profile-editor');
+  if(modalEl) modalEl.classList.add('active');
 }
 
 function renderEmojiPicker(){
@@ -1784,16 +1794,11 @@ function selectRegisterColor(c){
 }
 
 function saveProfileForm(){
-  const nameInput = document.getElementById('input-profile-name').value.trim();
-  const pinInput = document.getElementById('input-profile-pin').value.trim();
+  const nameEl = document.getElementById('input-profile-name');
+  const nameInput = nameEl ? nameEl.value.trim() : '';
   
   if(!nameInput){
     alert('Por favor escribe un nombre para la jugadora.');
-    return;
-  }
-  
-  if(pinInput && !/^\d{4}$/.test(pinInput)){
-    alert('El PIN debe ser un código de 4 números exactos (o déjalo vacío).');
     return;
   }
   
@@ -1805,7 +1810,6 @@ function saveProfileForm(){
       profiles[index].emoji = selectedRegisterEmoji;
       profiles[index].mascot = selectedRegisterMascot;
       profiles[index].themeColor = selectedRegisterColor;
-      profiles[index].pin = pinInput;
     }
   } else {
     targetId = 'p_' + Date.now();
@@ -1815,7 +1819,6 @@ function saveProfileForm(){
       emoji: selectedRegisterEmoji,
       mascot: selectedRegisterMascot,
       themeColor: selectedRegisterColor,
-      pin: pinInput,
       createdDate: new Date().toISOString().split('T')[0]
     };
     profiles.push(newP);
@@ -1912,6 +1915,7 @@ function openLeaderboard(){
   
   grid.innerHTML = sorted.map((p, idx) => {
     const pawsCount = pawsForProfile(p.id);
+    const errCount = errorsForProfile(p.id);
     const rank = getProfileRank(pawsCount);
     const topicId = getTopicForMascot(p.mascot);
     const crown = idx === 0 ? '👑' : (idx === 1 ? '🥈' : (idx === 2 ? '🥉' : ''));
@@ -1928,7 +1932,10 @@ function openLeaderboard(){
           '<div class="rank-pill" style="background:'+rank.bg+'; font-size:.7rem; padding:1px 6px;">'+rank.badge+' '+rank.title+'</div>' +
         '</div>' +
       '</div>' +
-      '<div class="paws" style="font-size:1.1rem; font-weight:800; color:#d97706;">🐾 '+pawsCount+'</div>' +
+      '<div style="text-align:right;">' +
+        '<div class="paws" style="font-size:1.05rem; font-weight:800; color:#d97706;">🐾 '+pawsCount+'</div>' +
+        '<div style="font-size:.8rem; font-weight:800; color:#dc2626; margin-top:2px;">❌ '+errCount+' error'+(errCount===1?'':'es')+'</div>' +
+      '</div>' +
     '</div>';
   }).join('');
   
@@ -2093,7 +2100,7 @@ function answerGame2(idx){
   } else {
     g2.hearts--; chosen.classList.add('wrong'); correctBtn.classList.add('correct');
     fb.textContent = 'La correcta es "' + it.correct + '"'; fb.className='feedback bad';
-    setMood('g2-pet-svg','sad'); shakePet('g2-pet-svg'); playTone(220,0.3);
+    setMood('g2-pet-svg','sad'); shakePet('g2-pet-svg'); playTone(220,0.3); recordErrorForProfile();
   }
   g2.round++;
   setTimeout(()=>{ setMood('g2-pet-svg','normal'); nextRoundGame2(); }, 1200);
@@ -2513,7 +2520,7 @@ function answerMegaQuiz(letter){
   } else {
     if(chosenBtn) chosenBtn.classList.add('wrong');
     fb.textContent = 'La respuesta correcta es "' + (it.full || it.answer) + '"'; fb.className = 'feedback bad';
-    setMood('mq-pet-svg', 'sad'); shakePet('mq-pet-svg'); playTone(220, 0.3);
+    setMood('mq-pet-svg', 'sad'); shakePet('mq-pet-svg'); playTone(220, 0.3); recordErrorForProfile();
   }
   
   megaQuiz.round++;
@@ -2664,7 +2671,7 @@ function answerSpeedRound(chosenIdx){
     speedState.streak = 0;
     document.getElementById('speed-combo').textContent = '❌ ¡Era "' + item.correct + '"!';
     setMood('speed-pet-svg', 'sad');
-    playTone(220, 0.2);
+    playTone(220, 0.2); recordErrorForProfile();
   }
   
   document.getElementById('speed-score').textContent = speedState.score;
