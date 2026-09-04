@@ -1201,7 +1201,7 @@ const TOPICS = [
       {word:"*cer", options:['ha','a'], answer:'ha', emoji:'🛠️', full:'hacer'},
       {word:"*mano", options:['her','er'], answer:'her', emoji:'👦', full:'hermano'},
       {word:"*lla", options:['hue','ue'], answer:'hue', emoji:'🐾', full:'huella'},
-      {word:"*ay", options:['h',''], answer:'h', emoji:'✨', full:'hay'},
+      {word:"*ay", options:['h','sin h'], answer:'h', emoji:'✨', full:'hay'},
       {word:"*cho", options:['he','e'], answer:'he', emoji:'✅', full:'hecho'},
       {word:"*cho", options:['e','he'], answer:'e', emoji:'🗑️', full:'echo'}
     ],
@@ -1214,7 +1214,7 @@ const TOPICS = [
       {template:'Sale mucho #mo de la chimenea.', options:['hum','um'], answer:'hum', full:'humo'},
       {template:'Debemos #cer la tarea temprano.', options:['ha','a'], answer:'ha', full:'hacer'},
       {template:'Mi #mano me ayudó a limpiar.', options:['her','er'], answer:'her', full:'hermano'},
-      {template:'#ay muchas estrellas en el cielo.', options:['H',''], answer:'H', full:'Hay'},
+      {template:'#ay muchas estrellas en el cielo.', options:['H','Sin H'], answer:'H', full:'Hay'},
       {template:'Yo #cho la fruta en la licuadora.', options:['e','he'], answer:'e', full:'echo'}
     ],
     p2: [{correct:'Hielo', wrong:'Ielo'}, {correct:'Huevo', wrong:'Uevo'}, {correct:'Historia', wrong:'Istoria'}, {correct:'Huella', wrong:'Uella'}, {correct:'Hecho', wrong:'Echo'}],
@@ -1299,7 +1299,7 @@ const TOPICS = [
       {template:'El ár# da mucha sombra.', options:['bol','vol'], answer:'bol', full:'árbol'},
       {template:'Escucho mú# para relajarme.', options:['sica','zica'], answer:'sica', full:'música'},
       {template:'Dibujo con mi lá# azul.', options:['piz','pis'], answer:'piz', full:'lápiz'},
-      {template:'# eres mi mejor amiga.', options:['Tu','Tú'], answer:'Tú', full:'Tú'},
+      {template:'# eres mi mejor amigo/a.', options:['Tu','Tú'], answer:'Tú', full:'Tú'},
       {template:'Tomé una taza de ca# bien caliente.', options:['fe','fé'], answer:'fé', full:'café'},
       {template:'Un pá# canta en el jardín.', options:['jaro','jro'], answer:'jaro', full:'pájaro'},
       {template:'Sonó el telé# de la oficina.', options:['fono','feno'], answer:'fono', full:'teléfono'},
@@ -1308,7 +1308,7 @@ const TOPICS = [
     ],
     p2: [{correct:'Canción', wrong:'Cancion'}, {correct:'Árbol', wrong:'Arbol'}, {correct:'Música', wrong:'Musica'}, {correct:'Lápiz', wrong:'Lapiz'}, {correct:'Tú', wrong:'Tu'}],
     p3: [{wrong:'cancion', template:'can#', options:['cion','ción'], answer:'ción', full:'canción'}, {wrong:'arbol', template:'ár#', options:['bol','vol'], answer:'bol', full:'árbol'}, {wrong:'musica', template:'mú#', options:['sica','zica'], answer:'sica', full:'música'}],
-    p4: [{template:'Me encanta esa ____.', answer:'canción'}, {template:'El ____ tiene muchas hojas.', answer:'árbol'}, {template:'La ____ suena en la radio.', answer:'música'}, {template:'Necesito un ____ para escribir.', answer:'lápiz'}, {template:'____ eres mi amiga.', answer:'tú'}]
+    p4: [{template:'Me encanta esa ____.', answer:'canción'}, {template:'El ____ tiene muchas hojas.', answer:'árbol'}, {template:'La ____ suena en la radio.', answer:'música'}, {template:'Necesito un ____ para escribir.', answer:'lápiz'}, {template:'____ eres mi amigo/a.', answer:'tú'}]
   },
   {
     id: 'rrr',
@@ -2580,7 +2580,7 @@ function checkParte4(){
   let correct = 0;
   p4.sentences.forEach((s,i)=>{
     const el = document.getElementById('p4-blank-'+i);
-    if(p4.placements[i] === s.answer){ el.classList.add('filled'); el.classList.remove('wrong'); correct++; }
+    if(p4.placements[i] && p4.placements[i].toLowerCase() === s.answer.toLowerCase()){ el.classList.add('filled'); el.classList.remove('wrong'); correct++; }
     else { el.classList.add('wrong'); el.classList.remove('filled'); }
   });
   if(correct === total){ finishParte('p4', correct, total, startParte5); }
@@ -2615,15 +2615,16 @@ function finishParte5(){
   const count = updateStoryCheck();
   const pawsEarned = count>=5 ? 15 : 10;
   cuadernoPaws.p5 = pawsEarned; paws += pawsEarned; savePaws();
+  confettiBurst();
   showDiploma();
 }
 
 function showDiploma(){
-  const t = TOPICS.find(x=>x.id===currentTopicId);
+  const t = TOPICS.find(x=>x.id===currentTopicId) || TOPICS[0];
   const totalPaws = cuadernoPaws.p1+cuadernoPaws.p2+cuadernoPaws.p3+cuadernoPaws.p4+cuadernoPaws.p5;
   saveBest(currentTopicId+'_cuaderno', totalPaws);
   
-  document.getElementById('diploma-nombre').textContent = profileInfo(currentProfile).name;
+  document.getElementById('diploma-nombre').textContent = profileInfo(currentProfile).name || 'Jugador/a';
   const d = new Date();
   const meses = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
   document.getElementById('diploma-fecha').textContent = d.getDate() + ' de ' + meses[d.getMonth()] + ' de ' + d.getFullYear();
@@ -2631,7 +2632,8 @@ function showDiploma(){
   document.getElementById('diploma-paws').textContent = '🐾'.repeat(Math.min(8, Math.max(1, Math.round(totalPaws/6))));
   document.getElementById('diploma-badges').innerHTML = '<span>Insignia '+t.badge+' ✅</span>';
   document.getElementById('diploma-signature').textContent = '🐾 Firmado con orgullo por ' + t.mascot;
-  document.getElementById('diploma-pet').innerHTML = getPetSVG(currentTopicId, 'diploma-pet-svg');
+  document.getElementById('diploma-pet').innerHTML = getPetSVG(t.id, 'diploma-pet-svg');
+  showScreen('screen-diploma');
 }
 
 /* ================== EXAMEN GRAN MULTIVERSO (TEST MULTI-FORMATO) ================== */
