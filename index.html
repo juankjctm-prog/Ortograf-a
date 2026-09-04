@@ -329,24 +329,27 @@
   
   .login-card-box { background:linear-gradient(135deg, #ffffff 0%, #faf5ff 100%); border-radius:24px; padding:22px 20px; border:3px solid #f0abfc; box-shadow:0 10px 25px rgba(236,72,153,0.15), var(--glow); width:100%; max-width:440px; margin:14px auto 0; box-sizing:border-box; }
   
+  /* Profile Cards Layout */
   .profile-grid { display:flex; flex-direction:column; gap:14px; width:100%; margin-top:12px; }
-  .profile-card { background:linear-gradient(135deg, #ffffff 0%, #faf5ff 100%); border-radius:24px; padding:16px 18px; display:flex; align-items:center; justify-content:space-between; gap:12px; box-shadow:var(--shadow-md); border:2px solid #f3e8ff; transition:all .2s ease; position:relative; overflow:hidden; }
+  .profile-card { background:linear-gradient(135deg, #ffffff 0%, #faf5ff 100%); border-radius:24px; padding:16px 18px; display:flex; flex-direction:column; gap:12px; box-shadow:var(--shadow-md); border:2.5px solid #f0abfc; transition:all .2s ease; position:relative; overflow:hidden; cursor:pointer; width:100%; box-sizing:border-box; }
   .profile-card:hover { transform:translateY(-3px); box-shadow:var(--shadow-lg), 0 0 15px rgba(236,72,153,0.2); border-color:var(--primary-light); }
-  .profile-card-left { display:flex; align-items:center; gap:14px; flex:1; min-width:0; }
-  .profile-card .avatar-box { position:relative; width:60px; height:60px; border-radius:50%; background:linear-gradient(135deg, #fbcfe8, #e9d5ff); display:flex; align-items:center; justify-content:center; font-size:2.2rem; box-shadow:0 4px 8px rgba(0,0,0,0.1); border:2px solid #fff; flex-shrink:0; }
-  .profile-card .mascot-mini-badge { position:absolute; bottom:-4px; right:-4px; width:26px; height:26px; background:#fff; border-radius:50%; padding:2px; box-shadow:0 2px 4px rgba(0,0,0,0.2); border:1px solid #f0abfc; display:flex; align-items:center; justify-content:center; }
+  
+  .profile-card-header { display:flex; align-items:center; justify-content:space-between; width:100%; gap:10px; }
+  .profile-card-user { display:flex; align-items:center; gap:12px; flex:1; min-width:0; }
+  .profile-card .avatar-box { position:relative; width:54px; height:54px; border-radius:50%; background:linear-gradient(135deg, #fbcfe8, #e9d5ff); display:flex; align-items:center; justify-content:center; font-size:1.9rem; box-shadow:0 4px 8px rgba(0,0,0,0.1); border:2px solid #fff; flex-shrink:0; }
+  .profile-card .mascot-mini-badge { position:absolute; bottom:-4px; right:-4px; width:24px; height:24px; background:#fff; border-radius:50%; padding:2px; box-shadow:0 2px 4px rgba(0,0,0,0.2); border:1px solid #f0abfc; display:flex; align-items:center; justify-content:center; }
   
   .profile-card .info { flex:1; min-width:0; }
-  .profile-card .info h3 { margin:0 0 3px; color:var(--primary-dark); font-size:1.15rem; font-weight:800; display:flex; align-items:center; gap:6px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-  .profile-card .rank-pill { display:inline-flex; align-items:center; gap:4px; padding:2px 8px; border-radius:12px; font-size:.74rem; font-weight:700; color:#fff; box-shadow:0 2px 4px rgba(0,0,0,0.12); margin-bottom:4px; white-space:nowrap; }
-  .profile-card .paws-info { font-size:.85rem; color:#d97706; font-weight:700; display:flex; align-items:center; gap:6px; flex-wrap:wrap; }
-  .profile-card .pin-tag { font-size:.7rem; background:#fee2e2; color:#dc2626; font-weight:800; padding:1px 6px; border-radius:6px; display:inline-flex; align-items:center; gap:2px; }
+  .profile-card .info h3 { margin:0 0 2px; color:var(--primary-dark); font-size:1.15rem; font-weight:800; word-break:break-word; }
+  .profile-card .rank-pill { display:inline-flex; align-items:center; gap:4px; padding:2px 8px; border-radius:12px; font-size:.72rem; font-weight:700; color:#fff; box-shadow:0 2px 4px rgba(0,0,0,0.12); margin-bottom:4px; white-space:nowrap; }
+  .profile-card .paws-info { font-size:.84rem; color:#d97706; font-weight:700; display:flex; align-items:center; gap:4px; }
   
-  .profile-card-actions { display:flex; gap:6px; align-items:center; flex-shrink:0; }
-  .btn-play-card { background:linear-gradient(135deg, #10b981, #059669); color:#fff; border:none; padding:10px 16px; border-radius:16px; font-weight:800; font-size:.95rem; cursor:pointer; box-shadow:0 4px 10px rgba(16,185,129,0.3); transition:all .15s ease; white-space:nowrap; }
-  .btn-play-card:hover { transform:scale(1.05); box-shadow:0 6px 14px rgba(16,185,129,0.4); }
-  .btn-icon-card { background:#f3e8ff; color:var(--primary-dark); border:none; width:38px; height:38px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:1rem; cursor:pointer; transition:all .15s ease; }
+  .profile-card-mini-actions { display:flex; gap:6px; align-items:center; flex-shrink:0; }
+  .btn-icon-card { background:#f3e8ff; color:var(--primary-dark); border:none; width:36px; height:36px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:1rem; cursor:pointer; transition:all .15s ease; flex-shrink:0; }
   .btn-icon-card:hover { background:var(--primary-light); color:#fff; transform:scale(1.08); }
+
+  .btn-play-card { width:100%; background:linear-gradient(135deg, #10b981, #059669); color:#fff; border:none; padding:11px 16px; border-radius:16px; font-weight:800; font-size:.98rem; cursor:pointer; box-shadow:0 4px 10px rgba(16,185,129,0.3); transition:all .15s ease; text-align:center; display:block; box-sizing:border-box; }
+  .btn-play-card:hover { transform:scale(1.02); box-shadow:0 6px 14px rgba(16,185,129,0.4); }
 
   /* User Hub Status Bar */
   .user-hub-bar { display:flex; align-items:center; justify-content:space-between; background:linear-gradient(135deg, #ffffff 0%, #faf5ff 100%); border-radius:20px; padding:10px 16px; margin-bottom:16px; border:2px solid #f3e8ff; box-shadow:var(--shadow-sm); }
@@ -467,35 +470,21 @@
       margin-top: 10px;
     }
     .profile-card {
-      padding: 12px 14px;
-      border-radius: 18px;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-    .profile-card-left {
+      padding: 14px 14px;
+      border-radius: 20px;
       gap: 10px;
     }
     .profile-card .avatar-box {
-      width: 50px;
-      height: 50px;
-      font-size: 1.8rem;
+      width: 48px;
+      height: 48px;
+      font-size: 1.7rem;
     }
     .profile-card .info h3 {
       font-size: 1.05rem;
     }
-    .profile-card-actions {
-      width: 100%;
-      justify-content: flex-end;
-      gap: 6px;
-      border-top: 1px dashed #f0abfc;
-      padding-top: 8px;
-      margin-top: 4px;
-    }
     .btn-play-card {
-      flex: 1;
-      text-align: center;
-      padding: 8px 12px;
-      font-size: 0.9rem;
+      padding: 10px 12px;
+      font-size: 0.92rem;
     }
 
     /* Exterior & Interior Scenes (2.5D House) */
@@ -2103,22 +2092,24 @@ function renderProfileCards(){
     const hasPin = p.pin && p.pin.trim().length > 0;
     
     return '<div class="profile-card" onclick="fillLoginFields(\''+p.name+'\')">' +
-      '<div class="profile-card-left">' +
-        '<div class="avatar-box" style="border-color:'+(p.themeColor||'#ec4899')+'">' +
-          p.emoji +
-          '<div class="mascot-mini-badge">'+getPetSVG(topicIdForMascot, 'mini-p-'+p.id)+'</div>' +
+      '<div class="profile-card-header">' +
+        '<div class="profile-card-user">' +
+          '<div class="avatar-box" style="border-color:'+(p.themeColor||'#ec4899')+'">' +
+            p.emoji +
+            '<div class="mascot-mini-badge">'+getPetSVG(topicIdForMascot, 'mini-p-'+p.id)+'</div>' +
+          '</div>' +
+          '<div class="info">' +
+            '<h3>'+p.name+'</h3>' +
+            '<div class="rank-pill" style="background:'+rank.bg+'">'+rank.badge+' '+rank.title+'</div>' +
+            '<div class="paws-info">🐾 '+pPaws+' patitas</div>' +
+          '</div>' +
         '</div>' +
-        '<div class="info">' +
-          '<h3>'+p.name+'</h3>' +
-          '<div class="rank-pill" style="background:'+rank.bg+'">'+rank.badge+' '+rank.title+'</div>' +
-          '<div class="paws-info">🐾 '+pPaws+' patitas</div>' +
+        '<div class="profile-card-mini-actions" onclick="event.stopPropagation()">' +
+          '<button class="btn-icon-card" title="Editar Perfil" onclick="openRegisterModal(\''+p.id+'\')">✏️</button>' +
+          '<button class="btn-icon-card" title="Eliminar Perfil" onclick="deleteProfile(\''+p.id+'\')">🗑️</button>' +
         '</div>' +
       '</div>' +
-      '<div class="profile-card-actions" onclick="event.stopPropagation()">' +
-        '<button class="btn-play-card" onclick="fillLoginFields(\''+p.name+'\')">¡Entrar! ▶</button>' +
-        '<button class="btn-icon-card" title="Editar Perfil" onclick="openRegisterModal(\''+p.id+'\')">✏️</button>' +
-        '<button class="btn-icon-card" title="Eliminar Perfil" onclick="deleteProfile(\''+p.id+'\')">🗑️</button>' +
-      '</div>' +
+      '<button class="btn-play-card" onclick="fillLoginFields(\''+p.name+'\')">🚀 ¡Entrar como '+p.name+'! ▶</button>' +
     '</div>';
   }).join('');
 }
