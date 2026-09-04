@@ -652,21 +652,21 @@
     <div class="login-hero">
       <div class="logo-badge">🌸🐱🔑</div>
       <h1>Ortografía <span class="highlight">Multiverso</span></h1>
-      <p class="subtitle">¡Ingreso de Jugadoras! 🐾</p>
+      <p class="subtitle">¡Ingreso de Jugadores! 🐾</p>
     </div>
     
     <!-- LOGIN FORM BOX -->
     <div class="login-card-box" id="login-card-box">
       <form onsubmit="handleDirectLogin(event)">
         <div class="form-group" style="text-align:left;">
-          <label for="login-username">👤 Nombre de Usuaria:</label>
-          <input type="text" id="login-username" class="form-control" placeholder="Ej: Ángela, Margarita..." required autocomplete="off">
+          <label for="login-username">👤 Nombre de Usuario/a:</label>
+          <input type="text" id="login-username" class="form-control" placeholder="Ej: Ángela, Mateo, Sofia..." required autocomplete="off">
         </div>
         
         <div class="form-group" style="text-align:left;">
           <label for="login-password">🔑 Contraseña (Es tu mismo nombre):</label>
           <input type="password" id="login-password" class="form-control" placeholder="Escribe tu nombre aquí..." required autocomplete="off">
-          <small style="color:#d97706; font-weight:700; font-size:.78rem; display:block; margin-top:4px;">💡 Ejemplo: Si tu nombre es <b>Ángela</b>, tu contraseña es <b>Ángela</b>.</small>
+          <small style="color:#d97706; font-weight:700; font-size:.78rem; display:block; margin-top:4px;">💡 Ejemplo: Si tu nombre es <b>Ángela</b> o <b>Mateo</b>, tu contraseña es tu mismo nombre.</small>
         </div>
 
         <div id="login-error-msg" style="display:none; color:#dc2626; background:#fee2e2; padding:8px 12px; border-radius:12px; font-weight:700; font-size:.82rem; margin-bottom:12px; border:1px solid #fca5a5;"></div>
@@ -676,12 +676,12 @@
     </div>
 
     <div style="margin-top:20px; width:100%;">
-      <h3 style="color:var(--primary-dark); margin:0 0 8px; font-size:1.05rem; text-align:center;">o selecciona tu tarjeta registrada:</h3>
+      <h3 style="color:var(--primary-dark); margin:0 0 8px; font-size:1.05rem; text-align:center;">o selecciona tu perfil registrado:</h3>
       <div class="profile-grid" id="profile-grid"></div>
     </div>
     
     <div class="login-actions" style="margin-top:16px;">
-      <button class="btn-primary" onclick="openRegisterModal()">+ Registrar nueva jugadora 🌸</button>
+      <button class="btn-primary" onclick="openRegisterModal()">+ Registrar nuevo jugador/a 🌸</button>
       <button class="btn-secondary" onclick="openLeaderboard()">🏆 Tabla de Posiciones</button>
     </div>
   </section>
@@ -1399,7 +1399,7 @@ const TOPICS = [
   }
 ];
 
-/* ================== PERFILES DE JUGADORAS ================== */
+/* ================== PERFILES DE JUGADORES ================== */
 let profiles = JSON.parse(localStorage.getItem('multiverso_profiles') || 'null');
 if(!profiles || !Array.isArray(profiles) || profiles.length === 0){
   profiles = [
@@ -1819,7 +1819,7 @@ function handleDirectLogin(e){
   if(errorEl) errorEl.style.display = 'none';
 
   if(!usernameInput.trim()){
-    showLoginError('Por favor ingresa tu nombre de usuaria.');
+    showLoginError('Por favor ingresa tu nombre de usuario/a.');
     return;
   }
 
@@ -1829,7 +1829,7 @@ function handleDirectLogin(e){
   let profile = profiles.find(p => normalizeText(p.name) === normUser);
 
   if(!profile){
-    if(confirm('No encontramos a la jugadora "' + usernameInput + '". ¿Deseas registrarla ahora mismo?')){
+    if(confirm('No encontramos al jugador/a "' + usernameInput + '". ¿Deseas registrarle ahora mismo?')){
       openRegisterModal();
       document.getElementById('input-profile-name').value = usernameInput;
     }
@@ -2028,7 +2028,7 @@ function saveProfileForm(){
   const nameInput = nameEl ? nameEl.value.trim() : '';
   
   if(!nameInput){
-    alert('Por favor escribe un nombre para la jugadora.');
+    alert('Por favor escribe un nombre para el jugador/a.');
     return;
   }
   
@@ -2080,7 +2080,7 @@ function renderProfileCards(){
   if(!grid) return;
   
   if(profiles.length === 0){
-    grid.innerHTML = '<div style="text-align:center; padding:30px; color:#64748b;">No hay perfiles creados. ¡Registra la primera jugadora! 🌸</div>';
+    grid.innerHTML = '<div style="text-align:center; padding:30px; color:#64748b;">No hay perfiles creados. ¡Registra el primer jugador/a! 🌸</div>';
     return;
   }
   
@@ -3149,8 +3149,8 @@ init();
     </div>
     
     <div class="form-group">
-      <label for="input-profile-name">Nombre o Apodo de la Jugadora:</label>
-      <input type="text" id="input-profile-name" class="form-control" placeholder="Ej: Ángela, Sofia, Mateo..." maxlength="18">
+      <label for="input-profile-name">Nombre o Apodo del Jugador/a:</label>
+      <input type="text" id="input-profile-name" class="form-control" placeholder="Ej: Ángela, Mateo, Sofia..." maxlength="18">
     </div>
 
     <div class="form-group">
@@ -3169,7 +3169,7 @@ init();
     </div>
 
     <div class="form-group">
-      <small style="color:#d97706; font-weight:700; font-size:.82rem; display:block; background:#fffbeb; padding:8px 12px; border-radius:10px; border:1px solid #fef3c7;">💡 Recordatorio: Tu contraseña para iniciar sesión es tu mismo <b>Nombre de Usuaria</b> (ej: Ángela / angela).</small>
+      <small style="color:#d97706; font-weight:700; font-size:.82rem; display:block; background:#fffbeb; padding:8px 12px; border-radius:10px; border:1px solid #fef3c7;">💡 Recordatorio: Tu contraseña para iniciar sesión es tu mismo <b>Nombre de Usuario/a</b> (ej: Ángela / Mateo).</small>
     </div>
 
     <div style="display:flex; gap:10px; margin-top:20px;">
@@ -3226,7 +3226,7 @@ init();
       <button class="modal-close" onclick="closeModal('modal-leaderboard')">✕</button>
     </div>
     
-    <p style="margin:0 0 12px; color:#64748b; font-size:.88rem;">Ranking de jugadoras del Multiverso según sus patitas ganadas 🐾</p>
+    <p style="margin:0 0 12px; color:#64748b; font-size:.88rem;">Ranking de jugadores del Multiverso según sus patitas ganadas 🐾</p>
     
     <div class="marcador-grid" id="leaderboard-list"></div>
     
