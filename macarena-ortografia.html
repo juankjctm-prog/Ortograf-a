@@ -1,0 +1,1575 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+<title>Macarena - Ortografía C, K, S, Z</title>
+<style>
+  :root{
+    --bg1:#1b0f3a; --bg2:#3a1668; --bg3:#6a1b6e;
+    --primary:#a855f7; --primary-dark:#7c22d6;
+    --accent:#ff4fa3; --accent2:#ffd54d; --cyan:#4dd8e8;
+    --success:#3ecf8e; --danger:#ff6b6b; --dark:#2c2350;
+    --card-bg:#ffffff;
+    --shadow: 0 8px 0 rgba(0,0,0,0.25);
+    --glow: 0 8px 24px rgba(168,85,247,0.35);
+  }
+  *{box-sizing:border-box;}
+  html,body{ margin:0;padding:0;height:100%; font-family:'Quicksand','Trebuchet MS','Segoe UI',sans-serif; color:var(--dark); overflow-x:hidden; }
+  body{
+    background:
+      radial-gradient(1.5px 1.5px at 10% 20%, #fff 100%, transparent),
+      radial-gradient(1.5px 1.5px at 80% 10%, #fff 100%, transparent),
+      radial-gradient(1px 1px at 50% 45%, #fff 100%, transparent),
+      radial-gradient(1.5px 1.5px at 30% 78%, #fff 100%, transparent),
+      radial-gradient(1px 1px at 70% 65%, #fff 100%, transparent),
+      radial-gradient(1.5px 1.5px at 92% 88%, #fff 100%, transparent),
+      radial-gradient(1px 1px at 15% 60%, #fff 100%, transparent),
+      radial-gradient(1.5px 1.5px at 60% 25%, #fff 100%, transparent),
+      linear-gradient(160deg, var(--bg1) 0%, var(--bg2) 55%, var(--bg3) 100%);
+    background-repeat:no-repeat; background-attachment:fixed; min-height:100vh; position:relative;
+  }
+  .floating-decor{ position:fixed; inset:0; pointer-events:none; z-index:0; overflow:hidden; }
+  .floating-decor span{ position:absolute; font-size:24px; opacity:.5; animation: floatUp 9s linear infinite; }
+  @keyframes floatUp{ 0%{ transform:translateY(110vh) rotate(0deg);} 100%{ transform:translateY(-10vh) rotate(360deg);} }
+  .app{ position:relative; z-index:1; max-width:520px; margin:0 auto; min-height:100vh; padding:18px 16px 40px; display:flex; flex-direction:column; align-items:center; }
+  .screen{ display:none; width:100%; flex-direction:column; align-items:center; animation:fadeIn .35s ease; }
+  .screen.active{ display:flex; }
+  @keyframes fadeIn{ from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);} }
+  h1{ font-size:1.9rem; text-align:center; margin:6px 0 4px; color:#fff; text-shadow: 0 2px 10px rgba(255,79,163,.6); }
+  h1 .highlight{ color:var(--accent2); }
+  h2{ color:#fff; font-size:1.4rem; text-align:center; margin:4px 0 10px; }
+  .subtitle{ text-align:center; color:#e3d9ff; font-size:1rem; margin:0 0 14px; padding:0 8px;}
+  .cat-wrap{ width:220px; height:230px; margin:6px auto 8px; filter:drop-shadow(0 6px 14px rgba(0,0,0,.35)); }
+  .cat-wrap.small{ width:130px; height:136px; }
+  .cat-wrap.tiny{ width:90px; height:94px; }
+  .cat-svg .mouth, .cat-svg .eyes-set{ display:none; }
+  .cat-svg.mood-normal .mouth-normal, .cat-svg.mood-normal .eyes-normal{ display:block; }
+  .cat-svg.mood-happy .mouth-happy, .cat-svg.mood-happy .eyes-happy{ display:block; }
+  .cat-svg.mood-sad .mouth-sad, .cat-svg.mood-sad .eyes-sad{ display:block; }
+  .cat-svg.bounce{ animation: bounce .5s ease; }
+  .cat-svg.shake{ animation: shake .5s ease; }
+  @keyframes bounce{ 0%,100%{ transform:translateY(0) scale(1);} 30%{ transform:translateY(-14px) scale(1.05);} 60%{ transform:translateY(0) scale(0.97);} }
+  @keyframes shake{ 0%,100%{ transform:translateX(0);} 20%{ transform:translateX(-8px) rotate(-3deg);} 40%{ transform:translateX(8px) rotate(3deg);} 60%{ transform:translateX(-6px) rotate(-2deg);} 80%{ transform:translateX(6px) rotate(2deg);} }
+  .stars-total{ background:#fff; border-radius:999px; padding:8px 18px; font-size:1.1rem; font-weight:bold; box-shadow:var(--shadow); margin:8px 0 18px; color:var(--primary-dark); }
+  .btn-primary, .btn-secondary, .btn-choice{ border:none; cursor:pointer; font-family:inherit; font-weight:bold; border-radius:18px; padding:16px 30px; font-size:1.1rem; box-shadow: var(--shadow); transition: transform .08s ease; }
+  .btn-primary{ background:linear-gradient(135deg, var(--accent), var(--primary)); color:#fff; }
+  .btn-primary:active, .btn-secondary:active, .btn-choice:active{ transform:translateY(6px); box-shadow:0 2px 0 rgba(0,0,0,.25); }
+  .btn-primary:disabled{ opacity:.45; cursor:default; }
+  .btn-primary:disabled:active{ transform:none; }
+  .btn-secondary{ background:#fff; color:var(--primary-dark); margin-top:10px; }
+  .btn-back{ align-self:flex-start; background:rgba(255,255,255,.12); border:none; cursor:pointer; font-size:.95rem; color:#fff; font-weight:bold; margin-bottom:10px; padding:8px 14px; border-radius:999px; }
+  .menu-card{ width:100%; background:var(--card-bg); border-radius:22px; padding:18px; display:flex; align-items:center; gap:14px; margin-bottom:14px; box-shadow:var(--shadow), var(--glow); cursor:pointer; border:3px solid transparent; }
+  .menu-card:active{ transform:translateY(4px); box-shadow:0 4px 0 rgba(0,0,0,.2); }
+  .menu-card .icon{ font-size:2.4rem; }
+  .menu-card .info{ flex:1; }
+  .menu-card .info h3{ margin:0 0 4px; color:var(--primary-dark); font-size:1.15rem; }
+  .menu-card .info p{ margin:0; font-size:.86rem; color:#6b5c8a; }
+  .menu-card .best{ font-size:.78rem; color:#c77b00; font-weight:bold; }
+  .hud{ display:flex; justify-content:space-between; align-items:center; width:100%; margin-bottom:10px; font-weight:bold; color:#fff; }
+  .hearts{ font-size:1.3rem; }
+  .progress-pill{ background:rgba(255,255,255,.15); color:#fff; border-radius:999px; padding:5px 14px; font-size:.85rem; }
+  .word-card{ background:#fff; border-radius:24px; padding:26px 20px; width:100%; text-align:center; box-shadow:var(--shadow); margin:10px 0 18px; }
+  .word-emoji{ font-size:3rem; margin-bottom:6px; }
+  .word-display{ font-size:2rem; letter-spacing:1px; font-weight:bold; color:var(--dark); }
+  .word-display .blank{ color:var(--accent); border-bottom:4px dotted var(--accent); padding:0 4px; }
+  .choice-row{ display:flex; gap:14px; width:100%; justify-content:center; margin-bottom:8px; flex-wrap:wrap; }
+  .btn-choice{ flex:1; min-width:70px; max-width:140px; font-size:1.5rem; background:#fff; color:var(--primary-dark); border:3px solid var(--primary); }
+  .btn-choice:disabled{ opacity:.6; cursor:default; }
+  .btn-choice.correct{ background:var(--success); color:#fff; border-color:var(--success); }
+  .btn-choice.wrong{ background:var(--danger); color:#fff; border-color:var(--danger); }
+  .feedback{ min-height:44px; font-size:1rem; font-weight:bold; text-align:center; padding:0 10px; color:#fff; }
+  .feedback.ok{ color:var(--success); }
+  .feedback.bad{ color:#ffb4b4; }
+  .tip-bubble{ background:#fff4d6; border-radius:14px; padding:10px 14px; font-size:.85rem; color:#7a5b00; margin-top:4px; max-width:340px; text-align:center; }
+  .btn-speak{ margin-top:10px; background:#f3ecff; color:var(--primary-dark); border:none; border-radius:999px; padding:8px 16px; font-weight:bold; font-size:.85rem; cursor:pointer; font-family:inherit; }
+  .sentence-card{ background:#fff; border-radius:24px; padding:22px 18px; width:100%; text-align:center; box-shadow:var(--shadow); margin:10px 0 18px; font-size:1.15rem; }
+  .word-options{ display:flex; gap:14px; width:100%; margin-bottom:8px; }
+  .word-options button{ flex:1; background:#fff; border:3px solid var(--primary); border-radius:18px; padding:16px 8px; font-size:1.2rem; font-weight:bold; color:var(--primary-dark); cursor:pointer; box-shadow:var(--shadow); }
+  .word-options button:active{ transform:translateY(6px); box-shadow:0 2px 0 rgba(0,0,0,.2); }
+  .word-options button.correct{ background:var(--success); color:#fff; border-color:var(--success); }
+  .word-options button.wrong{ background:var(--danger); color:#fff; border-color:var(--danger); }
+  .result-stars{ font-size:2.6rem; margin:6px 0; letter-spacing:6px; }
+  .result-msg{ font-size:1.15rem; text-align:center; font-weight:bold; color:#fff; margin-bottom:4px;}
+  .result-score{ font-size:1rem; color:#e3d9ff; margin-bottom:14px; }
+  .confetti-layer{ position:fixed; inset:0; pointer-events:none; z-index:50; overflow:hidden; }
+  .confetti-piece{ position:absolute; top:-30px; font-size:22px; animation:fall 1.4s ease-in forwards; }
+  @keyframes fall{ to{ transform:translateY(110vh) rotate(360deg); opacity:.2; } }
+  footer.credit{ margin-top:auto; font-size:.72rem; color:#c9b8ee; text-align:center; padding-top:20px; }
+  .rule-card{ background:#fff; border-radius:24px; padding:24px 20px; width:100%; box-shadow:var(--shadow), var(--glow); text-align:center; margin-bottom:14px; }
+  .rule-tag{ display:inline-block; padding:5px 14px; border-radius:999px; font-weight:bold; font-size:.85rem; margin-bottom:10px; }
+  .rule-tag.c{ background:#ffe6cc; color:#b35c00; }
+  .rule-tag.z{ background:#ffd9e6; color:#c2185b; }
+  .rule-tag.s{ background:#d6f7fb; color:#0891a8; }
+  .rule-tag.k{ background:#e3d9ff; color:#5b21b6; }
+  .rule-title{ font-size:1.15rem; font-weight:bold; color:var(--primary-dark); margin-bottom:10px; }
+  .rule-examples{ display:flex; gap:8px; justify-content:center; flex-wrap:wrap; margin-bottom:10px; }
+  .rule-examples span{ background:#f3ecff; color:var(--primary-dark); border-radius:12px; padding:6px 12px; font-weight:bold; font-size:.95rem; }
+  .rule-tip{ font-size:.9rem; color:#6b5c8a; }
+  .rule-dots{ display:flex; gap:8px; margin-bottom:14px; flex-wrap:wrap; justify-content:center; }
+  .rule-dots span{ width:9px; height:9px; border-radius:50%; background:rgba(255,255,255,.35); }
+  .rule-dots span.active{ background:var(--accent2); }
+  .rule-nav{ display:flex; gap:12px; width:100%; justify-content:center; }
+  .rule-nav button{ flex:1; max-width:150px; }
+  .shop-tabs{ display:flex; gap:8px; width:100%; overflow-x:auto; margin-bottom:14px; padding-bottom:4px; }
+  .shop-tab{ background:rgba(255,255,255,.15); color:#fff; border:none; border-radius:999px; padding:8px 16px; font-weight:bold; font-size:.85rem; cursor:pointer; white-space:nowrap; font-family:inherit; }
+  .shop-tab.active{ background:var(--accent2); color:#5a4300; }
+  .shop-grid{ display:grid; grid-template-columns:1fr 1fr; gap:12px; width:100%; margin-bottom:16px; }
+  .shop-item{ background:#fff; border-radius:18px; padding:14px 10px; text-align:center; box-shadow:var(--shadow); }
+  .shop-item .emoji{ font-size:2rem; width:66px; height:66px; margin:0 auto 8px; border-radius:50%; display:flex; align-items:center; justify-content:center; box-shadow:0 3px 0 rgba(0,0,0,.1), inset 0 0 0 3px #fff; }
+  .shop-item.cat-sala .emoji{ background:linear-gradient(135deg,#e9defc,#cfb2fb); }
+  .shop-item.cat-cocina .emoji{ background:linear-gradient(135deg,#ffe6cc,#ffbf7a); }
+  .shop-item.cat-cuarto .emoji{ background:linear-gradient(135deg,#ffe0ef,#ff9fc9); }
+  .shop-item.cat-jardin .emoji{ background:linear-gradient(135deg,#e3f9d5,#a3e885); }
+  .shop-item.cat-macarena .emoji{ background:linear-gradient(135deg,#fff3c4,#ffcf5c); }
+  .shop-item .name{ font-weight:bold; color:var(--primary-dark); font-size:.9rem; margin-bottom:6px; min-height:2.2em; }
+  .shop-item .price{ font-size:.85rem; color:#c77b00; font-weight:bold; margin-bottom:8px; }
+  .shop-item button{ width:100%; border:none; border-radius:12px; padding:8px; font-weight:bold; font-family:inherit; cursor:pointer; background:var(--primary); color:#fff; font-size:.85rem; }
+  .shop-item button:disabled{ background:#ddd; color:#888; cursor:default; }
+  .shop-item.owned{ opacity:.7; }
+  .shop-item.owned button{ background:var(--success); }
+  .house-toggle{ display:flex; gap:10px; width:100%; margin-bottom:14px; }
+  .house-toggle button{ flex:1; background:rgba(255,255,255,.15); color:#fff; border:none; border-radius:999px; padding:10px 14px; font-weight:bold; font-size:.9rem; cursor:pointer; font-family:inherit; }
+  .house-toggle button.active{ background:var(--accent2); color:#5a4300; }
+  .house-caption{ color:#e3d9ff; font-size:.85rem; text-align:center; margin:-6px 0 12px; min-height:1.2em; }
+
+  .exterior-scene{ position:relative; width:100%; height:310px; border-radius:24px; overflow:hidden; box-shadow:var(--shadow); margin-bottom:16px;
+    background:linear-gradient(180deg,#bfeaff 0%,#bfeaff 55%,#9adf7e 55%,#79c95f 100%); }
+  .ext-sun{ position:absolute; top:14px; right:22px; font-size:2.1rem; filter:drop-shadow(0 2px 2px rgba(0,0,0,.15)); }
+  .ext-cloud{ position:absolute; font-size:1.5rem; opacity:.95; }
+  .ext-house{ position:absolute; left:50%; bottom:96px; transform:translateX(-50%); width:150px; z-index:2; }
+  .ext-roof{ width:0; height:0; margin:0 auto; border-left:82px solid transparent; border-right:82px solid transparent; border-bottom:52px solid #e0637d; filter:drop-shadow(0 3px 2px rgba(0,0,0,.15)); }
+  .ext-wall{ width:150px; height:100px; background:#fff3e2; border:4px solid #e8b98a; border-top:none; border-radius:0 0 10px 10px; position:relative; margin:0 auto; }
+  .ext-door{ position:absolute; bottom:0; left:50%; transform:translateX(-50%); width:34px; height:56px; background:#a85c32; border-radius:8px 8px 0 0; }
+  .ext-door::after{ content:''; position:absolute; right:5px; top:26px; width:4px; height:4px; border-radius:50%; background:#ffd54d; }
+  .ext-window{ position:absolute; top:16px; width:28px; height:28px; background:#bfe8ff; border:3px solid #fff; border-radius:50%; box-shadow:0 0 0 3px #e8b98a; }
+  .ext-window.left{ left:14px; } .ext-window.right{ right:14px; }
+  .ext-cat{ position:absolute; bottom:90px; left:14px; width:56px; height:58px; z-index:3; }
+  .garden-bed{ position:absolute; bottom:0; left:0; right:0; height:96px; z-index:1;
+    background:linear-gradient(180deg,#8a5a34 0%,#6b4423 60%,#5a3a1e 100%); border-radius:20px 20px 0 0; box-shadow:inset 0 4px 0 rgba(255,255,255,.15); }
+  .garden-ground{ position:absolute; bottom:10px; left:0; right:0; height:86px; display:flex; align-items:flex-end; justify-content:center; gap:16px; flex-wrap:wrap; padding:0 16px; z-index:2; }
+  .garden-item-wrap{ display:flex; flex-direction:column; align-items:center; }
+  .garden-item{ font-size:2.1rem; filter:drop-shadow(0 2px 1px rgba(0,0,0,.2)); }
+  .garden-item-shadow{ width:24px; height:7px; border-radius:50%; background:rgba(0,0,0,.3); margin-top:2px; }
+  .garden-empty{ position:absolute; bottom:32px; left:0; right:0; text-align:center; color:#fff; text-shadow:0 1px 2px rgba(0,0,0,.4); font-size:.85rem; font-weight:bold; z-index:2; }
+
+  .interior-scene{ position:relative; width:100%; min-height:360px; border-radius:24px; overflow:hidden; box-shadow:var(--shadow); margin-bottom:16px;
+    background:linear-gradient(180deg,#ffe9d6 0%,#ffe9d6 56%,#caa06a 56%,#8a5a34 100%); padding:0; }
+  .int-wallpaper{ position:absolute; top:0; left:0; right:0; height:56%;
+    background-image: radial-gradient(rgba(255,255,255,.55) 2px, transparent 2.5px);
+    background-size: 26px 26px; opacity:.6; z-index:1; }
+  .int-rail{ position:absolute; top:56%; left:0; right:0; height:6px; background:linear-gradient(90deg,#e8b98a,#f0cba3,#e8b98a); box-shadow:0 2px 3px rgba(0,0,0,.15); z-index:1; }
+  .int-floor-planks{ position:absolute; bottom:0; left:0; right:0; height:44%;
+    background-image: repeating-linear-gradient(90deg, rgba(0,0,0,.08) 0px, rgba(0,0,0,.08) 2px, transparent 2px, transparent 62px);
+    z-index:1; }
+  .int-lights{ position:absolute; top:8px; left:0; right:0; height:22px; z-index:2;
+    background-image: radial-gradient(circle, #ffd54d 3px, transparent 3.5px);
+    background-size: 34px 22px; background-position: 17px 6px; opacity:.85; filter:drop-shadow(0 0 4px rgba(255,213,77,.8)); }
+  .int-window{ position:absolute; top:34px; right:26px; width:52px; height:52px; background:#bfe8ff; border:4px solid #fff; border-radius:10px; box-shadow:inset 0 0 0 2px #e8b98a; z-index:2; }
+  .int-window::after{ content:''; position:absolute; left:50%; top:-2px; bottom:-2px; width:3px; background:#fff; transform:translateX(-50%); }
+  .int-curtain{ position:absolute; top:22px; width:22px; height:70px; z-index:2; border-radius:0 0 40% 40%/0 0 60% 60%; opacity:.9; }
+  .int-curtain.left{ right:74px; background:linear-gradient(90deg,#ff9fc2,#ffc2dc); transform:rotate(-4deg); }
+  .int-curtain.right{ right:20px; background:linear-gradient(-90deg,#ff9fc2,#ffc2dc); transform:rotate(4deg); }
+  .int-shelf{ position:absolute; top:96px; left:24px; width:110px; height:8px; background:#a9723f; border-radius:2px; box-shadow:0 3px 0 rgba(0,0,0,.15); z-index:2; }
+  .int-shelf-decor{ position:absolute; top:66px; left:26px; display:flex; gap:6px; z-index:3; font-size:1.5rem; filter:drop-shadow(0 2px 1px rgba(0,0,0,.2)); }
+  .int-frame{ position:absolute; top:30px; left:24px; width:40px; height:34px; background:#fff8ec; border:5px solid #c77b00; border-radius:3px; z-index:2; box-shadow:0 2px 4px rgba(0,0,0,.2); display:flex; align-items:center; justify-content:center; font-size:1.1rem; }
+  .int-rug{ position:absolute; bottom:44px; left:50%; transform:translateX(-50%); width:170px; height:66px; background:radial-gradient(ellipse at center,#ff9fc2 55%,#ff7fb0 100%); border-radius:50%; opacity:.75; box-shadow:0 0 0 6px rgba(255,255,255,.35); z-index:1; }
+  .int-cat{ position:absolute; bottom:46px; left:20px; width:64px; height:66px; z-index:3; }
+  .interior-wall-row{ position:absolute; top:104px; left:150px; right:16px; display:flex; gap:10px; flex-wrap:wrap; align-items:flex-start; z-index:2; }
+  .interior-wall-badge{ width:48px; height:48px; padding:5px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:1.4rem; background:#fff8ec; box-shadow:0 3px 0 rgba(0,0,0,.15), inset 0 0 0 3px #e8b98a; filter:drop-shadow(0 2px 1px rgba(0,0,0,.15)); }
+  .interior-floor-row{ position:absolute; bottom:4px; left:0; right:0; height:98px; display:flex; align-items:flex-end; justify-content:center; gap:16px; flex-wrap:wrap; padding:0 86px 0 90px; z-index:2; }
+  .interior-floor-wrap{ display:flex; flex-direction:column; align-items:center; }
+  .interior-floor-item{ width:46px; height:46px; font-size:2rem; display:flex; align-items:center; justify-content:center; filter:drop-shadow(0 2px 1px rgba(0,0,0,.25)); }
+  .interior-floor-item.big{ width:84px; height:84px; font-size:3.6rem; filter:drop-shadow(0 3px 2px rgba(0,0,0,.3)); }
+  .interior-floor-shadow{ width:24px; height:7px; border-radius:50%; background:rgba(0,0,0,.25); margin-top:2px; }
+  .interior-floor-shadow.big{ width:44px; height:11px; margin-top:4px; background:rgba(0,0,0,.3); }
+  .interior-empty{ position:absolute; bottom:120px; left:0; right:0; text-align:center; color:#5a3418; text-shadow:0 1px 1px rgba(255,255,255,.4); font-size:.82rem; font-weight:bold; z-index:2; padding:0 20px; }
+  .paws-total{ background:#fff; border-radius:999px; padding:8px 18px; font-size:1.1rem; font-weight:bold; box-shadow:var(--shadow); margin:8px 0 18px; color:var(--primary-dark); }
+  .profile-grid{ display:flex; flex-direction:column; gap:16px; width:100%; margin-top:20px; }
+  .profile-card{ background:#fff; border-radius:24px; padding:22px; display:flex; align-items:center; gap:16px; box-shadow:var(--shadow), var(--glow); cursor:pointer; border:3px solid transparent; }
+  .profile-card:active{ transform:translateY(4px); box-shadow:0 4px 0 rgba(0,0,0,.2); }
+  .profile-card .avatar{ font-size:3rem; }
+  .profile-card .info h3{ margin:0 0 4px; color:var(--primary-dark); font-size:1.3rem; }
+  .profile-card .info p{ margin:0; font-size:.85rem; color:#c77b00; font-weight:bold; }
+  .marcador-grid{ display:flex; gap:14px; width:100%; margin:14px 0; }
+  .marcador-card{ flex:1; background:#fff; border-radius:22px; padding:18px 12px; text-align:center; box-shadow:var(--shadow); position:relative; }
+  .marcador-card.leader{ box-shadow:var(--shadow), 0 0 0 4px var(--accent2); }
+  .marcador-card .crown{ position:absolute; top:-18px; left:50%; transform:translateX(-50%); font-size:1.8rem; }
+  .marcador-card .avatar{ font-size:2.4rem; margin-bottom:6px; }
+  .marcador-card h3{ margin:0 0 8px; color:var(--primary-dark); }
+  .marcador-card .paws{ font-size:1.4rem; font-weight:bold; color:#c77b00; }
+  .marcador-card .items{ font-size:.8rem; color:#6b5c8a; margin-top:4px; }
+
+  /* Cuaderno de Macarena */
+  .wrong-tag{ display:inline-block; background:#ffe3e3; color:#c53030; text-decoration:line-through; font-weight:bold; border-radius:10px; padding:4px 10px; margin-bottom:10px; font-size:.95rem; }
+  .kinesthetic-hint{ color:#e3d9ff; font-size:.85rem; text-align:center; margin:0 0 10px; padding:0 10px; }
+  .form-card{ background:#fff; border-radius:24px; padding:24px 20px; width:100%; box-shadow:var(--shadow); margin-bottom:14px; }
+  .form-card p{ font-size:.9rem; color:#6b5c8a; }
+  .p4-sentence{ background:#fff; border-radius:16px; padding:14px 16px; width:100%; margin-bottom:10px; font-size:1.02rem; box-shadow:var(--shadow); }
+  .p4-blank{ display:inline-block; min-width:90px; border-bottom:3px dashed var(--accent); color:var(--primary-dark); font-weight:bold; padding:2px 6px; cursor:pointer; }
+  .p4-blank.filled{ border-bottom:3px solid var(--success); background:#eafff4; border-radius:8px; }
+  .p4-blank.wrong{ border-bottom:3px solid var(--danger); background:#ffecec; border-radius:8px; }
+  .word-bank{ display:flex; flex-wrap:wrap; gap:10px; justify-content:center; width:100%; margin:14px 0; }
+  .word-chip{ background:var(--accent2); color:#5a4300; font-weight:bold; padding:10px 16px; border-radius:14px; cursor:pointer; box-shadow:var(--shadow); border:none; font-family:inherit; font-size:.95rem; }
+  .word-chip.selected{ background:var(--primary); color:#fff; }
+  .word-chip.used{ opacity:.25; cursor:default; }
+  .story-card{ background:#fff; border-radius:24px; padding:20px; width:100%; box-shadow:var(--shadow); margin-bottom:14px; }
+  .story-card textarea{ width:100%; min-height:160px; border-radius:16px; border:2px solid #e0d4ff; padding:14px; font-family:inherit; font-size:1rem; resize:vertical; }
+  .word-checklist{ display:flex; flex-wrap:wrap; gap:8px; margin-top:14px; }
+  .word-checklist span{ background:#f3ecff; color:var(--primary-dark); border-radius:12px; padding:6px 12px; font-size:.85rem; font-weight:bold; }
+  .word-checklist span.used{ background:var(--success); color:#fff; }
+  .story-counter{ text-align:center; font-weight:bold; color:var(--primary-dark); margin-top:10px; }
+  .diploma{ background:#fffdf3; border:6px double var(--accent2); border-radius:20px; padding:28px 20px; width:100%; text-align:center; box-shadow:var(--shadow), var(--glow); margin-bottom:18px; }
+  .diploma h2{ color:var(--primary-dark); }
+  .diploma .name{ font-size:1.6rem; font-weight:bold; color:var(--accent); margin:10px 0; font-family:'Segoe Script','Brush Script MT',cursive; }
+  .diploma .fecha{ font-size:.9rem; color:#8a7bad; margin-bottom:14px; }
+  .diploma .paws-big{ font-size:2.2rem; margin:8px 0; }
+  .diploma .badges{ display:flex; justify-content:center; gap:10px; flex-wrap:wrap; margin:14px 0; }
+  .diploma .badges span{ font-size:1.6rem; }
+  @media print{
+    body *{ visibility:hidden; }
+    .diploma, .diploma *{ visibility:visible; }
+    .diploma{ position:absolute; top:0; left:0; width:100%; }
+  }
+</style>
+</head>
+<body>
+
+<div class="floating-decor" id="floatingDecor"></div>
+
+<div class="app">
+
+  <!-- HOME -->
+  <section class="screen active" id="screen-profile">
+    <h1>Ortografía con <span class="highlight">Macarena</span></h1>
+    <p class="subtitle">¿Quién va a jugar hoy? 🐾</p>
+    <div class="profile-grid" id="profile-grid"></div>
+  </section>
+
+  <!-- HOME -->
+  <section class="screen" id="screen-home">
+    <button class="btn-back" onclick="switchProfile()">⟵ Cambiar jugadora</button>
+    <h1>Ortografía con <span class="highlight">Macarena</span></h1>
+    <p class="subtitle" id="home-greeting">¡Hola! 🌸</p>
+    <div class="cat-wrap" id="macarena-home-wrap"></div>
+    <div class="paws-total">🐾 <span id="total-paws">0</span> patitas</div>
+    <button class="btn-primary" onclick="goToMenu()">¡Empezar! 🚀</button>
+    <footer class="credit">Junta patitas jugando y decora la casa de Macarena</footer>
+  </section>
+
+  <!-- REGLAS -->
+  <section class="screen" id="screen-reglas">
+    <button class="btn-back" onclick="goToMenu()">⟵ Menú</button>
+    <div class="cat-wrap tiny" id="macarena-reglas-wrap"></div>
+    <h2>Macarena te enseña las reglas</h2>
+    <div class="rule-dots" id="rule-dots"></div>
+    <div class="rule-card" id="rule-card"></div>
+    <div class="rule-nav">
+      <button class="btn-secondary" id="rule-prev" onclick="ruleNav(-1)">⟵ Antes</button>
+      <button class="btn-primary" id="rule-next" onclick="ruleNav(1)">Después ⟶</button>
+    </div>
+  </section>
+
+  <!-- MENU PRINCIPAL -->
+  <section class="screen" id="screen-menu">
+    <button class="btn-back" onclick="goHome()">⟵ Inicio</button>
+    <h2>¿Qué quieres hacer?</h2>
+    <div class="menu-card" onclick="showScreen('screen-reglas'); renderRuleCard();">
+      <div class="icon">📖</div>
+      <div class="info"><h3>Aprende las reglas</h3><p>Macarena te explica los trucos de C, K, S y Z</p></div>
+    </div>
+    <div class="menu-card" onclick="startCuaderno()">
+      <div class="icon">📝</div>
+      <div class="info"><h3>Mi Cuaderno</h3><p>Oraciones y un cuento, en 5 partes súper cheveres</p>
+        <div class="best" id="best-cuaderno"></div>
+      </div>
+    </div>
+    <div class="menu-card" onclick="showScreen('screen-games-menu')">
+      <div class="icon">🎮</div>
+      <div class="info"><h3>Jugar y ganar patitas</h3><p>Practica y gana monedas para la casa</p></div>
+    </div>
+    <div class="menu-card" onclick="openShop()">
+      <div class="icon">🛍️</div>
+      <div class="info"><h3>Tienda de Macarena</h3><p>Compra cosas lindas con tus patitas</p></div>
+    </div>
+    <div class="menu-card" onclick="openHouse()">
+      <div class="icon">🏡</div>
+      <div class="info"><h3>Casa de Macarena</h3><p>Mira todo lo que ya decoraste</p></div>
+    </div>
+    <div class="menu-card" onclick="openMarcador()" style="border-color:var(--accent2);">
+      <div class="icon">🏆</div>
+      <div class="info"><h3>Marcador</h3><p>¿Quién tiene más patitas, Ángela o Margarita?</p></div>
+    </div>
+  </section>
+
+  <!-- MARCADOR -->
+  <section class="screen" id="screen-marcador">
+    <button class="btn-back" onclick="goToMenu()">⟵ Menú</button>
+    <h2>🏆 Marcador</h2>
+    <div class="marcador-grid" id="marcador-grid"></div>
+    <p class="subtitle" id="marcador-msg"></p>
+  </section>
+
+  <!-- SUBMENU JUEGOS -->
+  <section class="screen" id="screen-games-menu">
+    <button class="btn-back" onclick="goToMenu()">⟵ Menú</button>
+    <h2>Elige un juego</h2>
+    <div class="menu-card" id="card-repaso" onclick="startRepaso()" style="border-color:var(--accent2);">
+      <div class="icon">🔁</div>
+      <div class="info"><h3>Repaso de Macarena</h3><p>Practica solo las palabras que se te dificultan</p><div class="best" id="repaso-count"></div></div>
+    </div>
+    <div class="menu-card" onclick="startGame1()">
+      <div class="icon">🐾</div>
+      <div class="info"><h3>Atrapa la Letra</h3><p>Elige la letra correcta para cada palabra</p><div class="best" id="best-game1"></div></div>
+    </div>
+    <div class="menu-card" onclick="startGame3()">
+      <div class="icon">🔍</div>
+      <div class="info"><h3>¿Cuál está bien escrita?</h3><p>Descubre la palabra correcta</p><div class="best" id="best-game3"></div></div>
+    </div>
+  </section>
+
+  <!-- GAME 1 -->
+  <section class="screen" id="screen-game1">
+    <button class="btn-back" onclick="confirmExit('screen-games-menu')">⟵ Salir</button>
+    <div class="hud"><div class="hearts" id="g1-hearts">❤️❤️❤️</div><div class="progress-pill" id="g1-progress">Ronda 1/8</div></div>
+    <div class="cat-wrap small" id="macarena-g1-wrap"></div>
+    <div class="word-card">
+      <div class="word-emoji" id="g1-emoji">🐱</div>
+      <div class="word-display" id="g1-word">_apato</div>
+      <button class="btn-speak" onclick="speakCurrentG1()">🔊 Escuchar</button>
+    </div>
+    <div class="choice-row" id="g1-choices"></div>
+    <div class="feedback" id="g1-feedback"></div>
+    <div class="tip-bubble" id="g1-tip" style="display:none;"></div>
+  </section>
+
+  <!-- GAME 3 -->
+  <section class="screen" id="screen-game3">
+    <button class="btn-back" onclick="confirmExit('screen-games-menu')">⟵ Salir</button>
+    <div class="hud"><div class="hearts" id="g3-hearts">❤️❤️❤️</div><div class="progress-pill" id="g3-progress">Ronda 1/8</div></div>
+    <div class="cat-wrap small" id="macarena-g3-wrap"></div>
+    <div class="sentence-card">
+      <div style="font-size:2.2rem;" id="g3-emoji">🔍</div>
+      <p>¿Cuál palabra está <b>bien escrita</b>?</p>
+    </div>
+    <div class="word-options" id="g3-options">
+      <button id="g3-opt-0" onclick="answerGame3(0)">opcion</button>
+      <button id="g3-opt-1" onclick="answerGame3(1)">opcion</button>
+    </div>
+    <div class="feedback" id="g3-feedback"></div>
+    <div class="tip-bubble" id="g3-tip" style="display:none;"></div>
+  </section>
+
+  <!-- TIENDA -->
+  <section class="screen" id="screen-shop">
+    <button class="btn-back" onclick="goToMenu()">⟵ Menú</button>
+    <div class="hud"><h2 style="margin:0;">Tienda de Macarena</h2><div class="progress-pill">🐾 <span id="shop-paws">0</span></div></div>
+    <div class="shop-tabs" id="shop-tabs"></div>
+    <div class="shop-grid" id="shop-grid"></div>
+  </section>
+
+  <!-- CASA -->
+  <section class="screen" id="screen-house">
+    <button class="btn-back" onclick="goToMenu()">⟵ Menú</button>
+    <h2>Casa de Macarena</h2>
+    <div class="house-toggle">
+      <button id="house-tab-ext" onclick="setHouseView('exterior')">🏠 Por fuera</button>
+      <button id="house-tab-int" onclick="setHouseView('interior')">🛋️ Por dentro</button>
+    </div>
+    <div class="house-caption" id="house-caption"></div>
+
+    <div class="exterior-scene" id="exterior-scene">
+      <div class="ext-sun">☀️</div>
+      <div class="ext-cloud" style="top:22px; left:18px;">☁️</div>
+      <div class="ext-cloud" style="top:40px; left:60%;">☁️</div>
+      <div class="cat-wrap ext-cat" id="macarena-ext-wrap"></div>
+      <div class="ext-house">
+        <div class="ext-roof"></div>
+        <div class="ext-wall">
+          <div class="ext-window left"></div>
+          <div class="ext-window right"></div>
+          <div class="ext-door"></div>
+        </div>
+      </div>
+      <div class="garden-bed"></div>
+      <div class="garden-ground" id="garden-ground"></div>
+    </div>
+
+    <div class="interior-scene" id="interior-scene" style="display:none;">
+      <div class="int-wallpaper"></div>
+      <div class="int-floor-planks"></div>
+      <div class="int-rail"></div>
+      <div class="int-lights"></div>
+      <div class="int-frame">🖼️</div>
+      <div class="int-shelf"></div>
+      <div class="int-shelf-decor">🪴 📚</div>
+      <div class="int-window"></div>
+      <div class="int-curtain left"></div>
+      <div class="int-curtain right"></div>
+      <div class="int-rug"></div>
+      <div class="cat-wrap int-cat" id="macarena-int-wrap"></div>
+      <div class="interior-wall-row" id="interior-wall-row"></div>
+      <div class="interior-floor-row" id="interior-floor-row"></div>
+      <div class="interior-empty" id="interior-empty" style="display:none;"></div>
+    </div>
+
+    <button class="btn-secondary" onclick="openShop()">Ir a la tienda 🛍️</button>
+  </section>
+
+  <!-- RESULT -->
+  <section class="screen" id="screen-result">
+    <div class="cat-wrap" id="macarena-result-wrap"></div>
+    <div class="result-msg" id="result-msg">¡Muy bien!</div>
+    <div class="result-stars" id="result-stars">⭐⭐⭐</div>
+    <div class="result-score" id="result-score">Puntaje: 8/8</div>
+    <div class="paws-total" id="result-paws-earned">+8 🐾</div>
+    <button class="btn-primary" id="result-btn-primary">Continuar</button>
+    <button class="btn-secondary" id="result-btn-secondary">Menú principal</button>
+  </section>
+
+  <!-- CUADERNO INTRO -->
+  <section class="screen" id="screen-cuaderno-intro">
+    <button class="btn-back" onclick="goToMenu()">⟵ Menú</button>
+    <div class="cat-wrap small" id="macarena-intro-wrap"></div>
+    <h2>Mi Cuaderno de Ortografía</h2>
+    <div class="form-card">
+      <p style="margin-top:0;">¡Hola, <b id="intro-nombre">amiga</b>! Vas a completar 5 partes: llenar espacios, elegir la palabra correcta, corregir errores, un banco de palabras y ¡tu propio cuento! Ganarás patitas 🐾 en cada parte.</p>
+    </div>
+    <button class="btn-primary" onclick="startParte1M()">Comenzar Parte 1 ⟶</button>
+  </section>
+
+  <!-- PARTE 1 -->
+  <section class="screen" id="screen-parte1">
+    <button class="btn-back" onclick="confirmExit('screen-menu')">⟵ Salir</button>
+    <div class="hud"><div class="progress-pill">Parte 1: Completa la palabra</div><div class="progress-pill" id="p1-progress">1/10</div></div>
+    <div class="cat-wrap small" id="macarena-p1-wrap"></div>
+    <div class="word-card">
+      <div class="word-display" id="p1-sentence" style="font-size:1.2rem;">Cargando...</div>
+      <button class="btn-speak" onclick="speakCurrentP1()">🔊 Escuchar</button>
+    </div>
+    <p class="kinesthetic-hint">✍️ Truco: traza la letra en el aire con el dedo antes de elegir</p>
+    <div class="choice-row" id="p1-choices"></div>
+    <div class="feedback" id="p1-feedback"></div>
+  </section>
+
+  <!-- PARTE 2 -->
+  <section class="screen" id="screen-parte2">
+    <button class="btn-back" onclick="confirmExit('screen-menu')">⟵ Salir</button>
+    <div class="hud"><div class="progress-pill">Parte 2: Elige la correcta</div><div class="progress-pill" id="p2-progress">1/8</div></div>
+    <div class="cat-wrap small" id="macarena-p2-wrap"></div>
+    <div class="sentence-card"><p>Marca la opción bien escrita ✓</p></div>
+    <div class="word-options" id="p2-options">
+      <button id="p2-opt-0" onclick="answerParte2(0)">opcion</button>
+      <button id="p2-opt-1" onclick="answerParte2(1)">opcion</button>
+    </div>
+    <div class="feedback" id="p2-feedback"></div>
+  </section>
+
+  <!-- PARTE 3 -->
+  <section class="screen" id="screen-parte3">
+    <button class="btn-back" onclick="confirmExit('screen-menu')">⟵ Salir</button>
+    <div class="hud"><div class="progress-pill">Parte 3: Corrige el error</div><div class="progress-pill" id="p3-progress">1/6</div></div>
+    <div class="cat-wrap small" id="macarena-p3-wrap"></div>
+    <div class="word-card">
+      <div class="wrong-tag" id="p3-wrong">seso</div>
+      <div class="word-display" id="p3-word">_eso</div>
+      <button class="btn-speak" onclick="speakCurrentP3()">🔊 Escuchar</button>
+    </div>
+    <div class="choice-row" id="p3-choices"></div>
+    <div class="feedback" id="p3-feedback"></div>
+  </section>
+
+  <!-- PARTE 4 -->
+  <section class="screen" id="screen-parte4">
+    <button class="btn-back" onclick="confirmExit('screen-menu')">⟵ Salir</button>
+    <h2 style="font-size:1.15rem;">Parte 4: Completa con el banco de palabras</h2>
+    <div class="cat-wrap small" id="macarena-p4-wrap"></div>
+    <div id="p4-sentences"></div>
+    <div class="word-bank" id="p4-bank"></div>
+    <button class="btn-primary" onclick="checkParte4()">Revisar ✓</button>
+    <div class="feedback" id="p4-feedback"></div>
+  </section>
+
+  <!-- PARTE 5 -->
+  <section class="screen" id="screen-parte5">
+    <button class="btn-back" onclick="confirmExit('screen-menu')">⟵ Salir</button>
+    <h2 style="font-size:1.15rem;">Parte 5: Escribe tu cuento</h2>
+    <div class="cat-wrap small" id="macarena-p5-wrap"></div>
+    <div class="story-card">
+      <p style="margin-top:0;">Usa al menos <b>7</b> de estas palabras en un cuento de 6 a 8 líneas:</p>
+      <div class="word-checklist" id="p5-checklist"></div>
+      <textarea id="p5-textarea" placeholder="Había una vez..." oninput="updateStoryCheck()"></textarea>
+      <div class="story-counter" id="p5-counter">0/10 palabras usadas</div>
+    </div>
+    <button class="btn-primary" onclick="finishParte5()">Terminar mi cuento ✨</button>
+  </section>
+
+  <!-- DIPLOMA -->
+  <section class="screen" id="screen-diploma">
+    <div class="diploma">
+      <div class="cat-wrap small" id="macarena-diploma-wrap" style="margin:0 auto 6px;"></div>
+      <h2>Diploma de Ortografía</h2>
+      <p style="color:#8a7bad; margin:0;">Se lo otorga con orgullo a:</p>
+      <div class="name" id="diploma-nombre">Nombre</div>
+      <div class="fecha" id="diploma-fecha">Fecha</div>
+      <p style="color:#6b5c8a;">Por completar con éxito el Cuaderno de Ortografía de C, K, S y Z, demostrando esfuerzo y mucho talento.</p>
+      <div class="paws-big" id="diploma-paws">🐾🐾🐾🐾🐾</div>
+      <div class="badges" id="diploma-badges"></div>
+      <div style="font-size:.8rem; color:#b39ddb; margin-top:10px;">🐾 Firmado por Macarena</div>
+    </div>
+    <button class="btn-primary" onclick="window.print()">Imprimir mi diploma 🖨️</button>
+    <button class="btn-secondary" onclick="goToMenu()">Menú principal</button>
+  </section>
+
+</div>
+
+<div class="confetti-layer" id="confettiLayer"></div>
+
+<script>
+/* ================== REGLAS (enseñanza) ================== */
+const RULES = [
+  {group:'z', tag:'Regla #1', title:'ZA-ZO-ZU con Z, CE-CI con C', examples:['zapato','zorro','cielo'], tip:'Antes de A, O, U se escribe Z (zapato, zorro, zumo). Antes de E, I se escribe C (cielo, cena, cine).'},
+  {group:'k', tag:'Regla #2', title:'C con A,O,U — QU con E,I', examples:['casa','queso','química'], tip:'La C suena fuerte (como "k") antes de A, O, U: casa, copa, cuna. Ese mismo sonido fuerte antes de E, I se escribe QU: queso, química. Frase para recordar: "La C va con A, O, U; la QU va con E, I; y la K aparece en palabras especiales".'},
+  {group:'c', tag:'Regla #3', title:'El plural de -Z cambia a -CES', examples:['luz→luces','pez→peces','lápiz→lápices'], tip:'Cuando una palabra termina en Z y la pasas a plural, la Z se convierte en C.'},
+  {group:'z', tag:'Regla #4', title:'Palabras terminadas en -EZ, -EZA', examples:['rapidez','timidez','belleza'], tip:'Las cualidades terminadas en -ez o -eza casi siempre llevan Z: pobre→pobreza, rápido→rapidez, tímido→timidez, honrado→honradez.'},
+  {group:'z', tag:'Regla #5', title:'Palabras terminadas en -AZO, -AZA', examples:['golpazo','portazo','manazo'], tip:'Cuando una palabra indica un golpe o algo grande (golpe→golpazo, puerta→portazo, mano→manazo, perro→perrazo), casi siempre se escribe con Z.'},
+  {group:'z', tag:'Regla #6', title:'Verbos terminados en -IZAR', examples:['organizar','realizar','analizar'], tip:'Muchos verbos que terminan sonando "-izar" se escriben con Z: organizar, realizar, autorizar, analizar, sensibilizar, caracterizar.'},
+  {group:'c', tag:'Regla #7', title:'Verbos en -ZAR cambian a C delante de E', examples:['comencé','crucé','organicé'], tip:'Para conservar el mismo sonido delante de E, los verbos terminados en -zar cambian la Z por C cuando se conjugan: comenzar→comencé, cruzar→crucé, organizar→organicé.'},
+  {group:'s', tag:'Regla #8', title:'Adjetivos terminados en -OSO, -OSA', examples:['hermoso','famosa','mentirosa'], tip:'Estos adjetivos casi siempre se escriben con S.'},
+  {group:'s', tag:'Regla #9', title:'Palabras terminadas en -ISMO, -ISTA', examples:['turismo','artista','futbolista'], tip:'Estas palabras casi siempre llevan S.'},
+  {group:'c', tag:'Regla #10', title:'Palabras terminadas en -CIÓN', examples:['educación','dirección','producción'], tip:'Se escribe -ción cuando existe una palabra relacionada terminada en -to, -tor o -do: director→dirección, productor→producción, educado→educación, correcto→corrección.'},
+  {group:'s', tag:'Regla #11', title:'Palabras terminadas en -SIÓN', examples:['decisión','expresión','comprensión'], tip:'Se escribe -sión cuando existe una palabra relacionada terminada en -so, -sor, -sible o -sivo: confuso→confusión, comprensible→comprensión, revisor→revisión, expresivo→expresión.'},
+  {group:'k', tag:'Regla #12', title:'La K se usa poco', examples:['kilo','koala','kiosco'], tip:'La K casi solo aparece en palabras que vienen de otros idiomas: kilogramo, kilómetro, karate, kayak, koala, kiosco, karma, karaoke.'}
+];
+let ruleIndex = 0;
+function renderRuleCard(){
+  const r = RULES[ruleIndex];
+  const card = document.getElementById('rule-card');
+  card.innerHTML =
+    '<div class="rule-tag '+r.group+'">'+r.tag+'</div>' +
+    '<div class="rule-title">'+r.title+'</div>' +
+    '<div class="rule-examples">'+r.examples.map(e=>'<span>'+e+'</span>').join('')+'</div>' +
+    '<div class="rule-tip">💡 '+r.tip+'</div>';
+  const dots = document.getElementById('rule-dots');
+  dots.innerHTML = RULES.map((_,i)=>'<span class="'+(i===ruleIndex?'active':'')+'"></span>').join('');
+  document.getElementById('rule-prev').style.visibility = ruleIndex === 0 ? 'hidden' : 'visible';
+  document.getElementById('rule-next').textContent = ruleIndex === RULES.length-1 ? '¡A practicar! 🚀' : 'Después ⟶';
+  setMood('macarena-reglas', 'normal');
+}
+function ruleNav(dir){
+  if(dir > 0 && ruleIndex === RULES.length-1){ goToMenu(); return; }
+  ruleIndex = Math.max(0, Math.min(RULES.length-1, ruleIndex+dir));
+  renderRuleCard();
+}
+
+/* ================== BANCO DE PALABRAS ================== */
+// word: usa "*" como espacio en blanco. options: las 2 letras posibles para ese hueco. answer: la correcta.
+const RULE_TIP = {
+  zc: 'Antes de A, O, U va Z; antes de E, I va C (mismo sonido).',
+  qu: 'El sonido fuerte de la C antes de E, I se escribe QU: queso, química.',
+  plural: 'El plural de las palabras en -Z cambia la Z por C.',
+  ez: 'Las palabras que terminan en -ez o -eza casi siempre llevan Z.',
+  azo: 'Las palabras terminadas en -azo o -aza (que indican un golpe o algo grande) casi siempre llevan Z.',
+  izar: 'Los verbos terminados en "-izar" se escriben con Z.',
+  zcverbo: 'Los verbos terminados en -zar cambian la Z por C delante de E: comenzar→comencé.',
+  oso: 'Los adjetivos terminados en -oso, -osa casi siempre llevan S.',
+  ismo: 'Las palabras terminadas en -ismo, -ista casi siempre llevan S.',
+  cion: 'Las palabras terminadas en -ción (de otra en -to,-do,-dor) llevan C.',
+  sion: 'Las palabras terminadas en -sión (de otra en -so,-sor,-sible,-sivo) llevan S.',
+  k: 'La K se usa casi solo en palabras que vienen de otros idiomas.'
+};
+const WORD_BANK = [
+  {word:"*apato", options:['c','z'], answer:'z', emoji:'👟', full:'zapato', rule:RULE_TIP.zc},
+  {word:"*orro", options:['c','z'], answer:'z', emoji:'🦊', full:'zorro', rule:RULE_TIP.zc},
+  {word:"ta*a", options:['c','z'], answer:'z', emoji:'☕', full:'taza', rule:RULE_TIP.zc},
+  {word:"*urdo", options:['c','z'], answer:'z', emoji:'🤚', full:'zurdo', rule:RULE_TIP.zc},
+  {word:"*ielo", options:['c','z'], answer:'c', emoji:'☁️', full:'cielo', rule:RULE_TIP.zc},
+  {word:"*ena", options:['c','z'], answer:'c', emoji:'🍽️', full:'cena', rule:RULE_TIP.zc},
+  {word:"*ine", options:['c','z'], answer:'c', emoji:'🎬', full:'cine', rule:RULE_TIP.zc},
+  {word:"*epillo", options:['c','z'], answer:'c', emoji:'🪥', full:'cepillo', rule:RULE_TIP.zc},
+  {word:"co*ina", options:['c','z'], answer:'c', emoji:'🍳', full:'cocina', rule:RULE_TIP.zc},
+  {word:"*eso", options:['c','qu'], answer:'qu', emoji:'🧀', full:'queso', rule:RULE_TIP.qu},
+  {word:"*ímica", options:['c','qu'], answer:'qu', emoji:'🧪', full:'química', rule:RULE_TIP.qu},
+  {word:"*ince", options:['c','qu'], answer:'qu', emoji:'🔟', full:'quince', rule:RULE_TIP.qu},
+  {word:"pe*eño", options:['c','qu'], answer:'qu', emoji:'🐣', full:'pequeño', rule:RULE_TIP.qu},
+  {word:"par*e", options:['c','qu'], answer:'qu', emoji:'🌳', full:'parque', rule:RULE_TIP.qu},
+  {word:"a*í", options:['c','qu'], answer:'qu', emoji:'📍', full:'aquí', rule:RULE_TIP.qu},
+  {word:"lu*es", options:['c','z'], answer:'c', emoji:'💡', full:'luces', rule:RULE_TIP.plural},
+  {word:"pe*es", options:['c','z'], answer:'c', emoji:'🐟', full:'peces', rule:RULE_TIP.plural},
+  {word:"lápi*es", options:['c','z'], answer:'c', emoji:'✏️', full:'lápices', rule:RULE_TIP.plural},
+  {word:"vo*es", options:['c','z'], answer:'c', emoji:'🗣️', full:'voces', rule:RULE_TIP.plural},
+  {word:"feli*", options:['s','z'], answer:'z', emoji:'😊', full:'feliz', rule:RULE_TIP.ez},
+  {word:"nari*", options:['s','z'], answer:'z', emoji:'👃', full:'nariz', rule:RULE_TIP.ez},
+  {word:"arro*", options:['s','z'], answer:'z', emoji:'🍚', full:'arroz', rule:RULE_TIP.ez},
+  {word:"capa*", options:['s','z'], answer:'z', emoji:'💪', full:'capaz', rule:RULE_TIP.ez},
+  {word:"veje*", options:['s','z'], answer:'z', emoji:'👴', full:'vejez', rule:RULE_TIP.ez},
+  {word:"triste*a", options:['s','z'], answer:'z', emoji:'😢', full:'tristeza', rule:RULE_TIP.ez},
+  {word:"naturale*a", options:['s','z'], answer:'z', emoji:'🌳', full:'naturaleza', rule:RULE_TIP.ez},
+  {word:"pobre*a", options:['s','z'], answer:'z', emoji:'😔', full:'pobreza', rule:RULE_TIP.ez},
+  {word:"belle*a", options:['s','z'], answer:'z', emoji:'🌹', full:'belleza', rule:RULE_TIP.ez},
+  {word:"rapide*", options:['s','z'], answer:'z', emoji:'⚡', full:'rapidez', rule:RULE_TIP.ez},
+  {word:"timide*", options:['s','z'], answer:'z', emoji:'🙈', full:'timidez', rule:RULE_TIP.ez},
+  {word:"honrade*", options:['s','z'], answer:'z', emoji:'🤝', full:'honradez', rule:RULE_TIP.ez},
+  {word:"escase*", options:['s','z'], answer:'z', emoji:'📉', full:'escasez', rule:RULE_TIP.ez},
+  {word:"golpa*o", options:['s','z'], answer:'z', emoji:'👊', full:'golpazo', rule:RULE_TIP.azo},
+  {word:"porta*o", options:['s','z'], answer:'z', emoji:'🚪', full:'portazo', rule:RULE_TIP.azo},
+  {word:"mana*o", options:['s','z'], answer:'z', emoji:'✋', full:'manazo', rule:RULE_TIP.azo},
+  {word:"perra*o", options:['s','z'], answer:'z', emoji:'🐕', full:'perrazo', rule:RULE_TIP.azo},
+  {word:"organi*ar", options:['s','z'], answer:'z', emoji:'🗂️', full:'organizar', rule:RULE_TIP.izar},
+  {word:"reali*ar", options:['s','z'], answer:'z', emoji:'✅', full:'realizar', rule:RULE_TIP.izar},
+  {word:"memori*ar", options:['s','z'], answer:'z', emoji:'🧠', full:'memorizar', rule:RULE_TIP.izar},
+  {word:"autori*ar", options:['s','z'], answer:'z', emoji:'✍️', full:'autorizar', rule:RULE_TIP.izar},
+  {word:"anali*ar", options:['s','z'], answer:'z', emoji:'🔬', full:'analizar', rule:RULE_TIP.izar},
+  {word:"sensibili*ar", options:['s','z'], answer:'z', emoji:'💗', full:'sensibilizar', rule:RULE_TIP.izar},
+  {word:"caracteri*ar", options:['s','z'], answer:'z', emoji:'🎭', full:'caracterizar', rule:RULE_TIP.izar},
+  {word:"comen*é", options:['s','c'], answer:'c', emoji:'🏁', full:'comencé', rule:RULE_TIP.zcverbo},
+  {word:"cru*é", options:['s','c'], answer:'c', emoji:'❌', full:'crucé', rule:RULE_TIP.zcverbo},
+  {word:"organi*é", options:['s','c'], answer:'c', emoji:'🗂️', full:'organicé', rule:RULE_TIP.zcverbo},
+  {word:"hermo*o", options:['s','z'], answer:'s', emoji:'😍', full:'hermoso', rule:RULE_TIP.oso},
+  {word:"famo*a", options:['s','z'], answer:'s', emoji:'⭐', full:'famosa', rule:RULE_TIP.oso},
+  {word:"mentiro*o", options:['s','z'], answer:'s', emoji:'🤥', full:'mentiroso', rule:RULE_TIP.oso},
+  {word:"turi*mo", options:['s','z'], answer:'s', emoji:'🧳', full:'turismo', rule:RULE_TIP.ismo},
+  {word:"arti*ta", options:['s','z'], answer:'s', emoji:'🎨', full:'artista', rule:RULE_TIP.ismo},
+  {word:"futboli*ta", options:['s','z'], answer:'s', emoji:'⚽', full:'futbolista', rule:RULE_TIP.ismo},
+  {word:"educa*ión", options:['s','c'], answer:'c', emoji:'🎓', full:'educación', rule:RULE_TIP.cion},
+  {word:"ac*ión", options:['s','c'], answer:'c', emoji:'🎬', full:'acción', rule:RULE_TIP.cion},
+  {word:"direc*ión", options:['s','c'], answer:'c', emoji:'🧭', full:'dirección', rule:RULE_TIP.cion},
+  {word:"coordina*ión", options:['s','c'], answer:'c', emoji:'🤹', full:'coordinación', rule:RULE_TIP.cion},
+  {word:"capacita*ión", options:['s','c'], answer:'c', emoji:'📋', full:'capacitación', rule:RULE_TIP.cion},
+  {word:"*ertificación", options:['s','c'], answer:'c', emoji:'📜', full:'certificación', rule:RULE_TIP.cion},
+  {word:"construc*ión", options:['s','c'], answer:'c', emoji:'🏗️', full:'construcción', rule:RULE_TIP.cion},
+  {word:"produc*ión", options:['s','c'], answer:'c', emoji:'🏭', full:'producción', rule:RULE_TIP.cion},
+  {word:"preven*ión", options:['s','c'], answer:'c', emoji:'🛡️', full:'prevención', rule:RULE_TIP.cion},
+  {word:"satisfac*ión", options:['c','s'], answer:'c', emoji:'😊', full:'satisfacción', rule:RULE_TIP.cion},
+  {word:"deci*ión", options:['c','s'], answer:'s', emoji:'🤔', full:'decisión', rule:RULE_TIP.sion},
+  {word:"discu*ión", options:['c','s'], answer:'s', emoji:'💬', full:'discusión', rule:RULE_TIP.sion},
+  {word:"expre*ión", options:['c','s'], answer:'s', emoji:'😲', full:'expresión', rule:RULE_TIP.sion},
+  {word:"compren*ión", options:['c','s'], answer:'s', emoji:'🧩', full:'comprensión', rule:RULE_TIP.sion},
+  {word:"supervi*ión", options:['c','s'], answer:'s', emoji:'👀', full:'supervisión', rule:RULE_TIP.sion},
+  {word:"preci*ión", options:['c','s'], answer:'s', emoji:'🎯', full:'precisión', rule:RULE_TIP.sion},
+  {word:"*ircunstancia", options:['c','s'], answer:'c', emoji:'🌦️', full:'circunstancia'},
+  {word:"con*iencia", options:['c','s'], answer:'c', emoji:'🧠', full:'conciencia'},
+  {word:"conse*uencia", options:['c','s'], answer:'c', emoji:'🔗', full:'consecuencia'},
+  {word:"efi*iencia", options:['c','s'], answer:'c', emoji:'⚙️', full:'eficiencia'},
+  {word:"nece*ario", options:['c','s'], answer:'s', emoji:'❗', full:'necesario'},
+  {word:"*ensible", options:['c','s'], answer:'s', emoji:'💞', full:'sensible'},
+  {word:"ca*a", options:['s','z'], answer:'s', emoji:'🏠', full:'casa'},
+  {word:"*ilo", options:['c','k'], answer:'k', emoji:'⚖️', full:'kilo', rule:RULE_TIP.k},
+  {word:"*ilogramo", options:['c','k'], answer:'k', emoji:'⚖️', full:'kilogramo', rule:RULE_TIP.k},
+  {word:"*ilómetro", options:['c','k'], answer:'k', emoji:'🛣️', full:'kilómetro', rule:RULE_TIP.k},
+  {word:"*oala", options:['c','k'], answer:'k', emoji:'🐨', full:'koala', rule:RULE_TIP.k},
+  {word:"*arate", options:['c','k'], answer:'k', emoji:'🥋', full:'karate', rule:RULE_TIP.k},
+  {word:"*iwi", options:['c','k'], answer:'k', emoji:'🥝', full:'kiwi', rule:RULE_TIP.k},
+  {word:"*ayak", options:['c','k'], answer:'k', emoji:'🛶', full:'kayak', rule:RULE_TIP.k},
+  {word:"*iosco", options:['c','k'], answer:'k', emoji:'🏪', full:'kiosco', rule:RULE_TIP.k},
+  {word:"*araoke", options:['c','k'], answer:'k', emoji:'🎤', full:'karaoke', rule:RULE_TIP.k}
+];
+
+/* ================== PERFILES (Ángela / Margarita) ================== */
+const PROFILES = [
+  {id:'angela', name:'Ángela', emoji:'🌸'},
+  {id:'margarita', name:'Margarita', emoji:'🌼'}
+];
+let currentProfile = localStorage.getItem('macarena_current_profile') || null;
+function keyFor(base){ return 'macarena_'+base+'_'+currentProfile; }
+function profileInfo(id){ return PROFILES.find(p=>p.id===id) || {id:id, name:id, emoji:'🐾'}; }
+function pawsForProfile(id){ return parseInt(localStorage.getItem('macarena_paws_'+id)||'0',10); }
+function ownedForProfile(id){ return JSON.parse(localStorage.getItem('macarena_owned_'+id)||'[]'); }
+
+/* ================== ESTADO GLOBAL (del perfil activo) ================== */
+let paws = 0;
+let best = {};
+let owned = [];
+let lastGame = 'game1';
+let g1=null, g3=null;
+
+function loadProfileData(){
+  paws = parseInt(localStorage.getItem(keyFor('paws'))||'0',10);
+  best = JSON.parse(localStorage.getItem(keyFor('best'))||'{}');
+  owned = JSON.parse(localStorage.getItem(keyFor('owned'))||'[]');
+}
+function selectProfile(id){
+  currentProfile = id;
+  localStorage.setItem('macarena_current_profile', id);
+  loadProfileData();
+  const greet = document.getElementById('home-greeting');
+  if(greet) greet.textContent = '¡Hola, ' + profileInfo(id).name + '! ' + profileInfo(id).emoji;
+  showScreen('screen-home');
+  savePaws(); renderBest(); renderRepasoCount(); injectCats();
+}
+function switchProfile(){ renderProfileCards(); showScreen('screen-profile'); }
+function renderProfileCards(){
+  const grid = document.getElementById('profile-grid');
+  if(!grid) return;
+  grid.innerHTML = PROFILES.map(p=>
+    '<div class="profile-card" onclick="selectProfile(\''+p.id+'\')">' +
+      '<div class="avatar">'+p.emoji+'</div>' +
+      '<div class="info"><h3>'+p.name+'</h3><p>🐾 '+pawsForProfile(p.id)+' patitas</p></div>' +
+    '</div>'
+  ).join('');
+}
+function openMarcador(){
+  showScreen('screen-marcador');
+  const grid = document.getElementById('marcador-grid');
+  const scores = PROFILES.map(p=>({ id:p.id, name:p.name, emoji:p.emoji, paws: pawsForProfile(p.id), items: ownedForProfile(p.id).length }));
+  const maxPaws = Math.max(...scores.map(s=>s.paws));
+  const tie = scores.every(s=>s.paws===maxPaws);
+  grid.innerHTML = scores.map(s=>{
+    const isLeader = !tie && s.paws===maxPaws && maxPaws>0;
+    return '<div class="marcador-card'+(isLeader?' leader':'')+'">' +
+      (isLeader ? '<div class="crown">👑</div>' : '') +
+      '<div class="avatar">'+s.emoji+'</div>' +
+      '<h3>'+s.name+'</h3>' +
+      '<div class="paws">🐾 '+s.paws+'</div>' +
+      '<div class="items">'+s.items+' cosas en su casa</div>' +
+    '</div>';
+  }).join('');
+  const msg = document.getElementById('marcador-msg');
+  if(tie && maxPaws>0) msg.textContent = '¡Están empatadas! Sigan practicando 💪';
+  else if(maxPaws===0) msg.textContent = '¡Todavía nadie ha ganado patitas! A jugar 🎮';
+  else { const leader = scores.find(s=>s.paws===maxPaws); msg.textContent = '¡'+leader.name+' va ganando! 🎉'; }
+}
+
+/* ================== UTILIDADES ================== */
+function shuffle(arr){ const a=arr.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+function pickWords(n){ return shuffle(WORD_BANK).slice(0,n); }
+function savePaws(){ localStorage.setItem(keyFor('paws'), String(paws)); const el=document.getElementById('total-paws'); if(el) el.textContent=paws; const sp=document.getElementById('shop-paws'); if(sp) sp.textContent=paws; }
+function saveBest(game, value){ if(!best[game] || value > best[game]) best[game] = value; localStorage.setItem(keyFor('best'), JSON.stringify(best)); renderBest(); }
+function renderBest(){
+  const labels = {game1:'best-game1', game3:'best-game3'};
+  Object.keys(labels).forEach(g=>{
+    const el = document.getElementById(labels[g]);
+    if(!el) return;
+    el.textContent = best[g] ? ('Mejor: ' + best[g] + ' pts') : '';
+  });
+  const bc = document.getElementById('best-cuaderno');
+  if(bc) bc.textContent = best.cuaderno ? ('Completado 🐾 ' + best.cuaderno) : '';
+}
+function showScreen(id){ document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active')); document.getElementById(id).classList.add('active'); }
+function goToMenu(){ showScreen('screen-menu'); }
+function goHome(){ showScreen('screen-home'); }
+function confirmExit(target){ if(confirm('¿Seguro que quieres salir? Perderás tu progreso de esta ronda.')){ showScreen(target); } }
+function setMood(svgId, mood){ const el=document.getElementById(svgId); if(!el) return; el.classList.remove('mood-normal','mood-happy','mood-sad'); el.classList.add('mood-'+mood); }
+function bounceCat(svgId){ const el=document.getElementById(svgId); if(!el) return; el.classList.remove('bounce'); void el.offsetWidth; el.classList.add('bounce'); }
+function shakeCat(svgId){ const el=document.getElementById(svgId); if(!el) return; el.classList.remove('shake'); void el.offsetWidth; el.classList.add('shake'); }
+function playTone(freq, duration){
+  try{
+    const ctx = new (window.AudioContext||window.webkitAudioContext)();
+    const osc = ctx.createOscillator(); const gain = ctx.createGain();
+    osc.connect(gain); gain.connect(ctx.destination);
+    osc.frequency.value = freq; osc.type = 'sine';
+    gain.gain.setValueAtTime(0.2, ctx.currentTime);
+    osc.start();
+    gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + duration);
+    osc.stop(ctx.currentTime + duration);
+  }catch(e){}
+}
+function speak(text){
+  try{
+    if(!('speechSynthesis' in window)) return;
+    window.speechSynthesis.cancel();
+    const utter = new SpeechSynthesisUtterance(text);
+    utter.lang = 'es-ES'; utter.rate = 0.85;
+    const voices = window.speechSynthesis.getVoices();
+    const esVoice = voices.find(v=>v.lang && v.lang.toLowerCase().startsWith('es'));
+    if(esVoice) utter.voice = esVoice;
+    window.speechSynthesis.speak(utter);
+  }catch(e){}
+}
+function confettiBurst(){
+  const layer = document.getElementById('confettiLayer');
+  const pieces = ['🎉','✨','🐾','🎊','💜','🌸'];
+  for(let i=0;i<24;i++){
+    const span = document.createElement('span');
+    span.className = 'confetti-piece';
+    span.textContent = pieces[Math.floor(Math.random()*pieces.length)];
+    span.style.left = Math.random()*100 + 'vw';
+    span.style.animationDuration = (1 + Math.random()*0.8) + 's';
+    span.style.fontSize = (16 + Math.random()*14) + 'px';
+    layer.appendChild(span);
+    setTimeout(()=>span.remove(), 2200);
+  }
+}
+function heartsString(n){ let s=''; for(let i=0;i<3;i++) s += i<n ? '❤️' : '🤍'; return s; }
+function pawsForScore(score, total){ const ratio = score/total; if(ratio>=0.9) return 12; if(ratio>=0.6) return 8; return 5; }
+
+/* ================== REPASO (repetición espaciada) ================== */
+function getMissedWords(){ return JSON.parse(localStorage.getItem(keyFor('missed'))||'[]'); }
+function markMissed(full){
+  const missed = getMissedWords();
+  if(!missed.includes(full)){ missed.push(full); localStorage.setItem(keyFor('missed'), JSON.stringify(missed)); }
+  renderRepasoCount();
+}
+function clearMissed(full){
+  const missed = getMissedWords();
+  const idx = missed.indexOf(full);
+  if(idx>-1){ missed.splice(idx,1); localStorage.setItem(keyFor('missed'), JSON.stringify(missed)); }
+  renderRepasoCount();
+}
+function renderRepasoCount(){
+  const el = document.getElementById('repaso-count');
+  if(!el) return;
+  const n = getMissedWords().length;
+  el.textContent = n>0 ? (n + ' palabra' + (n===1?'':'s') + ' pendiente' + (n===1?'':'s')) : '¡Todo al día! ✨';
+}
+function startRepaso(){
+  const missed = getMissedWords();
+  const pool = WORD_BANK.filter(w=>missed.includes(w.full));
+  if(pool.length===0){
+    alert('¡Todavía no tienes palabras para repasar! Juega un par de rondas y Macarena anotará las que se te dificulten.');
+    return;
+  }
+  lastGame='repaso';
+  const n = Math.min(pool.length, 10);
+  g1 = { hearts:3, score:0, round:0, total:n, words: shuffle(pool).slice(0,n), isRepaso:true };
+  showScreen('screen-game1'); setMood('g1-cat','normal'); nextRoundGame1();
+}
+
+/* ================== JUEGO 1: Atrapa la Letra ================== */
+function startGame1(){
+  lastGame='game1'; g1 = { hearts:3, score:0, round:0, total:8, words: pickWords(8) };
+  showScreen('screen-game1'); setMood('g1-cat','normal'); nextRoundGame1();
+}
+function renderChoiceButtons(containerId, idPrefix, options, onClick){
+  const row = document.getElementById(containerId);
+  row.innerHTML='';
+  options.forEach(letter=>{
+    const btn = document.createElement('button');
+    btn.className='btn-choice'; btn.id=idPrefix+'-btn-'+letter;
+    btn.textContent = letter.toUpperCase();
+    btn.onclick = ()=>onClick(letter);
+    row.appendChild(btn);
+  });
+}
+function nextRoundGame1(){
+  document.getElementById('g1-feedback').textContent=''; document.getElementById('g1-feedback').className='feedback';
+  document.getElementById('g1-tip').style.display='none';
+  const gameKey = g1.isRepaso ? 'repaso' : 'game1';
+  if(g1.hearts<=0){ finishGame(gameKey, g1.score, g1.total); return; }
+  if(g1.round>=g1.total){ finishGame(gameKey, g1.score, g1.total); return; }
+  const w = g1.words[g1.round]; g1.current = w;
+  document.getElementById('g1-emoji').textContent = w.emoji;
+  document.getElementById('g1-word').innerHTML = w.word.replace('*','<span class="blank">_</span>');
+  document.getElementById('g1-hearts').textContent = heartsString(g1.hearts);
+  document.getElementById('g1-progress').textContent = (g1.isRepaso ? 'Repaso ' : 'Ronda ') + (g1.round+1) + '/' + g1.total;
+  renderChoiceButtons('g1-choices', 'g1', w.options, answerGame1);
+}
+function speakCurrentG1(){ if(g1 && g1.current) speak(g1.current.full); }
+function answerGame1(letter){
+  const w = g1.current;
+  const buttons = w.options.map(o=>document.getElementById('g1-btn-'+o));
+  buttons.forEach(b=>b.disabled=true);
+  const chosenBtn = document.getElementById('g1-btn-'+letter);
+  const correctBtn = document.getElementById('g1-btn-'+w.answer);
+  const fb = document.getElementById('g1-feedback');
+  document.getElementById('g1-word').innerHTML = w.word.replace('*','<span class="blank">'+w.answer.toUpperCase()+'</span>');
+  if(letter===w.answer){
+    g1.score++; chosenBtn.classList.add('correct');
+    fb.textContent = '¡Correcto! ' + w.full.charAt(0).toUpperCase()+w.full.slice(1) + ' 🎉';
+    fb.className='feedback ok'; setMood('g1-cat','happy'); bounceCat('g1-cat'); playTone(880,0.15);
+    clearMissed(w.full);
+  } else {
+    g1.hearts--; chosenBtn.classList.add('wrong'); correctBtn.classList.add('correct');
+    fb.textContent = 'Casi... es "' + w.full + '"'; fb.className='feedback bad';
+    setMood('g1-cat','sad'); shakeCat('g1-cat'); playTone(220,0.3);
+    markMissed(w.full);
+  }
+  if(w.rule){ const tip=document.getElementById('g1-tip'); tip.textContent='💡 Macarena dice: ' + w.rule; tip.style.display='block'; }
+  g1.round++;
+  setTimeout(()=>{ setMood('g1-cat','normal'); nextRoundGame1(); }, 1300);
+}
+
+/* ================== JUEGO 3: ¿Cuál está bien escrita? ================== */
+function startGame3(){
+  lastGame='game3'; g3 = { hearts:3, score:0, round:0, total:8, words: pickWords(8) };
+  showScreen('screen-game3'); setMood('g3-cat','normal'); nextRoundGame3();
+}
+function nextRoundGame3(){
+  document.getElementById('g3-feedback').textContent=''; document.getElementById('g3-feedback').className='feedback';
+  document.getElementById('g3-tip').style.display='none';
+  if(g3.hearts<=0){ finishGame('game3', g3.score, g3.total); return; }
+  if(g3.round>=g3.total){ finishGame('game3', g3.score, g3.total); return; }
+  const w = g3.words[g3.round]; g3.current = w;
+  const correctWord = w.word.replace('*', w.answer);
+  const wrongLetter = w.options.find(o=>o!==w.answer);
+  const wrongWord = w.word.replace('*', wrongLetter);
+  const order = Math.random()<0.5 ? [correctWord, wrongWord] : [wrongWord, correctWord];
+  g3.correctIndex = order[0]===correctWord ? 0 : 1;
+  document.getElementById('g3-emoji').textContent = w.emoji;
+  document.getElementById('g3-progress').textContent = 'Ronda ' + (g3.round+1) + '/' + g3.total;
+  document.getElementById('g3-hearts').textContent = heartsString(g3.hearts);
+  const opt0=document.getElementById('g3-opt-0'), opt1=document.getElementById('g3-opt-1');
+  opt0.textContent = order[0]; opt1.textContent = order[1];
+  [opt0,opt1].forEach(o=>{ o.disabled=false; o.classList.remove('correct','wrong'); });
+}
+function answerGame3(idx){
+  const w = g3.current;
+  const opt0=document.getElementById('g3-opt-0'), opt1=document.getElementById('g3-opt-1');
+  opt0.disabled=true; opt1.disabled=true;
+  const chosen = idx===0?opt0:opt1; const correctBtn = g3.correctIndex===0?opt0:opt1;
+  const fb = document.getElementById('g3-feedback');
+  if(idx===g3.correctIndex){
+    g3.score++; chosen.classList.add('correct');
+    fb.textContent = '¡Sí! Se escribe "' + w.full + '" 🎉'; fb.className='feedback ok';
+    setMood('g3-cat','happy'); bounceCat('g3-cat'); playTone(880,0.15);
+    clearMissed(w.full);
+  } else {
+    g3.hearts--; chosen.classList.add('wrong'); correctBtn.classList.add('correct');
+    fb.textContent = 'La correcta es "' + w.full + '"'; fb.className='feedback bad';
+    setMood('g3-cat','sad'); shakeCat('g3-cat'); playTone(220,0.3);
+    markMissed(w.full);
+  }
+  if(w.rule){ const tip=document.getElementById('g3-tip'); tip.textContent='💡 Macarena dice: ' + w.rule; tip.style.display='block'; }
+  g3.round++;
+  setTimeout(()=>{ setMood('g3-cat','normal'); nextRoundGame3(); }, 1300);
+}
+
+/* ================== RESULTADOS GENÉRICOS ================== */
+function finishGame(game, score, total){
+  const pawsEarned = pawsForScore(score, total);
+  paws += pawsEarned; savePaws();
+  if(game !== 'repaso') saveBest(game, score);
+  const replayFn = game==='game1' ? startGame1 : game==='game3' ? startGame3 : startRepaso;
+  const msg = game==='repaso'
+    ? (score===total ? '¡Repasaste todo sin errores! 🎉' : '¡Buen repaso!')
+    : (score===total ? '¡Puntaje perfecto!' : '¡Buen trabajo!');
+  renderResult(score, total, pawsEarned, msg, 'Jugar de nuevo', replayFn, 'Menú de juegos', ()=>showScreen('screen-games-menu'));
+}
+function renderResult(score, total, pawsEarned, msg, primaryLabel, primaryAction, secondaryLabel, secondaryAction){
+  document.getElementById('result-msg').textContent = msg;
+  document.getElementById('result-score').textContent = 'Puntaje: ' + score + '/' + total;
+  document.getElementById('result-stars').textContent = '🐱'.repeat(Math.min(3, Math.ceil(score/total*3)));
+  document.getElementById('result-paws-earned').textContent = '+' + pawsEarned + ' 🐾';
+  const pBtn = document.getElementById('result-btn-primary');
+  const sBtn = document.getElementById('result-btn-secondary');
+  pBtn.textContent = primaryLabel; pBtn.onclick = primaryAction;
+  sBtn.textContent = secondaryLabel; sBtn.onclick = secondaryAction;
+  showScreen('screen-result');
+  const good = score/total >= 0.6;
+  setMood('macarena-result', good ? 'happy' : 'normal');
+  if(good) confettiBurst();
+}
+
+/* ================== CUADERNO DE MACARENA (oraciones y párrafos) ================== */
+const MESES = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+let cuadernoPaws = {p1:0,p2:0,p3:0,p4:0,p5:0};
+let p1=null, p2=null, p3=null, p4=null;
+
+function startCuaderno(){
+  const nombreEl = document.getElementById('intro-nombre');
+  if(nombreEl) nombreEl.textContent = profileInfo(currentProfile).name || 'amiga';
+  cuadernoPaws = {p1:0,p2:0,p3:0,p4:0,p5:0};
+  showScreen('screen-cuaderno-intro');
+}
+function finishParteM(key, score, total, nextFn){
+  const pawsEarned = pawsForScore(score, total);
+  cuadernoPaws[key] = pawsEarned;
+  paws += pawsEarned; savePaws();
+  const partNum = {p1:1,p2:2,p3:3,p4:4}[key];
+  renderResult(score, total, pawsEarned, score===total ? '¡Parte '+partNum+' perfecta!' : '¡Parte '+partNum+' completa!',
+    'Siguiente parte ⟶', nextFn, 'Menú principal', ()=>goToMenu());
+}
+
+/* PARTE 1: completar palabras en oraciones */
+const PARTE1_DATA = [
+  {template:'Mi mamá compró un #eso delicioso para la cena.', options:['c','qu'], answer:'qu', full:'queso'},
+  {template:'Hoy el #ielo está lleno de estrellas.', options:['c','z'], answer:'c', full:'cielo'},
+  {template:'Ana se puso sus #apatos nuevos para la fiesta.', options:['c','z'], answer:'z', full:'zapatos'},
+  {template:'Le serví el jugo en una ta#a azul.', options:['c','z'], answer:'z', full:'taza'},
+  {template:'Fue difícil, pero tomé la deci#ión correcta.', options:['c','s'], answer:'s', full:'decisión'},
+  {template:'El profesor nos dio la direc#ión de la escuela.', options:['c','s'], answer:'c', full:'dirección'},
+  {template:'Corrimos cinco #ilómetros esta mañana.', options:['c','k'], answer:'k', full:'kilómetros'},
+  {template:'Me sorprendió la rapide# con la que terminó la tarea.', options:['s','z'], answer:'z', full:'rapidez'},
+  {template:'Es nece#ario estudiar todos los días.', options:['c','s'], answer:'s', full:'necesario'},
+  {template:'La nueva máquina trabaja con mucha efi#iencia.', options:['c','s'], answer:'c', full:'eficiencia'}
+];
+function startParte1M(){
+  lastGame='parte1'; p1 = { score:0, round:0, total:PARTE1_DATA.length, items: shuffle(PARTE1_DATA) };
+  showScreen('screen-parte1'); setMood('macarena-p1','normal'); nextParte1();
+}
+function nextParte1(){
+  document.getElementById('p1-feedback').textContent=''; document.getElementById('p1-feedback').className='feedback';
+  if(p1.round >= p1.total){ finishParteM('p1', p1.score, p1.total, startParte2M); return; }
+  const it = p1.items[p1.round]; p1.current = it;
+  document.getElementById('p1-sentence').innerHTML = it.template.replace('#','<span class="blank">_</span>');
+  document.getElementById('p1-progress').textContent = (p1.round+1) + '/' + p1.total;
+  renderChoiceButtons('p1-choices', 'p1', it.options, answerParte1M);
+}
+function speakCurrentP1(){ if(p1 && p1.current) speak(p1.current.template.replace('#', p1.current.answer)); }
+function answerParte1M(letter){
+  const it = p1.current;
+  const buttons = it.options.map(o=>document.getElementById('p1-btn-'+o));
+  buttons.forEach(b=>b.disabled=true);
+  const chosenBtn = document.getElementById('p1-btn-'+letter);
+  const correctBtn = document.getElementById('p1-btn-'+it.answer);
+  const fb = document.getElementById('p1-feedback');
+  document.getElementById('p1-sentence').innerHTML = it.template.replace('#','<span class="blank">'+it.answer.toUpperCase()+'</span>');
+  if(letter===it.answer){
+    p1.score++; chosenBtn.classList.add('correct'); fb.textContent='¡Correcto! 🎉'; fb.className='feedback ok';
+    setMood('macarena-p1','happy'); bounceCat('macarena-p1'); playTone(880,0.15);
+  } else {
+    chosenBtn.classList.add('wrong'); correctBtn.classList.add('correct');
+    fb.textContent='Es "' + it.full + '"'; fb.className='feedback bad';
+    setMood('macarena-p1','sad'); shakeCat('macarena-p1'); playTone(220,0.3);
+  }
+  p1.round++;
+  setTimeout(()=>{ setMood('macarena-p1','normal'); nextParte1(); }, 1200);
+}
+
+/* PARTE 2: elegir la palabra correcta */
+const PARTE2_DATA = [
+  {correct:'Zapato', wrong:'Sapato'},
+  {correct:'Queso', wrong:'Ceso'},
+  {correct:'Decisión', wrong:'Desición'},
+  {correct:'Dirección', wrong:'Direcsión'},
+  {correct:'Kilómetro', wrong:'Cilómetro'},
+  {correct:'Cielo', wrong:'Zielo'},
+  {correct:'Necesario', wrong:'Necezario'},
+  {correct:'Cocina', wrong:'Cosina'}
+];
+function startParte2M(){
+  lastGame='parte2'; p2 = { score:0, round:0, total:PARTE2_DATA.length, items: shuffle(PARTE2_DATA) };
+  showScreen('screen-parte2'); setMood('macarena-p2','normal'); nextParte2();
+}
+function nextParte2(){
+  document.getElementById('p2-feedback').textContent=''; document.getElementById('p2-feedback').className='feedback';
+  if(p2.round >= p2.total){ finishParteM('p2', p2.score, p2.total, startParte3M); return; }
+  const it = p2.items[p2.round]; p2.current = it;
+  const order = Math.random()<0.5 ? [it.correct, it.wrong] : [it.wrong, it.correct];
+  p2.correctIndex = order[0]===it.correct ? 0 : 1;
+  document.getElementById('p2-progress').textContent = (p2.round+1) + '/' + p2.total;
+  const opt0=document.getElementById('p2-opt-0'), opt1=document.getElementById('p2-opt-1');
+  opt0.textContent = order[0]; opt1.textContent = order[1];
+  [opt0,opt1].forEach(o=>{ o.disabled=false; o.classList.remove('correct','wrong'); });
+}
+function answerParte2(idx){
+  const it = p2.current;
+  const opt0=document.getElementById('p2-opt-0'), opt1=document.getElementById('p2-opt-1');
+  opt0.disabled=true; opt1.disabled=true;
+  const chosen = idx===0?opt0:opt1; const correctBtn = p2.correctIndex===0?opt0:opt1;
+  const fb = document.getElementById('p2-feedback');
+  if(idx===p2.correctIndex){
+    p2.score++; chosen.classList.add('correct'); fb.textContent='¡Correcto! 🎉'; fb.className='feedback ok';
+    setMood('macarena-p2','happy'); bounceCat('macarena-p2'); playTone(880,0.15);
+  } else {
+    chosen.classList.add('wrong'); correctBtn.classList.add('correct');
+    fb.textContent='Es "' + it.correct + '"'; fb.className='feedback bad';
+    setMood('macarena-p2','sad'); shakeCat('macarena-p2'); playTone(220,0.3);
+  }
+  p2.round++;
+  setTimeout(()=>{ setMood('macarena-p2','normal'); nextParte2(); }, 1200);
+}
+
+/* PARTE 3: corrige el error */
+const PARTE3_DATA = [
+  {wrong:'sapato', template:'#apato', options:['s','z'], answer:'z', full:'zapato'},
+  {wrong:'ceso', template:'#eso', options:['c','qu'], answer:'qu', full:'queso'},
+  {wrong:'desición', template:'deci#ión', options:['c','s'], answer:'s', full:'decisión'},
+  {wrong:'direcsión', template:'direc#ión', options:['s','c'], answer:'c', full:'dirección'},
+  {wrong:'cilómetro', template:'#ilómetro', options:['c','k'], answer:'k', full:'kilómetro'},
+  {wrong:'zielo', template:'#ielo', options:['z','c'], answer:'c', full:'cielo'}
+];
+function startParte3M(){
+  lastGame='parte3'; p3 = { score:0, round:0, total:PARTE3_DATA.length, items: shuffle(PARTE3_DATA) };
+  showScreen('screen-parte3'); setMood('macarena-p3','normal'); nextParte3();
+}
+function nextParte3(){
+  document.getElementById('p3-feedback').textContent=''; document.getElementById('p3-feedback').className='feedback';
+  if(p3.round >= p3.total){ finishParteM('p3', p3.score, p3.total, startParte4M); return; }
+  const it = p3.items[p3.round]; p3.current = it;
+  document.getElementById('p3-wrong').textContent = it.wrong;
+  document.getElementById('p3-word').innerHTML = it.template.replace('#','<span class="blank">_</span>');
+  document.getElementById('p3-progress').textContent = (p3.round+1) + '/' + p3.total;
+  renderChoiceButtons('p3-choices', 'p3', it.options, answerParte3M);
+}
+function speakCurrentP3(){ if(p3 && p3.current) speak(p3.current.full); }
+function answerParte3M(letter){
+  const it = p3.current;
+  const buttons = it.options.map(o=>document.getElementById('p3-btn-'+o));
+  buttons.forEach(b=>b.disabled=true);
+  const chosenBtn = document.getElementById('p3-btn-'+letter);
+  const correctBtn = document.getElementById('p3-btn-'+it.answer);
+  const fb = document.getElementById('p3-feedback');
+  document.getElementById('p3-word').innerHTML = it.template.replace('#','<span class="blank">'+it.answer.toUpperCase()+'</span>');
+  if(letter===it.answer){
+    p3.score++; chosenBtn.classList.add('correct'); fb.textContent='¡Corregido! Es "'+it.full+'" 🎉'; fb.className='feedback ok';
+    setMood('macarena-p3','happy'); bounceCat('macarena-p3'); playTone(880,0.15);
+  } else {
+    chosenBtn.classList.add('wrong'); correctBtn.classList.add('correct');
+    fb.textContent='La palabra correcta es "' + it.full + '"'; fb.className='feedback bad';
+    setMood('macarena-p3','sad'); shakeCat('macarena-p3'); playTone(220,0.3);
+  }
+  p3.round++;
+  setTimeout(()=>{ setMood('macarena-p3','normal'); nextParte3(); }, 1200);
+}
+
+/* PARTE 4: banco de palabras */
+const PARTE4_DATA = [
+  {template:'Compramos un poco de ____ para el sándwich.', answer:'queso'},
+  {template:'Fue una ____ muy importante para la familia.', answer:'decisión'},
+  {template:'Corrió un ____ completo sin parar.', answer:'kilómetro'},
+  {template:'Por la noche, el ____ se llena de estrellas.', answer:'cielo'},
+  {template:'Es ____ dormir bien para rendir en el colegio.', answer:'necesario'}
+];
+function startParte4M(){
+  lastGame='parte4';
+  p4 = { placements:{}, selectedChip:null, bank: shuffle(['queso','decisión','kilómetro','cielo','necesario']), sentences: shuffle(PARTE4_DATA) };
+  showScreen('screen-parte4'); setMood('macarena-p4','normal');
+  renderParte4();
+  document.getElementById('p4-feedback').textContent='';
+}
+function renderParte4(){
+  const cont = document.getElementById('p4-sentences'); cont.innerHTML='';
+  p4.sentences.forEach((s,i)=>{
+    const div = document.createElement('div'); div.className='p4-sentence';
+    const placed = p4.placements[i];
+    const blankHtml = '<span class="p4-blank" id="p4-blank-'+i+'" onclick="clickBlank('+i+')">' + (placed ? placed : '_______') + '</span>';
+    div.innerHTML = s.template.replace('____', blankHtml);
+    cont.appendChild(div);
+  });
+  const bankDiv = document.getElementById('p4-bank'); bankDiv.innerHTML='';
+  const usedWords = Object.values(p4.placements);
+  p4.bank.forEach(word=>{
+    const btn = document.createElement('button'); btn.className='word-chip'; btn.textContent = word;
+    const isUsed = usedWords.includes(word);
+    if(isUsed) btn.classList.add('used');
+    if(p4.selectedChip===word && !isUsed) btn.classList.add('selected');
+    btn.onclick = ()=>selectChip(word);
+    bankDiv.appendChild(btn);
+  });
+}
+function selectChip(word){
+  const usedWords = Object.values(p4.placements);
+  if(usedWords.includes(word)) return;
+  p4.selectedChip = (p4.selectedChip === word) ? null : word;
+  renderParte4();
+}
+function clickBlank(i){
+  if(p4.placements[i]){
+    delete p4.placements[i];
+    renderParte4();
+    return;
+  }
+  if(p4.selectedChip){
+    p4.placements[i] = p4.selectedChip;
+    p4.selectedChip = null;
+    renderParte4();
+  }
+}
+function checkParte4(){
+  const total = p4.sentences.length;
+  if(Object.keys(p4.placements).length < total){
+    document.getElementById('p4-feedback').textContent = 'Completa todas las oraciones antes de revisar 🙂';
+    document.getElementById('p4-feedback').className = 'feedback bad';
+    return;
+  }
+  let correct = 0;
+  p4.sentences.forEach((s,i)=>{
+    const el = document.getElementById('p4-blank-'+i);
+    if(p4.placements[i] === s.answer){ el.classList.add('filled'); el.classList.remove('wrong'); correct++; }
+    else { el.classList.add('wrong'); el.classList.remove('filled'); }
+  });
+  if(correct === total){
+    setMood('macarena-p4','happy'); bounceCat('macarena-p4'); playTone(880,0.15);
+    finishParteM('p4', correct, total, startParte5M);
+  } else {
+    setMood('macarena-p4','sad'); shakeCat('macarena-p4'); playTone(220,0.3);
+    document.getElementById('p4-feedback').textContent = 'Tienes ' + correct + '/' + total + ' correctas. Corrige las rojas y vuelve a revisar 💪';
+    document.getElementById('p4-feedback').className = 'feedback bad';
+    p4.sentences.forEach((s,i)=>{ if(p4.placements[i] !== s.answer) delete p4.placements[i]; });
+    setTimeout(()=>{ setMood('macarena-p4','normal'); renderParte4(); }, 1200);
+  }
+}
+
+/* PARTE 5: escribe un cuento */
+const PARTE5_WORDS = ['zapato','queso','decisión','kilómetro','cielo','necesario','cocina','taza','koala','eficiencia'];
+function startParte5M(){
+  lastGame='parte5';
+  showScreen('screen-parte5'); setMood('macarena-p5','normal');
+  document.getElementById('p5-textarea').value='';
+  const cl = document.getElementById('p5-checklist');
+  cl.innerHTML = PARTE5_WORDS.map(w=>'<span id="chk-'+w+'">'+w+'</span>').join('');
+  updateStoryCheck();
+}
+function updateStoryCheck(){
+  const text = document.getElementById('p5-textarea').value.toLowerCase();
+  let count = 0;
+  PARTE5_WORDS.forEach(w=>{
+    const el = document.getElementById('chk-'+w);
+    if(text.includes(w)){ el.classList.add('used'); count++; }
+    else { el.classList.remove('used'); }
+  });
+  document.getElementById('p5-counter').textContent = count + '/10 palabras usadas';
+  return count;
+}
+function finishParte5(){
+  const count = updateStoryCheck();
+  const text = document.getElementById('p5-textarea').value.trim();
+  localStorage.setItem(keyFor('cuento'), text);
+  const pawsEarned = count>=8 ? 15 : count>=5 ? 10 : 5;
+  cuadernoPaws.p5 = pawsEarned;
+  paws += pawsEarned; savePaws();
+  setMood('macarena-p5', pawsEarned>=10?'happy':'normal');
+  if(pawsEarned>=10) confettiBurst();
+  setTimeout(()=>showDiploma(), 400);
+}
+
+/* DIPLOMA */
+function showDiploma(){
+  const totalPaws = cuadernoPaws.p1+cuadernoPaws.p2+cuadernoPaws.p3+cuadernoPaws.p4+cuadernoPaws.p5;
+  const bestSoFar = best.cuaderno || 0;
+  if(totalPaws > bestSoFar){ best.cuaderno = totalPaws; localStorage.setItem(keyFor('best'), JSON.stringify(best)); renderBest(); }
+  document.getElementById('diploma-nombre').textContent = profileInfo(currentProfile).name || 'Futura crack de la ortografía';
+  const d = new Date();
+  document.getElementById('diploma-fecha').textContent = d.getDate() + ' de ' + MESES[d.getMonth()] + ' de ' + d.getFullYear();
+  document.getElementById('diploma-paws').textContent = '🐾'.repeat(Math.min(10, Math.max(1, Math.round(totalPaws/6))));
+  const badgeNames = ['Parte 1 ✅','Parte 2 ✅','Parte 3 ✅','Parte 4 ✅','Parte 5 ✅'];
+  document.getElementById('diploma-badges').innerHTML = badgeNames.map(b=>'<span>'+b+'</span>').join('');
+  showScreen('screen-diploma');
+  setMood('macarena-diploma','happy');
+  confettiBurst();
+}
+
+/* ================== TIENDA ================== */
+const SHOP_ITEMS = [
+  {cat:'sala', emoji:'🛋️', name:'Sofá rosa', price:20, placement:'floor', size:'big'},
+  {cat:'sala', emoji:'🟪', name:'Alfombra floreada', price:15, placement:'floor'},
+  {cat:'sala', emoji:'💡', name:'Lámpara dorada', price:25, placement:'floor'},
+  {cat:'sala', emoji:'📺', name:'Televisor', price:40, placement:'wall'},
+  {cat:'cocina', emoji:'☕', name:'Mesa de té', price:20, placement:'floor'},
+  {cat:'cocina', emoji:'🧊', name:'Refrigerador', price:35, placement:'floor', size:'big'},
+  {cat:'cocina', emoji:'🌿', name:'Plantita de cocina', price:15, placement:'floor'},
+  {cat:'cocina', emoji:'🧁', name:'Pastelera', price:30, placement:'floor'},
+  {cat:'cuarto', emoji:'🛏️', name:'Cama con dosel', price:45, placement:'floor', size:'big'},
+  {cat:'cuarto', emoji:'🎀', name:'Cortinas', price:20, placement:'wall'},
+  {cat:'cuarto', emoji:'🪞', name:'Espejo', price:25, placement:'wall'},
+  {cat:'cuarto', emoji:'🕯️', name:'Velador con luz', price:18, placement:'floor'},
+  {cat:'jardin', emoji:'⛲', name:'Fuente de agua', price:50},
+  {cat:'jardin', emoji:'🌷', name:'Flores', price:15},
+  {cat:'jardin', emoji:'🌳', name:'Arbolito', price:30},
+  {cat:'jardin', emoji:'🪑', name:'Banca de jardín', price:22},
+  {cat:'macarena', emoji:'🎀', name:'Moño rosa', price:15},
+  {cat:'macarena', emoji:'🔔', name:'Collar con campana', price:18},
+  {cat:'macarena', emoji:'🎩', name:'Sombrero de fiesta', price:25},
+  {cat:'macarena', emoji:'🧣', name:'Bufanda', price:20}
+];
+const SHOP_CATS = [
+  {id:'sala', label:'Sala 🛋️'},
+  {id:'cocina', label:'Cocina 🍳'},
+  {id:'cuarto', label:'Cuarto 🛏️'},
+  {id:'jardin', label:'Jardín 🌷'},
+  {id:'macarena', label:'Macarena 🎀'}
+];
+let shopCat = 'sala';
+function openShop(){ showScreen('screen-shop'); document.getElementById('shop-paws').textContent = paws; renderShopTabs(); renderShopGrid(); }
+function renderShopTabs(){
+  const tabs = document.getElementById('shop-tabs'); tabs.innerHTML='';
+  SHOP_CATS.forEach(c=>{
+    const btn = document.createElement('button');
+    btn.className = 'shop-tab' + (shopCat===c.id ? ' active' : '');
+    btn.textContent = c.label;
+    btn.onclick = ()=>{ shopCat=c.id; renderShopTabs(); renderShopGrid(); };
+    tabs.appendChild(btn);
+  });
+}
+function renderShopGrid(){
+  const grid = document.getElementById('shop-grid'); grid.innerHTML='';
+  SHOP_ITEMS.filter(it=>it.cat===shopCat).forEach(it=>{
+    const isOwned = owned.includes(it.name);
+    const div = document.createElement('div');
+    div.className = 'shop-item cat-' + it.cat + (isOwned?' owned':'');
+    div.innerHTML = '<div class="emoji">'+it.emoji+'</div><div class="name">'+it.name+'</div><div class="price">🐾 '+it.price+'</div><button '+(isOwned?'disabled':(paws<it.price?'disabled':''))+'>'+(isOwned?'Comprado ✓':'Comprar')+'</button>';
+    if(!isOwned){
+      div.querySelector('button').onclick = ()=>buyItem(it);
+    }
+    grid.appendChild(div);
+  });
+}
+function buyItem(item){
+  if(owned.includes(item.name) || paws < item.price) return;
+  paws -= item.price; owned.push(item.name);
+  localStorage.setItem(keyFor('owned'), JSON.stringify(owned));
+  savePaws(); playTone(880,0.15); confettiBurst();
+  renderShopGrid();
+  injectCats();
+}
+
+/* ================== ÍCONOS DE MUEBLES (SVG dibujados) ================== */
+function furnitureIcon(name){
+  const icons = {
+    'Sofá rosa': '<svg viewBox="0 0 120 82" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">' +
+      '<rect x="8" y="58" width="10" height="16" rx="3" fill="#a9723f"/><rect x="102" y="58" width="10" height="16" rx="3" fill="#a9723f"/>' +
+      '<rect x="6" y="18" width="108" height="46" rx="20" fill="#f5a623"/>' +
+      '<rect x="2" y="24" width="20" height="46" rx="10" fill="#e0901a"/><rect x="98" y="24" width="20" height="46" rx="10" fill="#e0901a"/>' +
+      '<rect x="14" y="40" width="92" height="28" rx="12" fill="#ffcf6b"/>' +
+      '<rect x="18" y="24" width="34" height="18" rx="9" fill="#ffe3a6"/><rect x="68" y="24" width="34" height="18" rx="9" fill="#ffe3a6"/>' +
+    '</svg>',
+    'Cama con dosel': '<svg viewBox="0 0 120 92" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">' +
+      '<path d="M14,10 Q60,-6 106,10" stroke="#a9723f" stroke-width="3" fill="none"/>' +
+      '<path d="M14,10 L10,30 M106,10 L110,30" stroke="#a9723f" stroke-width="3"/>' +
+      '<rect x="14" y="6" width="92" height="30" rx="8" fill="#8a5a34"/>' +
+      '<rect x="6" y="34" width="108" height="50" rx="12" fill="#ff9fc2"/>' +
+      '<rect x="6" y="34" width="108" height="16" rx="8" fill="#ffc2dc"/>' +
+      '<rect x="16" y="24" width="36" height="20" rx="7" fill="#fff8ec"/>' +
+      '<rect x="4" y="78" width="8" height="10" fill="#6b4423"/><rect x="108" y="78" width="8" height="10" fill="#6b4423"/>' +
+    '</svg>',
+    'Refrigerador': '<svg viewBox="0 0 70 100" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">' +
+      '<rect x="6" y="4" width="58" height="92" rx="10" fill="#fff8ec" stroke="#d8c7a8" stroke-width="2"/>' +
+      '<line x1="6" y1="34" x2="64" y2="34" stroke="#d8c7a8" stroke-width="2"/>' +
+      '<rect x="54" y="10" width="5" height="18" rx="2.5" fill="#c77b00"/><rect x="54" y="42" width="5" height="24" rx="2.5" fill="#c77b00"/>' +
+      '<rect x="12" y="10" width="14" height="18" rx="4" fill="#e8f6ff" opacity="0.7"/>' +
+    '</svg>',
+    'Televisor': '<svg viewBox="0 0 64 50" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">' +
+      '<rect x="2" y="2" width="60" height="36" rx="5" fill="#2c2350"/>' +
+      '<rect x="7" y="7" width="50" height="26" rx="3" fill="#4dd8e8" opacity="0.85"/>' +
+      '<rect x="12" y="11" width="18" height="10" rx="2" fill="#fff" opacity="0.35"/>' +
+      '<rect x="26" y="38" width="12" height="6" fill="#8a8a8a"/><rect x="16" y="44" width="32" height="4" rx="2" fill="#5b21b6"/>' +
+    '</svg>',
+    'Espejo': '<svg viewBox="0 0 50 62" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">' +
+      '<ellipse cx="25" cy="26" rx="21" ry="25" fill="#ffd54d"/>' +
+      '<ellipse cx="25" cy="26" rx="15" ry="19" fill="#cfeeff"/>' +
+      '<ellipse cx="19" cy="18" rx="5" ry="8" fill="#fff" opacity="0.55"/>' +
+      '<rect x="22" y="50" width="6" height="10" fill="#c77b00"/>' +
+    '</svg>',
+    'Cortinas': '<svg viewBox="0 0 50 60" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">' +
+      '<rect x="2" y="2" width="46" height="4" rx="2" fill="#c77b00"/>' +
+      '<path d="M6,6 Q2,34 8,56 L20,56 Q14,34 18,6 Z" fill="#ff9fc2"/>' +
+      '<path d="M44,6 Q48,34 42,56 L30,56 Q36,34 32,6 Z" fill="#ffc2dc"/>' +
+    '</svg>',
+    'Alfombra floreada': '<svg viewBox="0 0 64 40" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">' +
+      '<ellipse cx="32" cy="22" rx="30" ry="14" fill="#fff8ec"/>' +
+      '<ellipse cx="32" cy="22" rx="22" ry="10" fill="none" stroke="#ff9fc2" stroke-width="2"/>' +
+      '<circle cx="20" cy="20" r="3" fill="#ff9fc2"/><circle cx="32" cy="26" r="3" fill="#ffd54d"/><circle cx="44" cy="20" r="3" fill="#ff9fc2"/>' +
+    '</svg>',
+    'Lámpara dorada': '<svg viewBox="0 0 32 60" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">' +
+      '<ellipse cx="16" cy="18" rx="14" ry="8" fill="#ffd54d" opacity="0.5"/>' +
+      '<path d="M6,16 L26,16 L22,2 L10,2 Z" fill="#f5a623"/>' +
+      '<rect x="14" y="16" width="4" height="34" fill="#c77b00"/><ellipse cx="16" cy="52" rx="12" ry="4" fill="#a9723f"/>' +
+    '</svg>',
+    'Mesa de té': '<svg viewBox="0 0 60 44" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">' +
+      '<rect x="4" y="18" width="52" height="8" rx="3" fill="#a9723f"/>' +
+      '<rect x="8" y="26" width="5" height="14" fill="#8a5a34"/><rect x="47" y="26" width="5" height="14" fill="#8a5a34"/>' +
+      '<ellipse cx="38" cy="12" rx="9" ry="6" fill="#fff8ec"/><rect x="36" y="6" width="4" height="6" fill="#ffd54d"/>' +
+    '</svg>',
+    'Plantita de cocina': '<svg viewBox="0 0 40 52" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">' +
+      '<path d="M10,34 L30,34 L26,50 L14,50 Z" fill="#c77b3a"/>' +
+      '<ellipse cx="20" cy="20" rx="14" ry="16" fill="#5fae5f"/><ellipse cx="12" cy="16" rx="7" ry="10" fill="#79c95f"/><ellipse cx="28" cy="16" rx="7" ry="10" fill="#79c95f"/>' +
+    '</svg>',
+    'Pastelera': '<svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">' +
+      '<ellipse cx="22" cy="36" rx="18" ry="4" fill="#e8b98a"/><rect x="18" y="24" width="8" height="12" fill="#e8b98a"/>' +
+      '<path d="M12,24 Q22,4 32,24 Z" fill="#ff9fc2"/><circle cx="22" cy="8" r="4" fill="#c2185b"/>' +
+    '</svg>',
+    'Velador con luz': '<svg viewBox="0 0 26 50" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">' +
+      '<ellipse cx="13" cy="18" rx="11" ry="11" fill="#ffd54d" opacity="0.45"/>' +
+      '<rect x="9" y="18" width="8" height="26" fill="#fff8ec" stroke="#e8b98a" stroke-width="1.5"/>' +
+      '<path d="M13,18 Q9,10 13,4 Q17,10 13,18 Z" fill="#ff9f4d"/>' +
+    '</svg>'
+  };
+  return icons[name] || null;
+}
+
+/* ================== CASA DE MACARENA ================== */
+let houseView = 'exterior';
+function openHouse(){
+  showScreen('screen-house');
+  setHouseView(houseView);
+}
+function setHouseView(view){
+  houseView = view;
+  document.getElementById('exterior-scene').style.display = view==='exterior' ? 'block' : 'none';
+  document.getElementById('interior-scene').style.display = view==='interior' ? 'block' : 'none';
+  document.getElementById('house-tab-ext').classList.toggle('active', view==='exterior');
+  document.getElementById('house-tab-int').classList.toggle('active', view==='interior');
+  document.getElementById('house-caption').textContent = view==='exterior'
+    ? '¡El jardín de Macarena! 🌷'
+    : 'La salita acogedora de Macarena 🛋️';
+  if(view==='exterior') renderExterior(); else renderInterior();
+  injectCats();
+}
+function renderExterior(){
+  const ground = document.getElementById('garden-ground'); ground.innerHTML='';
+  const gardenNames = owned.filter(n=>{ const it=SHOP_ITEMS.find(i=>i.name===n); return it && it.cat==='jardin'; });
+  if(gardenNames.length===0){
+    ground.innerHTML = '<div class="garden-empty">Compra cosas de Jardín 🌷 en la tienda para decorar aquí afuera</div>';
+    return;
+  }
+  gardenNames.forEach(name=>{
+    const item = SHOP_ITEMS.find(i=>i.name===name);
+    const wrap = document.createElement('div'); wrap.className='garden-item-wrap'; wrap.title=item.name;
+    const span = document.createElement('div'); span.className='garden-item'; span.textContent = item.emoji;
+    const shadow = document.createElement('div'); shadow.className='garden-item-shadow';
+    wrap.appendChild(span); wrap.appendChild(shadow);
+    ground.appendChild(wrap);
+  });
+}
+function renderInterior(){
+  const wallRow = document.getElementById('interior-wall-row'); wallRow.innerHTML='';
+  const floorRow = document.getElementById('interior-floor-row'); floorRow.innerHTML='';
+  const emptyMsg = document.getElementById('interior-empty');
+  const indoorNames = owned.filter(n=>{ const it=SHOP_ITEMS.find(i=>i.name===n); return it && ['sala','cocina','cuarto'].includes(it.cat); });
+
+  emptyMsg.style.display = indoorNames.length===0 ? 'block' : 'none';
+  emptyMsg.textContent = 'Compra muebles en la tienda para seguir decorando el cuarto de Macarena 🛋️';
+
+  indoorNames.forEach(name=>{
+    const item = SHOP_ITEMS.find(i=>i.name===name);
+    const icon = furnitureIcon(item.name);
+    if(item.placement === 'wall'){
+      const badge = document.createElement('div'); badge.className='interior-wall-badge'; badge.title=item.name;
+      if(icon) badge.innerHTML = icon; else badge.textContent = item.emoji;
+      wallRow.appendChild(badge);
+    } else {
+      const isBig = item.size === 'big';
+      const wrap = document.createElement('div'); wrap.className='interior-floor-wrap'; wrap.title=item.name;
+      const span = document.createElement('div'); span.className='interior-floor-item' + (isBig ? ' big' : '');
+      if(icon) span.innerHTML = icon; else span.textContent = item.emoji;
+      const shadow = document.createElement('div'); shadow.className='interior-floor-shadow' + (isBig ? ' big' : '');
+      wrap.appendChild(span); wrap.appendChild(shadow);
+      floorRow.appendChild(wrap);
+    }
+  });
+}
+
+/* ================== MASCOTA MACARENA (SVG calico) ================== */
+function macarenaSVG(id){
+  return '' +
+  '<svg viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg" class="cat-svg mood-normal" id="'+id+'">' +
+    '<path d="M170,182 Q208,150 186,108 Q174,86 152,98" stroke="#2b2320" stroke-width="15" fill="none" stroke-linecap="round"/>' +
+    '<ellipse cx="100" cy="176" rx="54" ry="36" fill="#f5f0e8"/>' +
+    '<path d="M100,140 A54,36 0 0,0 100,212 Z" fill="#2b2320"/>' +
+    '<ellipse cx="128" cy="168" rx="18" ry="14" fill="#f0862f"/>' +
+    '<ellipse cx="78" cy="182" rx="9" ry="7" fill="#ffd54d"/>' +
+    '<ellipse cx="70" cy="207" rx="13" ry="9" fill="#2b2320"/>' +
+    '<ellipse cx="130" cy="207" rx="13" ry="9" fill="#f5f0e8"/>' +
+    '<path d="M78,152 Q100,166 122,152" stroke="#ff6fae" stroke-width="5" fill="none" stroke-linecap="round"/>' +
+    '<path d="M100,159 L96,168 L104,168 Z" fill="#ff6fae"/>' +
+    '<ellipse cx="100" cy="103" rx="60" ry="58" fill="#f5f0e8"/>' +
+    '<path d="M100,45 A60,58 0 0,0 100,161 Z" fill="#2b2320"/>' +
+    '<ellipse cx="100" cy="126" rx="25" ry="18" fill="#f5f0e8"/>' +
+    '<ellipse cx="130" cy="76" rx="19" ry="23" fill="#f0862f"/>' +
+    '<ellipse cx="93" cy="46" rx="15" ry="13" fill="#ffd54d"/>' +
+    '<ellipse cx="118" cy="60" rx="8" ry="7" fill="#f0862f"/>' +
+    '<polygon points="52,66 38,18 84,52" fill="#2b2320"/>' +
+    '<polygon points="148,66 162,18 116,52" fill="#f5f0e8"/>' +
+    '<polygon points="56,58 49,33 72,50" fill="#ff9fc2"/>' +
+    '<polygon points="144,58 151,33 128,50" fill="#ff9fc2"/>' +
+    '<ellipse cx="68" cy="120" rx="11" ry="7" fill="#ffb6c9" opacity="0.55"/>' +
+    '<ellipse cx="132" cy="120" rx="11" ry="7" fill="#ffb6c9" opacity="0.55"/>' +
+    '<g class="eyes-set eyes-normal">' +
+      '<ellipse cx="74" cy="103" rx="17" ry="20" fill="#c8f0ff"/>' +
+      '<ellipse cx="126" cy="103" rx="17" ry="20" fill="#c8f0ff"/>' +
+      '<circle cx="76" cy="107" r="9" fill="#2a1740"/>' +
+      '<circle cx="128" cy="107" r="9" fill="#2a1740"/>' +
+      '<circle cx="80" cy="101" r="3.5" fill="#fff"/>' +
+      '<circle cx="132" cy="101" r="3.5" fill="#fff"/>' +
+      '<circle cx="72" cy="112" r="1.8" fill="#fff" opacity="0.85"/>' +
+      '<circle cx="124" cy="112" r="1.8" fill="#fff" opacity="0.85"/>' +
+      '<path d="M60,88 Q74,78 90,87" stroke="#2b2320" stroke-width="3" fill="none" stroke-linecap="round"/>' +
+      '<path d="M110,87 Q126,78 140,88" stroke="#2b2320" stroke-width="3" fill="none" stroke-linecap="round"/>' +
+    '</g>' +
+    '<g class="eyes-set eyes-happy">' +
+      '<path d="M60,102 Q74,86 90,102" stroke="#2b2320" stroke-width="6" fill="none" stroke-linecap="round"/>' +
+      '<path d="M110,102 Q126,86 142,102" stroke="#2b2320" stroke-width="6" fill="none" stroke-linecap="round"/>' +
+      '<path d="M170,70 L173,78 L181,80 L173,82 L170,90 L167,82 L159,80 L167,78 Z" fill="#ffd54d"/>' +
+    '</g>' +
+    '<g class="eyes-set eyes-sad">' +
+      '<ellipse cx="74" cy="108" rx="13" ry="15" fill="#c8f0ff"/>' +
+      '<ellipse cx="126" cy="108" rx="13" ry="15" fill="#c8f0ff"/>' +
+      '<circle cx="74" cy="113" r="7" fill="#2a1740"/>' +
+      '<circle cx="126" cy="113" r="7" fill="#2a1740"/>' +
+      '<path d="M58,86 Q74,96 88,88" stroke="#2b2320" stroke-width="3" fill="none" stroke-linecap="round"/>' +
+      '<path d="M112,88 Q126,96 142,86" stroke="#2b2320" stroke-width="3" fill="none" stroke-linecap="round"/>' +
+    '</g>' +
+    '<g class="lashes" stroke="#2b2320" stroke-width="2.5" stroke-linecap="round">' +
+      '<line x1="62" y1="88" x2="54" y2="77"/>' +
+      '<line x1="69" y1="82" x2="65" y2="69"/>' +
+      '<line x1="77" y1="80" x2="78" y2="66"/>' +
+      '<line x1="138" y1="88" x2="146" y2="77"/>' +
+      '<line x1="131" y1="82" x2="135" y2="69"/>' +
+      '<line x1="123" y1="80" x2="122" y2="66"/>' +
+    '</g>' +
+    '<polygon points="100,118 92,127 108,127" fill="#ff9fc2"/>' +
+    '<g stroke="#8a8a8a" stroke-width="2.5" stroke-linecap="round">' +
+      '<line x1="30" y1="112" x2="68" y2="116"/>' +
+      '<line x1="28" y1="126" x2="68" y2="124"/>' +
+      '<line x1="170" y1="112" x2="132" y2="116"/>' +
+      '<line x1="172" y1="126" x2="132" y2="124"/>' +
+    '</g>' +
+    '<path class="mouth mouth-normal" d="M100,127 Q100,137 89,134 M100,127 Q100,137 111,134" stroke="#2b2320" stroke-width="3.5" fill="none" stroke-linecap="round"/>' +
+    '<path class="mouth mouth-happy" d="M78,129 Q100,154 122,129" stroke="#2b2320" stroke-width="4" fill="none" stroke-linecap="round"/>' +
+    '<path class="mouth mouth-sad" d="M80,144 Q100,127 120,144" stroke="#2b2320" stroke-width="4" fill="none" stroke-linecap="round"/>' +
+    accessoryMarkup() +
+  '</svg>';
+}
+function accessoryMarkup(){
+  const hasHat = owned.includes('Sombrero de fiesta');
+  const hasBow = owned.includes('Moño rosa');
+  const hasCollarBell = owned.includes('Collar con campana');
+  const hasScarf = owned.includes('Bufanda');
+  let s = '';
+  if(hasHat){
+    s += '<g transform="translate(100,25)"><polygon points="-16,20 16,20 0,-18" fill="#ffd54d" stroke="#ff4fa3" stroke-width="2"/><circle cx="0" cy="-18" r="5" fill="#ff4fa3"/><circle cx="-7" cy="8" r="2.5" fill="#fff" opacity="0.85"/><circle cx="4" cy="0" r="2.5" fill="#fff" opacity="0.85"/></g>';
+  } else if(hasBow){
+    s += '<g transform="translate(100,34)"><path d="M-20,-8 L-2,8 L-20,24 Z" fill="#ff4fa3"/><path d="M20,-8 L2,8 L20,24 Z" fill="#ff4fa3"/><circle cx="0" cy="8" r="7" fill="#ff1f8f"/></g>';
+  } else {
+    s += '<g transform="translate(48,38)"><circle cx="0" cy="-8" r="6" fill="#ff9fc2"/><circle cx="7" cy="-3" r="6" fill="#ff9fc2"/><circle cx="4" cy="6" r="6" fill="#ff9fc2"/><circle cx="-4" cy="6" r="6" fill="#ff9fc2"/><circle cx="-7" cy="-3" r="6" fill="#ff9fc2"/><circle cx="0" cy="0" r="5" fill="#ffd54d"/></g>';
+  }
+  if(hasScarf){
+    s += '<path d="M68,148 Q100,172 132,148 L132,163 Q100,186 68,163 Z" fill="#ff8fc7" stroke="#ff4fa3" stroke-width="1.5"/>';
+  }
+  if(hasCollarBell){
+    s += '<circle cx="100" cy="163" r="6" fill="#ffd54d" stroke="#c77b00" stroke-width="1.5"/><path d="M96,163 Q100,168 104,163" stroke="#c77b00" stroke-width="1.5" fill="none"/>';
+  }
+  return s;
+}
+function injectCats(){
+  const ids = ['macarena-home','macarena-reglas','g1-cat','g3-cat','macarena-ext','macarena-int','macarena-result',
+    'macarena-intro','macarena-p1','macarena-p2','macarena-p3','macarena-p4','macarena-p5','macarena-diploma'];
+  const wraps = {
+    'macarena-home':'macarena-home-wrap','macarena-reglas':'macarena-reglas-wrap','g1-cat':'macarena-g1-wrap',
+    'g3-cat':'macarena-g3-wrap','macarena-ext':'macarena-ext-wrap','macarena-int':'macarena-int-wrap','macarena-result':'macarena-result-wrap',
+    'macarena-intro':'macarena-intro-wrap','macarena-p1':'macarena-p1-wrap','macarena-p2':'macarena-p2-wrap','macarena-p3':'macarena-p3-wrap',
+    'macarena-p4':'macarena-p4-wrap','macarena-p5':'macarena-p5-wrap','macarena-diploma':'macarena-diploma-wrap'
+  };
+  ids.forEach(id=>{
+    const wrapEl = document.getElementById(wraps[id]);
+    if(wrapEl) wrapEl.innerHTML = macarenaSVG(id);
+  });
+}
+
+/* ================== DECORACIÓN FLOTANTE ================== */
+function initDecor(){
+  const layer = document.getElementById('floatingDecor');
+  const icons = ['🐾','🌸','✨','💫'];
+  for(let i=0;i<10;i++){
+    const span = document.createElement('span');
+    span.textContent = icons[i % icons.length];
+    span.style.left = (Math.random()*95) + 'vw';
+    span.style.animationDelay = (Math.random()*9) + 's';
+    span.style.animationDuration = (7 + Math.random()*5) + 's';
+    layer.appendChild(span);
+  }
+}
+
+/* ================== INIT ================== */
+function init(){
+  renderProfileCards();
+  if(currentProfile){
+    loadProfileData();
+    const greet = document.getElementById('home-greeting');
+    if(greet) greet.textContent = '¡Hola, ' + profileInfo(currentProfile).name + '! ' + profileInfo(currentProfile).emoji;
+    showScreen('screen-home');
+  } else {
+    showScreen('screen-profile');
+  }
+  injectCats();
+  document.getElementById('total-paws').textContent = paws;
+  renderBest();
+  renderRepasoCount();
+  initDecor();
+  if('speechSynthesis' in window){ window.speechSynthesis.getVoices(); window.speechSynthesis.onvoiceschanged = ()=>{}; }
+}
+init();
+</script>
+</body>
+</html>

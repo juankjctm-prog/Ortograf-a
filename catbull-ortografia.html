@@ -1,0 +1,1212 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+<title>Catbull - Ortografía B y V</title>
+<style>
+  :root{
+    --bg1:#1b0f3a;
+    --bg2:#3a1668;
+    --bg3:#6a1b6e;
+    --primary:#a855f7;
+    --primary-dark:#7c22d6;
+    --accent:#ff4fa3;
+    --accent2:#ffd54d;
+    --cyan:#4dd8e8;
+    --success:#3ecf8e;
+    --danger:#ff6b6b;
+    --dark:#2c2350;
+    --card-bg:#ffffff;
+    --shadow: 0 8px 0 rgba(0,0,0,0.25);
+    --glow: 0 8px 24px rgba(168,85,247,0.35);
+  }
+  *{box-sizing:border-box;}
+  html,body{
+    margin:0;padding:0;height:100%;
+    font-family:'Quicksand','Trebuchet MS','Segoe UI',sans-serif;
+    color:var(--dark);
+    overflow-x:hidden;
+  }
+  body{
+    background:
+      radial-gradient(1.5px 1.5px at 10% 20%, #fff 100%, transparent),
+      radial-gradient(1.5px 1.5px at 80% 10%, #fff 100%, transparent),
+      radial-gradient(1px 1px at 50% 45%, #fff 100%, transparent),
+      radial-gradient(1.5px 1.5px at 30% 78%, #fff 100%, transparent),
+      radial-gradient(1px 1px at 70% 65%, #fff 100%, transparent),
+      radial-gradient(1.5px 1.5px at 92% 88%, #fff 100%, transparent),
+      radial-gradient(1px 1px at 15% 60%, #fff 100%, transparent),
+      radial-gradient(1.5px 1.5px at 60% 25%, #fff 100%, transparent),
+      radial-gradient(1px 1px at 25% 12%, #fff 100%, transparent),
+      radial-gradient(1px 1px at 85% 40%, #fff 100%, transparent),
+      linear-gradient(160deg, var(--bg1) 0%, var(--bg2) 55%, var(--bg3) 100%);
+    background-repeat:no-repeat;
+    background-attachment:fixed;
+    min-height:100vh;
+    position:relative;
+  }
+  .floating-decor{ position:fixed; inset:0; pointer-events:none; z-index:0; overflow:hidden; }
+  .floating-decor span{ position:absolute; font-size:24px; opacity:.5; animation: floatUp 9s linear infinite; }
+  @keyframes floatUp{ 0%{ transform:translateY(110vh) rotate(0deg);} 100%{ transform:translateY(-10vh) rotate(360deg);} }
+
+  .app{
+    position:relative; z-index:1;
+    max-width:520px; margin:0 auto; min-height:100vh;
+    padding:18px 16px 40px;
+    display:flex; flex-direction:column; align-items:center;
+  }
+  .screen{ display:none; width:100%; flex-direction:column; align-items:center; animation:fadeIn .35s ease; }
+  .screen.active{ display:flex; }
+  @keyframes fadeIn{ from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);} }
+
+  h1{ font-size:1.9rem; text-align:center; margin:6px 0 4px; color:#fff; text-shadow: 0 2px 10px rgba(255,79,163,.6); }
+  h1 .highlight{ color:var(--accent2); }
+  h2{ color:#fff; font-size:1.4rem; text-align:center; margin:4px 0 10px; }
+  .subtitle{ text-align:center; color:#e3d9ff; font-size:1rem; margin:0 0 14px; padding:0 8px;}
+
+  .catbull-wrap{ width:220px; height:230px; margin:6px auto 8px; filter:drop-shadow(0 6px 14px rgba(0,0,0,.35)); }
+  .catbull-wrap.small{ width:130px; height:136px; }
+  .catbull-wrap.tiny{ width:90px; height:94px; }
+  .catbull-svg .mouth, .catbull-svg .eyes-set{ display:none; }
+  .catbull-svg.mood-normal .mouth-normal, .catbull-svg.mood-normal .eyes-normal{ display:block; }
+  .catbull-svg.mood-happy .mouth-happy, .catbull-svg.mood-happy .eyes-happy{ display:block; }
+  .catbull-svg.mood-sad .mouth-sad, .catbull-svg.mood-sad .eyes-sad{ display:block; }
+  .catbull-svg.bounce{ animation: bounce .5s ease; }
+  .catbull-svg.shake{ animation: shake .5s ease; }
+  @keyframes bounce{ 0%,100%{ transform:translateY(0) scale(1);} 30%{ transform:translateY(-14px) scale(1.05);} 60%{ transform:translateY(0) scale(0.97);} }
+  @keyframes shake{ 0%,100%{ transform:translateX(0);} 20%{ transform:translateX(-8px) rotate(-3deg);} 40%{ transform:translateX(8px) rotate(3deg);} 60%{ transform:translateX(-6px) rotate(-2deg);} 80%{ transform:translateX(6px) rotate(2deg);} }
+
+  .stars-total{ background:#fff; border-radius:999px; padding:8px 18px; font-size:1.1rem; font-weight:bold; box-shadow:var(--shadow); margin:8px 0 18px; color:var(--primary-dark); }
+
+  .btn-primary, .btn-secondary, .btn-choice{ border:none; cursor:pointer; font-family:inherit; font-weight:bold; border-radius:18px; padding:16px 30px; font-size:1.1rem; box-shadow: var(--shadow); transition: transform .08s ease; }
+  .btn-primary{ background:linear-gradient(135deg, var(--accent), var(--primary)); color:#fff; }
+  .btn-primary:active, .btn-secondary:active, .btn-choice:active{ transform:translateY(6px); box-shadow:0 2px 0 rgba(0,0,0,.25); }
+  .btn-secondary{ background:#fff; color:var(--primary-dark); margin-top:10px; }
+  .btn-back{ align-self:flex-start; background:rgba(255,255,255,.12); border:none; cursor:pointer; font-size:.95rem; color:#fff; font-weight:bold; margin-bottom:10px; padding:8px 14px; border-radius:999px; }
+
+  .menu-card{ width:100%; background:var(--card-bg); border-radius:22px; padding:18px; display:flex; align-items:center; gap:14px; margin-bottom:14px; box-shadow:var(--shadow), var(--glow); cursor:pointer; border:3px solid transparent; }
+  .menu-card:active{ transform:translateY(4px); box-shadow:0 4px 0 rgba(0,0,0,.2); }
+  .menu-card .icon{ font-size:2.4rem; }
+  .menu-card .info{ flex:1; }
+  .menu-card .info h3{ margin:0 0 4px; color:var(--primary-dark); font-size:1.15rem; }
+  .menu-card .info p{ margin:0; font-size:.86rem; color:#6b5c8a; }
+  .menu-card .best{ font-size:.78rem; color:#c77b00; font-weight:bold; }
+
+  .hud{ display:flex; justify-content:space-between; align-items:center; width:100%; margin-bottom:10px; font-weight:bold; color:#fff; }
+  .hearts{ font-size:1.3rem; }
+  .progress-pill{ background:rgba(255,255,255,.15); color:#fff; border-radius:999px; padding:5px 14px; font-size:.85rem; }
+
+  .word-card{ background:#fff; border-radius:24px; padding:26px 20px; width:100%; text-align:center; box-shadow:var(--shadow); margin:10px 0 18px; }
+  .word-emoji{ font-size:3rem; margin-bottom:6px; }
+  .word-display{ font-size:2rem; letter-spacing:1px; font-weight:bold; color:var(--dark); }
+  .word-display .blank{ color:var(--accent); border-bottom:4px dotted var(--accent); padding:0 4px; }
+  .wrong-tag{ display:inline-block; background:#ffe3e3; color:#c53030; text-decoration:line-through; font-weight:bold; border-radius:10px; padding:4px 10px; margin-bottom:10px; font-size:.95rem; }
+
+  .choice-row{ display:flex; gap:16px; width:100%; justify-content:center; margin-bottom:8px; }
+  .btn-choice{ flex:1; max-width:140px; font-size:1.6rem; background:#fff; color:var(--primary-dark); border:3px solid var(--primary); }
+  .btn-choice.b{ border-color:#ff9f4d; }
+  .btn-choice.v{ border-color:var(--cyan); }
+  .btn-choice:disabled{ opacity:.6; cursor:default; }
+  .btn-choice.correct{ background:var(--success); color:#fff; border-color:var(--success); }
+  .btn-choice.wrong{ background:var(--danger); color:#fff; border-color:var(--danger); }
+
+  .feedback{ min-height:44px; font-size:1rem; font-weight:bold; text-align:center; padding:0 10px; color:#fff; }
+  .feedback.ok{ color:var(--success); }
+  .feedback.bad{ color:#ffb4b4; }
+  .tip-bubble{ background:#fff4d6; border-radius:14px; padding:10px 14px; font-size:.85rem; color:#7a5b00; margin-top:4px; max-width:340px; text-align:center; }
+  .btn-speak{ margin-top:10px; background:#f3ecff; color:var(--primary-dark); border:none; border-radius:999px; padding:8px 16px; font-weight:bold; font-size:.85rem; cursor:pointer; font-family:inherit; }
+  .btn-speak:active{ transform:translateY(2px); }
+  .kinesthetic-hint{ color:#e3d9ff; font-size:.85rem; text-align:center; margin:0 0 10px; padding:0 10px; }
+
+  .sentence-card{ background:#fff; border-radius:24px; padding:22px 18px; width:100%; text-align:center; box-shadow:var(--shadow); margin:10px 0 18px; font-size:1.15rem; }
+  .word-options{ display:flex; gap:14px; width:100%; margin-bottom:8px; }
+  .word-options button{ flex:1; background:#fff; border:3px solid var(--primary); border-radius:18px; padding:16px 8px; font-size:1.2rem; font-weight:bold; color:var(--primary-dark); cursor:pointer; box-shadow:var(--shadow); }
+  .word-options button:active{ transform:translateY(6px); box-shadow:0 2px 0 rgba(0,0,0,.2); }
+  .word-options button.correct{ background:var(--success); color:#fff; border-color:var(--success); }
+  .word-options button.wrong{ background:var(--danger); color:#fff; border-color:var(--danger); }
+
+  .memo-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:12px; width:100%; margin:14px 0 18px; }
+  .memo-card{ aspect-ratio:1/1; perspective:800px; cursor:pointer; user-select:none; }
+  .memo-inner{ position:relative; width:100%; height:100%; transition:transform .5s cubic-bezier(.4,.2,.2,1); transform-style:preserve-3d; }
+  .memo-card.flipped .memo-inner, .memo-card.matched .memo-inner{ transform:rotateY(180deg); }
+  .memo-front, .memo-back{ position:absolute; inset:0; backface-visibility:hidden; -webkit-backface-visibility:hidden; border-radius:16px; display:flex; align-items:center; justify-content:center; text-align:center; padding:4px; }
+  .memo-front{ background:linear-gradient(135deg,var(--primary),var(--accent)); box-shadow:var(--shadow), var(--glow); font-size:2.2rem; }
+  .memo-back{ background:#fff; border:3px solid var(--primary); box-shadow:var(--shadow); transform:rotateY(180deg); color:var(--primary-dark); font-weight:bold; }
+  .memo-back.back-emoji{ font-size:2.8rem; }
+  .memo-back.back-word{ font-size:.95rem; line-height:1.15; padding:6px; word-break:break-word; }
+  .memo-card.matched .memo-back{ background:var(--success); border:none; color:#fff; }
+  .memo-card.matched{ opacity:.92; }
+  .memo-card:not(.flipped):not(.matched):active .memo-inner{ transform:scale(.94); }
+
+  .result-stars{ font-size:2.6rem; margin:6px 0; letter-spacing:6px; }
+  .result-msg{ font-size:1.15rem; text-align:center; font-weight:bold; color:#fff; margin-bottom:4px;}
+  .result-score{ font-size:1rem; color:#e3d9ff; margin-bottom:14px; }
+
+  .confetti-layer{ position:fixed; inset:0; pointer-events:none; z-index:50; overflow:hidden; }
+  .confetti-piece{ position:absolute; top:-30px; font-size:22px; animation:fall 1.4s ease-in forwards; }
+  @keyframes fall{ to{ transform:translateY(110vh) rotate(360deg); opacity:.2; } }
+
+  footer.credit{ margin-top:auto; font-size:.72rem; color:#c9b8ee; text-align:center; padding-top:20px; }
+
+  /* Reglas carousel */
+  .rule-card{ background:#fff; border-radius:24px; padding:24px 20px; width:100%; box-shadow:var(--shadow), var(--glow); text-align:center; margin-bottom:14px; }
+  .rule-tag{ display:inline-block; padding:5px 14px; border-radius:999px; font-weight:bold; font-size:.85rem; margin-bottom:10px; }
+  .rule-tag.b{ background:#ffe6cc; color:#b35c00; }
+  .rule-tag.v{ background:#d6f7fb; color:#0891a8; }
+  .rule-title{ font-size:1.2rem; font-weight:bold; color:var(--primary-dark); margin-bottom:10px; }
+  .rule-examples{ display:flex; gap:8px; justify-content:center; flex-wrap:wrap; margin-bottom:10px; }
+  .rule-examples span{ background:#f3ecff; color:var(--primary-dark); border-radius:12px; padding:6px 12px; font-weight:bold; font-size:.95rem; }
+  .rule-tip{ font-size:.9rem; color:#6b5c8a; }
+  .rule-dots{ display:flex; gap:8px; margin-bottom:14px; }
+  .rule-dots span{ width:9px; height:9px; border-radius:50%; background:rgba(255,255,255,.35); }
+  .rule-dots span.active{ background:var(--accent2); }
+  .rule-nav{ display:flex; gap:12px; width:100%; justify-content:center; }
+  .rule-nav button{ flex:1; max-width:150px; }
+
+  /* Cuaderno intro */
+  .form-card{ background:#fff; border-radius:24px; padding:24px 20px; width:100%; box-shadow:var(--shadow); margin-bottom:14px; }
+  .form-card label{ display:block; font-weight:bold; color:var(--primary-dark); margin-bottom:6px; font-size:.95rem; }
+  .form-card input[type=text]{ width:100%; padding:12px 14px; border-radius:14px; border:2px solid #e0d4ff; font-size:1.05rem; font-family:inherit; margin-bottom:16px; }
+  .form-card .fecha{ color:#8a7bad; font-size:.9rem; margin-bottom:6px; }
+
+  /* Parte 4 word bank */
+  .p4-sentence{ background:#fff; border-radius:16px; padding:14px 16px; width:100%; margin-bottom:10px; font-size:1.02rem; box-shadow:var(--shadow); }
+  .p4-blank{ display:inline-block; min-width:90px; border-bottom:3px dashed var(--accent); color:var(--primary-dark); font-weight:bold; padding:2px 6px; cursor:pointer; }
+  .p4-blank.filled{ border-bottom:3px solid var(--success); background:#eafff4; border-radius:8px; }
+  .p4-blank.wrong{ border-bottom:3px solid var(--danger); background:#ffecec; border-radius:8px; }
+  .word-bank{ display:flex; flex-wrap:wrap; gap:10px; justify-content:center; width:100%; margin:14px 0; }
+  .word-chip{ background:var(--accent2); color:#5a4300; font-weight:bold; padding:10px 16px; border-radius:14px; cursor:pointer; box-shadow:var(--shadow); border:none; font-family:inherit; font-size:.95rem; }
+  .word-chip.selected{ background:var(--primary); color:#fff; }
+  .word-chip.used{ opacity:.25; cursor:default; }
+
+  /* Parte 5 story */
+  .story-card{ background:#fff; border-radius:24px; padding:20px; width:100%; box-shadow:var(--shadow); margin-bottom:14px; }
+  .story-card textarea{ width:100%; min-height:160px; border-radius:16px; border:2px solid #e0d4ff; padding:14px; font-family:inherit; font-size:1rem; resize:vertical; }
+  .word-checklist{ display:flex; flex-wrap:wrap; gap:8px; margin-top:14px; }
+  .word-checklist span{ background:#f3ecff; color:var(--primary-dark); border-radius:12px; padding:6px 12px; font-size:.85rem; font-weight:bold; }
+  .word-checklist span.used{ background:var(--success); color:#fff; }
+  .story-counter{ text-align:center; font-weight:bold; color:var(--primary-dark); margin-top:10px; }
+
+  /* Diploma */
+  .diploma{ background:#fffdf3; border:6px double var(--accent2); border-radius:20px; padding:28px 20px; width:100%; text-align:center; box-shadow:var(--shadow), var(--glow); margin-bottom:18px; }
+  .diploma h2{ color:var(--primary-dark); }
+  .diploma .name{ font-size:1.6rem; font-weight:bold; color:var(--accent); margin:10px 0; font-family:'Segoe Script','Brush Script MT',cursive; }
+  .diploma .fecha{ font-size:.9rem; color:#8a7bad; margin-bottom:14px; }
+  .diploma .stars-big{ font-size:2.2rem; margin:8px 0; }
+  .diploma .badges{ display:flex; justify-content:center; gap:10px; flex-wrap:wrap; margin:14px 0; }
+  .diploma .badges span{ font-size:1.6rem; }
+  @media print{
+    body *{ visibility:hidden; }
+    .diploma, .diploma *{ visibility:visible; }
+    .diploma{ position:absolute; top:0; left:0; width:100%; }
+  }
+</style>
+</head>
+<body>
+
+<div class="floating-decor" id="floatingDecor"></div>
+
+<div class="app">
+
+  <!-- HOME -->
+  <section class="screen active" id="screen-home">
+    <h1>Ortografía con <span class="highlight">Catbull</span></h1>
+    <p class="subtitle">El gato más cool te enseña a dominar la <b>B</b> y la <b>V</b> ✨</p>
+    <div class="catbull-wrap" id="catbull-home-wrap"></div>
+    <div class="stars-total">⭐ <span id="total-stars">0</span> estrellas ganadas</div>
+    <button class="btn-primary" onclick="goToMenu()">¡Empezar! 🚀</button>
+    <footer class="credit">Hecho con cariño para futuras cracks de la ortografía</footer>
+  </section>
+
+  <!-- REGLAS -->
+  <section class="screen" id="screen-reglas">
+    <button class="btn-back" onclick="goToMenu()">⟵ Menú</button>
+    <div class="catbull-wrap tiny" id="catbull-reglas-wrap"></div>
+    <h2>Catbull te enseña las reglas</h2>
+    <div class="rule-dots" id="rule-dots"></div>
+    <div class="rule-card" id="rule-card"></div>
+    <div class="rule-nav">
+      <button class="btn-secondary" id="rule-prev" onclick="ruleNav(-1)">⟵ Antes</button>
+      <button class="btn-primary" id="rule-next" onclick="ruleNav(1)">Después ⟶</button>
+    </div>
+  </section>
+
+  <!-- MENU PRINCIPAL -->
+  <section class="screen" id="screen-menu">
+    <button class="btn-back" onclick="goHome()">⟵ Inicio</button>
+    <h2>¿Qué quieres hacer?</h2>
+    <div class="menu-card" onclick="showScreen('screen-reglas'); renderRuleCard();">
+      <div class="icon">📖</div>
+      <div class="info"><h3>Aprende las reglas</h3><p>Catbull te explica los trucos de la B y la V</p></div>
+    </div>
+    <div class="menu-card" onclick="startCuaderno()">
+      <div class="icon">📝</div>
+      <div class="info"><h3>Mi Cuaderno</h3><p>El ejercicio completo, en 5 partes súper cheveres</p>
+        <div class="best" id="best-cuaderno"></div>
+      </div>
+    </div>
+    <div class="menu-card" onclick="showScreen('screen-games-menu')">
+      <div class="icon">🎮</div>
+      <div class="info"><h3>Práctica libre</h3><p>Minijuegos para seguir entrenando</p></div>
+    </div>
+  </section>
+
+  <!-- SUBMENU MINIJUEGOS -->
+  <section class="screen" id="screen-games-menu">
+    <button class="btn-back" onclick="goToMenu()">⟵ Menú</button>
+    <h2>Práctica libre</h2>
+    <div class="menu-card" id="card-repaso" onclick="startRepaso()" style="border-color:var(--accent2);">
+      <div class="icon">🔁</div>
+      <div class="info"><h3>Repaso de Catbull</h3><p>Practica solo las palabras que se te dificultan</p><div class="best" id="repaso-count"></div></div>
+    </div>
+    <div class="menu-card" onclick="startGame1()">
+      <div class="icon">🐾</div>
+      <div class="info"><h3>Atrapa la Letra</h3><p>Elige si la palabra lleva B o V</p><div class="best" id="best-game1"></div></div>
+    </div>
+    <div class="menu-card" onclick="startGame2()">
+      <div class="icon">🧠</div>
+      <div class="info"><h3>Memorama Mágico</h3><p>Encuentra las parejas correctas</p><div class="best" id="best-game2"></div></div>
+    </div>
+    <div class="menu-card" onclick="startGame3()">
+      <div class="icon">🔍</div>
+      <div class="info"><h3>¿Cuál está bien escrita?</h3><p>Descubre la palabra correcta</p><div class="best" id="best-game3"></div></div>
+    </div>
+  </section>
+
+  <!-- GAME 1 -->
+  <section class="screen" id="screen-game1">
+    <button class="btn-back" onclick="confirmExit('screen-games-menu')">⟵ Salir</button>
+    <div class="hud"><div class="hearts" id="g1-hearts">❤️❤️❤️</div><div class="progress-pill" id="g1-progress">Ronda 1/8</div></div>
+    <div class="catbull-wrap small" id="catbull-g1-wrap"></div>
+    <div class="word-card">
+      <div class="word-emoji" id="g1-emoji">🐱</div>
+      <div class="word-display" id="g1-word">_aca</div>
+      <button class="btn-speak" onclick="speakCurrentG1()">🔊 Escuchar</button>
+    </div>
+    <div class="choice-row">
+      <button class="btn-choice b" id="g1-btn-b" onclick="answerGame1('b')">B</button>
+      <button class="btn-choice v" id="g1-btn-v" onclick="answerGame1('v')">V</button>
+    </div>
+    <div class="feedback" id="g1-feedback"></div>
+    <div class="tip-bubble" id="g1-tip" style="display:none;"></div>
+  </section>
+
+  <!-- GAME 2 -->
+  <section class="screen" id="screen-game2">
+    <button class="btn-back" onclick="confirmExit('screen-games-menu')">⟵ Salir</button>
+    <div class="hud"><div id="g2-moves">Intentos: 0</div><div class="progress-pill" id="g2-progress">Parejas 0/6</div></div>
+    <div class="memo-grid" id="g2-grid"></div>
+    <div class="feedback" id="g2-feedback"></div>
+  </section>
+
+  <!-- GAME 3 -->
+  <section class="screen" id="screen-game3">
+    <button class="btn-back" onclick="confirmExit('screen-games-menu')">⟵ Salir</button>
+    <div class="hud"><div class="hearts" id="g3-hearts">❤️❤️❤️</div><div class="progress-pill" id="g3-progress">Ronda 1/8</div></div>
+    <div class="catbull-wrap small" id="catbull-g3-wrap"></div>
+    <div class="sentence-card">
+      <div style="font-size:2.2rem;" id="g3-emoji">🔍</div>
+      <p>¿Cuál palabra está <b>bien escrita</b>?</p>
+    </div>
+    <div class="word-options" id="g3-options">
+      <button id="g3-opt-0" onclick="answerGame3(0)">opcion</button>
+      <button id="g3-opt-1" onclick="answerGame3(1)">opcion</button>
+    </div>
+    <div class="feedback" id="g3-feedback"></div>
+    <div class="tip-bubble" id="g3-tip" style="display:none;"></div>
+  </section>
+
+  <!-- CUADERNO INTRO -->
+  <section class="screen" id="screen-cuaderno-intro">
+    <button class="btn-back" onclick="goToMenu()">⟵ Menú</button>
+    <div class="catbull-wrap small" id="catbull-intro-wrap"></div>
+    <h2>Mi Cuaderno de Ortografía</h2>
+    <div class="form-card">
+      <label for="input-nombre">Nombre:</label>
+      <input type="text" id="input-nombre" placeholder="Escribe tu nombre aquí">
+      <div class="fecha">Fecha: <span id="fecha-hoy"></span></div>
+      <p style="font-size:.9rem; color:#6b5c8a;">Vas a completar 5 partes: llenar espacios, elegir la palabra correcta, corregir errores, un banco de palabras y ¡tu propio cuento! Al final recibes tu diploma 🏆</p>
+    </div>
+    <button class="btn-primary" onclick="startParte1()">Comenzar Parte 1 ⟶</button>
+  </section>
+
+  <!-- PARTE 1 -->
+  <section class="screen" id="screen-parte1">
+    <button class="btn-back" onclick="confirmExit('screen-menu')">⟵ Salir</button>
+    <div class="hud"><div class="progress-pill">Parte 1: Completa con B o V</div><div class="progress-pill" id="p1-progress">1/10</div></div>
+    <div class="catbull-wrap small" id="catbull-p1-wrap"></div>
+    <div class="word-card">
+      <div class="word-display" id="p1-sentence" style="font-size:1.3rem;">Cargando...</div>
+      <button class="btn-speak" onclick="speakCurrentP1()">🔊 Escuchar</button>
+    </div>
+    <p class="kinesthetic-hint">✍️ Truco: traza la letra en el aire con el dedo antes de elegir</p>
+    <div class="choice-row">
+      <button class="btn-choice b" id="p1-btn-b" onclick="answerParte1('b')">B</button>
+      <button class="btn-choice v" id="p1-btn-v" onclick="answerParte1('v')">V</button>
+    </div>
+    <div class="feedback" id="p1-feedback"></div>
+  </section>
+
+  <!-- PARTE 2 -->
+  <section class="screen" id="screen-parte2">
+    <button class="btn-back" onclick="confirmExit('screen-menu')">⟵ Salir</button>
+    <div class="hud"><div class="progress-pill">Parte 2: Elige la correcta</div><div class="progress-pill" id="p2-progress">1/8</div></div>
+    <div class="catbull-wrap small" id="catbull-p2-wrap"></div>
+    <div class="sentence-card"><p>Marca la opción bien escrita ✓</p></div>
+    <div class="word-options" id="p2-options">
+      <button id="p2-opt-0" onclick="answerParte2(0)">opcion</button>
+      <button id="p2-opt-1" onclick="answerParte2(1)">opcion</button>
+    </div>
+    <div class="feedback" id="p2-feedback"></div>
+  </section>
+
+  <!-- PARTE 3 -->
+  <section class="screen" id="screen-parte3">
+    <button class="btn-back" onclick="confirmExit('screen-menu')">⟵ Salir</button>
+    <div class="hud"><div class="progress-pill">Parte 3: Corrige el error</div><div class="progress-pill" id="p3-progress">1/6</div></div>
+    <div class="catbull-wrap small" id="catbull-p3-wrap"></div>
+    <div class="word-card">
+      <div class="wrong-tag" id="p3-wrong">bentana</div>
+      <div class="word-display" id="p3-word">_entana</div>
+      <button class="btn-speak" onclick="speakCurrentP3()">🔊 Escuchar</button>
+    </div>
+    <div class="choice-row">
+      <button class="btn-choice b" id="p3-btn-b" onclick="answerParte3('b')">B</button>
+      <button class="btn-choice v" id="p3-btn-v" onclick="answerParte3('v')">V</button>
+    </div>
+    <div class="feedback" id="p3-feedback"></div>
+  </section>
+
+  <!-- PARTE 4 -->
+  <section class="screen" id="screen-parte4">
+    <button class="btn-back" onclick="confirmExit('screen-menu')">⟵ Salir</button>
+    <h2 style="font-size:1.15rem;">Parte 4: Completa con el banco de palabras</h2>
+    <div class="catbull-wrap small" id="catbull-p4-wrap"></div>
+    <div id="p4-sentences"></div>
+    <div class="word-bank" id="p4-bank"></div>
+    <button class="btn-primary" onclick="checkParte4()">Revisar ✓</button>
+    <div class="feedback" id="p4-feedback"></div>
+  </section>
+
+  <!-- PARTE 5 -->
+  <section class="screen" id="screen-parte5">
+    <button class="btn-back" onclick="confirmExit('screen-menu')">⟵ Salir</button>
+    <h2 style="font-size:1.15rem;">Parte 5: Escribe tu cuento</h2>
+    <div class="catbull-wrap small" id="catbull-p5-wrap"></div>
+    <div class="story-card">
+      <p style="margin-top:0;">Usa al menos <b>8</b> de estas palabras en un cuento de 6 a 8 líneas:</p>
+      <div class="word-checklist" id="p5-checklist"></div>
+      <textarea id="p5-textarea" placeholder="Había una vez..." oninput="updateStoryCheck()"></textarea>
+      <div class="story-counter" id="p5-counter">0/10 palabras usadas</div>
+    </div>
+    <button class="btn-primary" onclick="finishParte5()">Terminar mi cuento ✨</button>
+  </section>
+
+  <!-- RESULT -->
+  <section class="screen" id="screen-result">
+    <div class="catbull-wrap" id="catbull-result-wrap"></div>
+    <div class="result-msg" id="result-msg">¡Muy bien!</div>
+    <div class="result-stars" id="result-stars">⭐⭐⭐</div>
+    <div class="result-score" id="result-score">Puntaje: 8/8</div>
+    <button class="btn-primary" id="result-btn-primary">Continuar</button>
+    <button class="btn-secondary" id="result-btn-secondary">Menú principal</button>
+  </section>
+
+  <!-- DIPLOMA -->
+  <section class="screen" id="screen-diploma">
+    <div class="diploma">
+      <div class="catbull-wrap small" id="catbull-diploma-wrap" style="margin:0 auto 6px;"></div>
+      <h2>Diploma de Ortografía</h2>
+      <p style="color:#8a7bad; margin:0;">Se lo otorga con orgullo a:</p>
+      <div class="name" id="diploma-nombre">Nombre</div>
+      <div class="fecha" id="diploma-fecha">Fecha</div>
+      <p style="color:#6b5c8a;">Por completar con éxito el Cuaderno de Ortografía de la B y la V, demostrando esfuerzo y mucho talento.</p>
+      <div class="stars-big" id="diploma-stars">⭐⭐⭐⭐⭐</div>
+      <div class="badges" id="diploma-badges"></div>
+      <div style="font-size:.8rem; color:#b39ddb; margin-top:10px;">🐾 Firmado por Catbull</div>
+    </div>
+    <button class="btn-primary" onclick="window.print()">Imprimir mi diploma 🖨️</button>
+    <button class="btn-secondary" onclick="goToMenu()">Menú principal</button>
+  </section>
+
+</div>
+
+<div class="confetti-layer" id="confettiLayer"></div>
+
+<script>
+/* ================== REGLAS (enseñanza) ================== */
+const RULES = [
+  {group:'b', tag:'Regla B #1', title:'Empieza por BU-, BUR-, BUS-', examples:['buscar','burro','bufanda'], tip:'Si una palabra empieza sonando "bu", casi siempre se escribe con B.'},
+  {group:'b', tag:'Regla B #2', title:'Verbos terminados en -BIR', examples:['escribir','recibir','subir'], tip:'¡Ojo! vivir, servir y hervir son la excepción: esos van con V.'},
+  {group:'b', tag:'Regla B #3', title:'Después de la M', examples:['también','cambiar','sombra'], tip:'Después de M, siempre B. ¡Esta regla nunca falla!'},
+  {group:'v', tag:'Regla V #1', title:'Empieza por EVA-, EVE-, EVI-, EVO-', examples:['evaluar','evitar','evidente'], tip:'Estas palabras casi siempre se escriben con V.'},
+  {group:'v', tag:'Regla V #2', title:'Después de la N', examples:['invierno','enviar','conversar'], tip:'Después de N, casi siempre va V.'},
+  {group:'v', tag:'Regla V #3', title:'Adjetivos -ava,-ave,-avo,-eva,-eve,-evo,-iva,-ivo', examples:['suave','nuevo','activa'], tip:'Estas terminaciones de adjetivos casi siempre llevan V.'},
+  {group:'b', tag:'Regla B #4', title:'El pasado en -ABA y el verbo IR', examples:['jugaba','nadaba','iba'], tip:'Cuando cuentas algo que pasaba antes y termina en "-aba" (jugaba, nadaba, estaba), ¡siempre va con B! El verbo ir en pasado también: iba, ibas, iban.'},
+  {group:'b', tag:'Regla B #5', title:'Beber, caber, deber, haber, saber', examples:['bebía','debía','sabía'], tip:'Estos 5 verbos y todas sus formas siempre se escriben con B, en cualquier tiempo.'},
+  {group:'b', tag:'Regla B #6', title:'Antes de otra consonante', examples:['blanco','brazo','obtener'], tip:'Si justo después viene otra consonante (como en "bl" o "br"), siempre es B, nunca V.'},
+  {group:'v', tag:'Regla V #4', title:'Después de OL-', examples:['olvidar','resolver','envolver'], tip:'Las palabras que empiezan o tienen "ol-" casi siempre llevan V.'},
+  {group:'v', tag:'Regla V #5', title:'Pasado de estar, andar y tener', examples:['estuve','anduve','tuve'], tip:'Estos verbos cambian mucho en pasado, pero siempre se escriben con V.'}
+];
+let ruleIndex = 0;
+function renderRuleCard(){
+  const r = RULES[ruleIndex];
+  const card = document.getElementById('rule-card');
+  card.innerHTML =
+    '<div class="rule-tag '+r.group+'">'+r.tag+'</div>' +
+    '<div class="rule-title">'+r.title+'</div>' +
+    '<div class="rule-examples">'+r.examples.map(e=>'<span>'+e+'</span>').join('')+'</div>' +
+    '<div class="rule-tip">💡 '+r.tip+'</div>';
+  const dots = document.getElementById('rule-dots');
+  dots.innerHTML = RULES.map((_,i)=>'<span class="'+(i===ruleIndex?'active':'')+'"></span>').join('');
+  document.getElementById('rule-prev').style.visibility = ruleIndex === 0 ? 'hidden' : 'visible';
+  document.getElementById('rule-next').textContent = ruleIndex === RULES.length-1 ? '¡A practicar! 🚀' : 'Después ⟶';
+  setMood('catbull-reglas', r.group === 'b' ? 'normal' : 'happy');
+}
+function ruleNav(dir){
+  if(dir > 0 && ruleIndex === RULES.length-1){ goToMenu(); return; }
+  ruleIndex = Math.max(0, Math.min(RULES.length-1, ruleIndex+dir));
+  renderRuleCard();
+}
+
+/* ================== BANCO DE PALABRAS (práctica libre) ================== */
+const RULE_TIP = {
+  bu: 'Las palabras que empiezan por bu-, bur- o bus- casi siempre son con B.',
+  bir: 'Los verbos terminados en -bir se escriben con B... ¡excepto vivir, servir y hervir!',
+  m: 'Después de la M siempre se escribe B.',
+  eva: 'Las palabras que empiezan por eva-, eve-, evi- o evo- casi siempre son con V.',
+  n: 'Después de la N casi siempre se escribe V.',
+  adj: 'Los adjetivos terminados en -ava,-ave,-avo,-eva,-eve,-evo,-iva,-ivo casi siempre llevan V.',
+  excepcion: '¡Ojo! vivir, servir y hervir terminan en "-ir" pero se escriben con V, no con B.',
+  imperfecto: 'El pasado en "-aba" (jugaba, nadaba, estaba) y el verbo ir (iba, ibas) siempre se escriben con B.',
+  bdsh: 'Beber, caber, deber, haber y saber (y todas sus formas) siempre se escriben con B.',
+  consonante: 'Antes de otra consonante (como en "bl" o "br") siempre se escribe B, nunca V.',
+  ol: 'Las palabras que tienen "ol-" antes casi siempre llevan V.',
+  pasadoEstar: 'El pasado de estar, andar y tener (estuve, anduve, tuve) siempre se escribe con V.'
+};
+const WORD_BANK = [
+  {word:"a*uela", answer:"b", emoji:"👵", full:"abuela"},
+  {word:"*arco", answer:"b", emoji:"🚢", full:"barco"},
+  {word:"*icicleta", answer:"b", emoji:"🚲", full:"bicicleta"},
+  {word:"*lanco", answer:"b", emoji:"⚪", full:"blanco"},
+  {word:"*oca", answer:"b", emoji:"👄", full:"boca"},
+  {word:"*año", answer:"b", emoji:"🛁", full:"baño"},
+  {word:"*ebé", answer:"b", emoji:"👶", full:"bebé"},
+  {word:"*urro", answer:"b", emoji:"🐴", full:"burro", rule:RULE_TIP.bu},
+  {word:"*uscar", answer:"b", emoji:"🔍", full:"buscar", rule:RULE_TIP.bu},
+  {word:"*uzón", answer:"b", emoji:"📫", full:"buzón", rule:RULE_TIP.bu},
+  {word:"cam*io", answer:"b", emoji:"🔄", full:"cambio", rule:RULE_TIP.m},
+  {word:"tam*or", answer:"b", emoji:"🥁", full:"tambor", rule:RULE_TIP.m},
+  {word:"som*ra", answer:"b", emoji:"🌳", full:"sombra", rule:RULE_TIP.m},
+  {word:"hom*ro", answer:"b", emoji:"🦾", full:"hombro", rule:RULE_TIP.m},
+  {word:"tam*ién", answer:"b", emoji:"🤝", full:"también", rule:RULE_TIP.m},
+  {word:"escri*ir", answer:"b", emoji:"✍️", full:"escribir", rule:RULE_TIP.bir},
+  {word:"reci*ir", answer:"b", emoji:"📬", full:"recibir", rule:RULE_TIP.bir},
+  {word:"su*ir", answer:"b", emoji:"⬆️", full:"subir", rule:RULE_TIP.bir},
+  {word:"descri*ir", answer:"b", emoji:"📝", full:"describir", rule:RULE_TIP.bir},
+  {word:"prohi*ir", answer:"b", emoji:"🚫", full:"prohibir", rule:RULE_TIP.bir},
+  {word:"juga*a", answer:"b", emoji:"⚽", full:"jugaba", rule:RULE_TIP.imperfecto},
+  {word:"canta*a", answer:"b", emoji:"🎤", full:"cantaba", rule:RULE_TIP.imperfecto},
+  {word:"nada*a", answer:"b", emoji:"🏊", full:"nadaba", rule:RULE_TIP.imperfecto},
+  {word:"esta*a", answer:"b", emoji:"🙂", full:"estaba", rule:RULE_TIP.imperfecto},
+  {word:"i*a", answer:"b", emoji:"🚶", full:"iba", rule:RULE_TIP.imperfecto},
+  {word:"*iblioteca", answer:"b", emoji:"📚", full:"biblioteca"},
+  {word:"*otella", answer:"b", emoji:"🍾", full:"botella"},
+  {word:"*ufanda", answer:"b", emoji:"🧣", full:"bufanda", rule:RULE_TIP.bu},
+  {word:"*razo", answer:"b", emoji:"💪", full:"brazo", rule:RULE_TIP.consonante},
+  {word:"*anco", answer:"b", emoji:"🏦", full:"banco"},
+  {word:"*onito", answer:"b", emoji:"😊", full:"bonito"},
+  {word:"be*ía", answer:"b", emoji:"🥛", full:"bebía", rule:RULE_TIP.bdsh},
+  {word:"de*ía", answer:"b", emoji:"📌", full:"debía", rule:RULE_TIP.bdsh},
+  {word:"sa*ía", answer:"b", emoji:"🧠", full:"sabía", rule:RULE_TIP.bdsh},
+  {word:"ha*ía", answer:"b", emoji:"🗓️", full:"había", rule:RULE_TIP.bdsh},
+  {word:"o*tener", answer:"b", emoji:"🏆", full:"obtener", rule:RULE_TIP.consonante},
+
+  {word:"*aca", answer:"v", emoji:"🐄", full:"vaca"},
+  {word:"*entana", answer:"v", emoji:"🪟", full:"ventana"},
+  {word:"a*ión", answer:"v", emoji:"✈️", full:"avión"},
+  {word:"nue*o", answer:"v", emoji:"🆕", full:"nuevo", rule:RULE_TIP.adj},
+  {word:"in*ierno", answer:"v", emoji:"❄️", full:"invierno", rule:RULE_TIP.n},
+  {word:"hue*o", answer:"v", emoji:"🥚", full:"huevo"},
+  {word:"u*a", answer:"v", emoji:"🍇", full:"uva"},
+  {word:"*aso", answer:"v", emoji:"🥤", full:"vaso"},
+  {word:"*ela", answer:"v", emoji:"🕯️", full:"vela"},
+  {word:"*erde", answer:"v", emoji:"🟢", full:"verde"},
+  {word:"*iaje", answer:"v", emoji:"🧳", full:"viaje"},
+  {word:"*olar", answer:"v", emoji:"🕊️", full:"volar"},
+  {word:"in*itar", answer:"v", emoji:"💌", full:"invitar", rule:RULE_TIP.n},
+  {word:"en*iar", answer:"v", emoji:"✉️", full:"enviar", rule:RULE_TIP.n},
+  {word:"con*ersar", answer:"v", emoji:"💬", full:"conversar", rule:RULE_TIP.n},
+  {word:"*aliente", answer:"v", emoji:"🦸", full:"valiente"},
+  {word:"*estido", answer:"v", emoji:"👗", full:"vestido"},
+  {word:"*iolín", answer:"v", emoji:"🎻", full:"violín"},
+  {word:"*olcán", answer:"v", emoji:"🌋", full:"volcán"},
+  {word:"jo*en", answer:"v", emoji:"🧑", full:"joven"},
+  {word:"nue*e", answer:"v", emoji:"9️⃣", full:"nueve"},
+  {word:"con*ivir", answer:"v", emoji:"🤝", full:"convivir", rule:RULE_TIP.n},
+  {word:"uni*erso", answer:"v", emoji:"🌌", full:"universo"},
+  {word:"e*aluar", answer:"v", emoji:"📊", full:"evaluar", rule:RULE_TIP.eva},
+  {word:"e*itar", answer:"v", emoji:"🚫", full:"evitar", rule:RULE_TIP.eva},
+  {word:"e*idente", answer:"v", emoji:"💡", full:"evidente", rule:RULE_TIP.eva},
+  {word:"e*ento", answer:"v", emoji:"🎉", full:"evento", rule:RULE_TIP.eva},
+  {word:"sua*e", answer:"v", emoji:"🧸", full:"suave", rule:RULE_TIP.adj},
+  {word:"acti*o", answer:"v", emoji:"🏃", full:"activo", rule:RULE_TIP.adj},
+  {word:"positi*o", answer:"v", emoji:"👍", full:"positivo", rule:RULE_TIP.adj},
+  {word:"bre*e", answer:"v", emoji:"⏱️", full:"breve", rule:RULE_TIP.adj},
+  {word:"*ivir", answer:"v", emoji:"🏠", full:"vivir", rule:RULE_TIP.excepcion},
+  {word:"ser*ir", answer:"v", emoji:"🍽️", full:"servir", rule:RULE_TIP.excepcion},
+  {word:"her*ir", answer:"v", emoji:"♨️", full:"hervir", rule:RULE_TIP.excepcion},
+  {word:"ol*idar", answer:"v", emoji:"🤦", full:"olvidar", rule:RULE_TIP.ol},
+  {word:"resol*er", answer:"v", emoji:"🧩", full:"resolver", rule:RULE_TIP.ol},
+  {word:"estu*e", answer:"v", emoji:"🕰️", full:"estuve", rule:RULE_TIP.pasadoEstar},
+  {word:"andu*e", answer:"v", emoji:"🚶", full:"anduve", rule:RULE_TIP.pasadoEstar},
+  {word:"tu*e", answer:"v", emoji:"🙌", full:"tuve", rule:RULE_TIP.pasadoEstar}
+];
+
+/* ================== ESTADO GLOBAL ================== */
+let stars = parseInt(localStorage.getItem('catbull_stars')||'0',10);
+let best = JSON.parse(localStorage.getItem('catbull_best')||'{}');
+let lastGame = 'game1';
+let studentName = localStorage.getItem('catbull_nombre') || '';
+
+let g1=null, g2=null, g3=null, p1=null, p2=null, p3=null, p4=null;
+let cuadernoStars = {p1:0,p2:0,p3:0,p4:0,p5:0};
+
+/* ================== UTILIDADES ================== */
+function shuffle(arr){ const a=arr.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+function pickWords(n){ return shuffle(WORD_BANK).slice(0,n); }
+function saveStars(){ localStorage.setItem('catbull_stars', String(stars)); document.getElementById('total-stars').textContent = stars; }
+function saveBest(game, value){ if(!best[game] || value > best[game]) best[game] = value; localStorage.setItem('catbull_best', JSON.stringify(best)); renderBest(); }
+function renderBest(){
+  const labels = {game1:'best-game1', game2:'best-game2', game3:'best-game3'};
+  Object.keys(labels).forEach(g=>{
+    const el = document.getElementById(labels[g]);
+    if(!el) return;
+    el.textContent = best[g] ? ('Mejor: ' + best[g] + (g==='game2' ? ' (menos intentos)' : ' pts')) : '';
+  });
+  const bc = document.getElementById('best-cuaderno');
+  if(bc) bc.textContent = best.cuaderno ? ('Completado ⭐ ' + best.cuaderno) : '';
+}
+function showScreen(id){ document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active')); document.getElementById(id).classList.add('active'); }
+function goToMenu(){ showScreen('screen-menu'); }
+function goHome(){ showScreen('screen-home'); }
+function confirmExit(target){ if(confirm('¿Seguro que quieres salir? Perderás tu progreso de esta ronda.')){ showScreen(target); } }
+function setMood(svgId, mood){ const el=document.getElementById(svgId); if(!el) return; el.classList.remove('mood-normal','mood-happy','mood-sad'); el.classList.add('mood-'+mood); }
+function bounceCat(svgId){ const el=document.getElementById(svgId); if(!el) return; el.classList.remove('bounce'); void el.offsetWidth; el.classList.add('bounce'); }
+function shakeCat(svgId){ const el=document.getElementById(svgId); if(!el) return; el.classList.remove('shake'); void el.offsetWidth; el.classList.add('shake'); }
+function playTone(freq, duration){
+  try{
+    const ctx = new (window.AudioContext||window.webkitAudioContext)();
+    const osc = ctx.createOscillator(); const gain = ctx.createGain();
+    osc.connect(gain); gain.connect(ctx.destination);
+    osc.frequency.value = freq; osc.type = 'sine';
+    gain.gain.setValueAtTime(0.2, ctx.currentTime);
+    osc.start();
+    gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + duration);
+    osc.stop(ctx.currentTime + duration);
+  }catch(e){}
+}
+function speak(text){
+  try{
+    if(!('speechSynthesis' in window)) return;
+    window.speechSynthesis.cancel();
+    const utter = new SpeechSynthesisUtterance(text);
+    utter.lang = 'es-ES'; utter.rate = 0.85;
+    const voices = window.speechSynthesis.getVoices();
+    const esVoice = voices.find(v=>v.lang && v.lang.toLowerCase().startsWith('es'));
+    if(esVoice) utter.voice = esVoice;
+    window.speechSynthesis.speak(utter);
+  }catch(e){}
+}
+function confettiBurst(){
+  const layer = document.getElementById('confettiLayer');
+  const pieces = ['🎉','✨','⭐','🎊','💜','🐾'];
+  for(let i=0;i<24;i++){
+    const span = document.createElement('span');
+    span.className = 'confetti-piece';
+    span.textContent = pieces[Math.floor(Math.random()*pieces.length)];
+    span.style.left = Math.random()*100 + 'vw';
+    span.style.animationDuration = (1 + Math.random()*0.8) + 's';
+    span.style.fontSize = (16 + Math.random()*14) + 'px';
+    layer.appendChild(span);
+    setTimeout(()=>span.remove(), 2200);
+  }
+}
+function heartsString(n){ let s=''; for(let i=0;i<3;i++) s += i<n ? '❤️' : '🤍'; return s; }
+function starsForScore(score, total){ const ratio = score/total; if(ratio>=0.9) return 3; if(ratio>=0.6) return 2; return 1; }
+
+/* ================== JUEGO 1: Atrapa la Letra ================== */
+function startGame1(){
+  lastGame='game1'; g1 = { hearts:3, score:0, round:0, total:8, words: pickWords(8) };
+  showScreen('screen-game1'); setMood('g1-cat','normal'); nextRoundGame1();
+}
+function nextRoundGame1(){
+  document.getElementById('g1-feedback').textContent=''; document.getElementById('g1-feedback').className='feedback';
+  document.getElementById('g1-tip').style.display='none';
+  const gameKey = g1.isRepaso ? 'repaso' : 'game1';
+  if(g1.hearts<=0){ finishGame(gameKey, g1.score, g1.total); return; }
+  if(g1.round>=g1.total){ finishGame(gameKey, g1.score, g1.total); return; }
+  const w = g1.words[g1.round]; g1.current = w;
+  document.getElementById('g1-emoji').textContent = w.emoji;
+  document.getElementById('g1-word').innerHTML = w.word.replace('*','<span class="blank">_</span>');
+  document.getElementById('g1-hearts').textContent = heartsString(g1.hearts);
+  document.getElementById('g1-progress').textContent = (g1.isRepaso ? 'Repaso ' : 'Ronda ') + (g1.round+1) + '/' + g1.total;
+  const bBtn=document.getElementById('g1-btn-b'), vBtn=document.getElementById('g1-btn-v');
+  [bBtn,vBtn].forEach(b=>{ b.disabled=false; b.classList.remove('correct','wrong'); });
+}
+function speakCurrentG1(){ if(g1 && g1.current) speak(g1.current.full); }
+function answerGame1(letter){
+  const w = g1.current;
+  const bBtn=document.getElementById('g1-btn-b'), vBtn=document.getElementById('g1-btn-v');
+  bBtn.disabled=true; vBtn.disabled=true;
+  const chosenBtn = letter==='b'?bBtn:vBtn; const correctBtn = w.answer==='b'?bBtn:vBtn;
+  const fb = document.getElementById('g1-feedback');
+  document.getElementById('g1-word').innerHTML = w.word.replace('*','<span class="blank">'+w.answer.toUpperCase()+'</span>');
+  if(letter===w.answer){
+    g1.score++; chosenBtn.classList.add('correct');
+    fb.textContent = '¡Correcto! ' + w.full.charAt(0).toUpperCase()+w.full.slice(1) + ' 🎉';
+    fb.className='feedback ok'; setMood('g1-cat','happy'); bounceCat('g1-cat'); playTone(880,0.15);
+    clearMissed(w.full);
+  } else {
+    g1.hearts--; chosenBtn.classList.add('wrong'); correctBtn.classList.add('correct');
+    fb.textContent = 'Casi... es "' + w.full + '"'; fb.className='feedback bad';
+    setMood('g1-cat','sad'); shakeCat('g1-cat'); playTone(220,0.3);
+    markMissed(w.full);
+  }
+  if(w.rule){ const tip=document.getElementById('g1-tip'); tip.textContent='💡 Catbull dice: ' + w.rule; tip.style.display='block'; }
+  g1.round++;
+  setTimeout(()=>{ setMood('g1-cat','normal'); nextRoundGame1(); }, 1300);
+}
+
+/* ================== REPASO (repetición espaciada de errores) ================== */
+function getMissedWords(){ return JSON.parse(localStorage.getItem('catbull_missed')||'[]'); }
+function markMissed(full){
+  const missed = getMissedWords();
+  if(!missed.includes(full)){ missed.push(full); localStorage.setItem('catbull_missed', JSON.stringify(missed)); }
+  renderRepasoCount();
+}
+function clearMissed(full){
+  const missed = getMissedWords();
+  const idx = missed.indexOf(full);
+  if(idx>-1){ missed.splice(idx,1); localStorage.setItem('catbull_missed', JSON.stringify(missed)); }
+  renderRepasoCount();
+}
+function renderRepasoCount(){
+  const el = document.getElementById('repaso-count');
+  if(!el) return;
+  const n = getMissedWords().length;
+  el.textContent = n>0 ? (n + ' palabra' + (n===1?'':'s') + ' pendiente' + (n===1?'':'s')) : '¡Todo al día! ✨';
+}
+function startRepaso(){
+  const missed = getMissedWords();
+  const pool = WORD_BANK.filter(w=>missed.includes(w.full));
+  if(pool.length===0){
+    alert('¡Todavía no tienes palabras para repasar! Juega "Atrapa la Letra" o "¿Cuál está bien escrita?" y Catbull anotará las que se te dificulten para practicarlas aquí.');
+    return;
+  }
+  lastGame='repaso';
+  const n = Math.min(pool.length, 10);
+  g1 = { hearts:3, score:0, round:0, total:n, words: shuffle(pool).slice(0,n), isRepaso:true };
+  showScreen('screen-game1'); setMood('g1-cat','normal'); nextRoundGame1();
+}
+
+/* ================== JUEGO 3: ¿Cuál está bien escrita? ================== */
+function startGame3(){
+  lastGame='game3'; g3 = { hearts:3, score:0, round:0, total:8, words: pickWords(8) };
+  showScreen('screen-game3'); setMood('g3-cat','normal'); nextRoundGame3();
+}
+function nextRoundGame3(){
+  document.getElementById('g3-feedback').textContent=''; document.getElementById('g3-feedback').className='feedback';
+  document.getElementById('g3-tip').style.display='none';
+  if(g3.hearts<=0){ finishGame('game3', g3.score, g3.total); return; }
+  if(g3.round>=g3.total){ finishGame('game3', g3.score, g3.total); return; }
+  const w = g3.words[g3.round]; g3.current = w;
+  const correctWord = w.word.replace('*', w.answer);
+  const wrongLetter = w.answer==='b' ? 'v':'b';
+  const wrongWord = w.word.replace('*', wrongLetter);
+  const order = Math.random()<0.5 ? [correctWord, wrongWord] : [wrongWord, correctWord];
+  g3.correctIndex = order[0]===correctWord ? 0 : 1;
+  document.getElementById('g3-emoji').textContent = w.emoji;
+  document.getElementById('g3-progress').textContent = 'Ronda ' + (g3.round+1) + '/' + g3.total;
+  document.getElementById('g3-hearts').textContent = heartsString(g3.hearts);
+  const opt0=document.getElementById('g3-opt-0'), opt1=document.getElementById('g3-opt-1');
+  opt0.textContent = order[0]; opt1.textContent = order[1];
+  [opt0,opt1].forEach(o=>{ o.disabled=false; o.classList.remove('correct','wrong'); });
+}
+function answerGame3(idx){
+  const w = g3.current;
+  const opt0=document.getElementById('g3-opt-0'), opt1=document.getElementById('g3-opt-1');
+  opt0.disabled=true; opt1.disabled=true;
+  const chosen = idx===0?opt0:opt1; const correctBtn = g3.correctIndex===0?opt0:opt1;
+  const fb = document.getElementById('g3-feedback');
+  if(idx===g3.correctIndex){
+    g3.score++; chosen.classList.add('correct');
+    fb.textContent = '¡Sí! Se escribe "' + w.full + '" 🎉'; fb.className='feedback ok';
+    setMood('g3-cat','happy'); bounceCat('g3-cat'); playTone(880,0.15);
+    clearMissed(w.full);
+  } else {
+    g3.hearts--; chosen.classList.add('wrong'); correctBtn.classList.add('correct');
+    fb.textContent = 'La correcta es "' + w.full + '"'; fb.className='feedback bad';
+    setMood('g3-cat','sad'); shakeCat('g3-cat'); playTone(220,0.3);
+    markMissed(w.full);
+  }
+  if(w.rule){ const tip=document.getElementById('g3-tip'); tip.textContent='💡 Catbull dice: ' + w.rule; tip.style.display='block'; }
+  g3.round++;
+  setTimeout(()=>{ setMood('g3-cat','normal'); nextRoundGame3(); }, 1300);
+}
+
+/* ================== JUEGO 2: Memorama Mágico ================== */
+function startGame2(){
+  lastGame='game2'; const chosen = pickWords(6); const cards = [];
+  chosen.forEach((w,i)=>{ cards.push({pairId:i,type:'emoji',display:w.emoji}); cards.push({pairId:i,type:'word',display:w.full}); });
+  g2 = { moves:0, matchedPairs:0, totalPairs:chosen.length, first:null, lock:false, cards: shuffle(cards) };
+  showScreen('screen-game2'); document.getElementById('g2-feedback').textContent='';
+  renderGrid(); document.getElementById('g2-moves').textContent='Intentos: 0';
+  document.getElementById('g2-progress').textContent='Parejas 0/' + g2.totalPairs;
+}
+function renderGrid(){
+  const grid = document.getElementById('g2-grid'); grid.innerHTML='';
+  g2.cards.forEach((card,idx)=>{
+    const div = document.createElement('div'); div.className='memo-card'; div.id='memo-'+idx;
+    div.onclick = ()=>flipCard(idx);
+    div.innerHTML = '<div class="memo-inner"><div class="memo-front">🐾</div><div class="memo-back back-'+card.type+'">' + card.display + '</div></div>';
+    grid.appendChild(div);
+  });
+}
+function flipCard(idx){
+  if(g2.lock) return;
+  const card = g2.cards[idx]; const el = document.getElementById('memo-'+idx);
+  if(el.classList.contains('flipped') || el.classList.contains('matched')) return;
+  el.classList.add('flipped');
+  if(g2.first===null){ g2.first=idx; return; }
+  if(g2.first===idx) return;
+  g2.lock=true; g2.moves++;
+  document.getElementById('g2-moves').textContent='Intentos: ' + g2.moves;
+  const firstCard = g2.cards[g2.first]; const firstEl = document.getElementById('memo-'+g2.first);
+  if(firstCard.pairId===card.pairId){
+    setTimeout(()=>{
+      firstEl.classList.add('matched'); el.classList.add('matched'); g2.matchedPairs++;
+      document.getElementById('g2-progress').textContent='Parejas ' + g2.matchedPairs + '/' + g2.totalPairs;
+      g2.first=null; g2.lock=false; playTone(880,0.15);
+      if(g2.matchedPairs>=g2.totalPairs) setTimeout(()=>finishGame2(), 500);
+    }, 500);
+  } else {
+    playTone(220,0.3);
+    setTimeout(()=>{ firstEl.classList.remove('flipped'); el.classList.remove('flipped'); g2.first=null; g2.lock=false; }, 800);
+  }
+}
+function finishGame2(){
+  let starsEarned;
+  if(g2.moves <= g2.totalPairs+2) starsEarned=3; else if(g2.moves <= g2.totalPairs+6) starsEarned=2; else starsEarned=1;
+  stars += starsEarned; saveStars();
+  const bestMoves = best.game2 ? Math.min(best.game2, g2.moves) : g2.moves;
+  best.game2 = bestMoves; localStorage.setItem('catbull_best', JSON.stringify(best)); renderBest();
+  renderResult(starsEarned, '¡Encontraste todas las parejas!', 'Intentos usados: ' + g2.moves,
+    'Jugar de nuevo', ()=>startGame2(), 'Menú de juegos', ()=>showScreen('screen-games-menu'), 'cat-result');
+}
+
+/* ================== RESULTADOS GENÉRICOS (minijuegos) ================== */
+function finishGame(game, score, total){
+  const starsEarned = starsForScore(score, total);
+  stars += starsEarned; saveStars();
+  if(game !== 'repaso') saveBest(game, score);
+  const replayFn = game==='game1' ? startGame1 : game==='game3' ? startGame3 : startRepaso;
+  const msg = game==='repaso'
+    ? (score===total ? '¡Repasaste todo sin errores! 🎉' : '¡Buen repaso!')
+    : (score===total ? '¡Puntaje perfecto!' : '¡Buen trabajo!');
+  renderResult(starsEarned, msg, 'Puntaje: ' + score + '/' + total,
+    'Jugar de nuevo', replayFn, 'Menú de juegos', ()=>showScreen('screen-games-menu'), 'cat-result');
+}
+function renderResult(starsEarned, msg, scoreText, primaryLabel, primaryAction, secondaryLabel, secondaryAction, catId){
+  document.getElementById('result-msg').textContent = msg;
+  document.getElementById('result-score').textContent = scoreText;
+  document.getElementById('result-stars').textContent = '⭐'.repeat(starsEarned) + '☆'.repeat(3-starsEarned);
+  const pBtn = document.getElementById('result-btn-primary');
+  const sBtn = document.getElementById('result-btn-secondary');
+  pBtn.textContent = primaryLabel; pBtn.onclick = primaryAction;
+  sBtn.textContent = secondaryLabel; sBtn.onclick = secondaryAction;
+  showScreen('screen-result');
+  setMood(catId||'cat-result', starsEarned>=2 ? 'happy':'normal');
+  if(starsEarned>=2) confettiBurst();
+}
+
+/* ================== CUADERNO: INTRO ================== */
+const MESES = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+function startCuaderno(){
+  document.getElementById('input-nombre').value = studentName;
+  const d = new Date();
+  document.getElementById('fecha-hoy').textContent = d.getDate() + ' de ' + MESES[d.getMonth()] + ' de ' + d.getFullYear();
+  cuadernoStars = {p1:0,p2:0,p3:0,p4:0,p5:0};
+  showScreen('screen-cuaderno-intro');
+}
+
+/* ================== PARTE 1: completar oraciones con B/V ================== */
+const PARTE1_DATA = [
+  {template:'La a#uela preparó una deliciosa sopa.', answer:'b', full:'abuela'},
+  {template:'Mi hermano es muy #aliente.', answer:'v', full:'valiente'},
+  {template:'El li#ro que leí fue muy interesante.', answer:'b', full:'libro'},
+  {template:'Mi hermano canta muy #ien.', answer:'b', full:'bien'},
+  {template:'Hoy hace mucho #iento.', answer:'v', full:'viento'},
+  {template:'La #icicleta es de color azul.', answer:'b', full:'bicicleta'},
+  {template:'Ese cuento me pareció increí#le.', answer:'b', full:'increíble'},
+  {template:'Mi papá conduce un #ehículo rojo.', answer:'v', full:'vehículo'},
+  {template:'La niña tomó un #aso de leche.', answer:'v', full:'vaso'},
+  {template:'El oso es un animal sal#aje.', answer:'v', full:'salvaje'}
+];
+function startParte1(){
+  studentName = document.getElementById('input-nombre').value.trim();
+  localStorage.setItem('catbull_nombre', studentName);
+  lastGame='parte1'; p1 = { score:0, round:0, total:PARTE1_DATA.length, items: shuffle(PARTE1_DATA) };
+  showScreen('screen-parte1'); setMood('catbull-p1','normal'); nextParte1();
+}
+function nextParte1(){
+  document.getElementById('p1-feedback').textContent=''; document.getElementById('p1-feedback').className='feedback';
+  if(p1.round >= p1.total){ finishParte('p1', p1.score, p1.total, startParte2); return; }
+  const it = p1.items[p1.round]; p1.current = it;
+  document.getElementById('p1-sentence').innerHTML = it.template.replace('#','<span class="blank">_</span>');
+  document.getElementById('p1-progress').textContent = (p1.round+1) + '/' + p1.total;
+  const bBtn=document.getElementById('p1-btn-b'), vBtn=document.getElementById('p1-btn-v');
+  [bBtn,vBtn].forEach(b=>{ b.disabled=false; b.classList.remove('correct','wrong'); });
+}
+function speakCurrentP1(){ if(p1 && p1.current) speak(p1.current.template.replace('#', p1.current.answer)); }
+function answerParte1(letter){
+  const it = p1.current;
+  const bBtn=document.getElementById('p1-btn-b'), vBtn=document.getElementById('p1-btn-v');
+  bBtn.disabled=true; vBtn.disabled=true;
+  const chosenBtn = letter==='b'?bBtn:vBtn; const correctBtn = it.answer==='b'?bBtn:vBtn;
+  const fb = document.getElementById('p1-feedback');
+  document.getElementById('p1-sentence').innerHTML = it.template.replace('#','<span class="blank">'+it.answer.toUpperCase()+'</span>');
+  if(letter===it.answer){
+    p1.score++; chosenBtn.classList.add('correct'); fb.textContent='¡Correcto! 🎉'; fb.className='feedback ok';
+    setMood('catbull-p1','happy'); bounceCat('catbull-p1'); playTone(880,0.15);
+  } else {
+    chosenBtn.classList.add('wrong'); correctBtn.classList.add('correct');
+    fb.textContent='Es "' + it.full + '"'; fb.className='feedback bad';
+    setMood('catbull-p1','sad'); shakeCat('catbull-p1'); playTone(220,0.3);
+  }
+  p1.round++;
+  setTimeout(()=>{ setMood('catbull-p1','normal'); nextParte1(); }, 1200);
+}
+
+/* ================== PARTE 2: elegir la palabra correcta ================== */
+const PARTE2_DATA = [
+  {correct:'Bicicleta', wrong:'Vicicleta'},
+  {correct:'Vaca', wrong:'Baca'},
+  {correct:'Biblioteca', wrong:'Viblioteca'},
+  {correct:'Ventana', wrong:'Bentana'},
+  {correct:'Bufanda', wrong:'Vufanda'},
+  {correct:'Viaje', wrong:'Biaje'},
+  {correct:'Botella', wrong:'Votella'},
+  {correct:'Volcán', wrong:'Bolcán'}
+];
+function startParte2(){
+  lastGame='parte2'; p2 = { score:0, round:0, total:PARTE2_DATA.length, items: shuffle(PARTE2_DATA) };
+  showScreen('screen-parte2'); setMood('catbull-p2','normal'); nextParte2();
+}
+function nextParte2(){
+  document.getElementById('p2-feedback').textContent=''; document.getElementById('p2-feedback').className='feedback';
+  if(p2.round >= p2.total){ finishParte('p2', p2.score, p2.total, startParte3); return; }
+  const it = p2.items[p2.round]; p2.current = it;
+  const order = Math.random()<0.5 ? [it.correct, it.wrong] : [it.wrong, it.correct];
+  p2.correctIndex = order[0]===it.correct ? 0 : 1;
+  document.getElementById('p2-progress').textContent = (p2.round+1) + '/' + p2.total;
+  const opt0=document.getElementById('p2-opt-0'), opt1=document.getElementById('p2-opt-1');
+  opt0.textContent = order[0]; opt1.textContent = order[1];
+  [opt0,opt1].forEach(o=>{ o.disabled=false; o.classList.remove('correct','wrong'); });
+}
+function answerParte2(idx){
+  const it = p2.current;
+  const opt0=document.getElementById('p2-opt-0'), opt1=document.getElementById('p2-opt-1');
+  opt0.disabled=true; opt1.disabled=true;
+  const chosen = idx===0?opt0:opt1; const correctBtn = p2.correctIndex===0?opt0:opt1;
+  const fb = document.getElementById('p2-feedback');
+  if(idx===p2.correctIndex){
+    p2.score++; chosen.classList.add('correct'); fb.textContent='¡Correcto! 🎉'; fb.className='feedback ok';
+    setMood('catbull-p2','happy'); bounceCat('catbull-p2'); playTone(880,0.15);
+  } else {
+    chosen.classList.add('wrong'); correctBtn.classList.add('correct');
+    fb.textContent='Es "' + it.correct + '"'; fb.className='feedback bad';
+    setMood('catbull-p2','sad'); shakeCat('catbull-p2'); playTone(220,0.3);
+  }
+  p2.round++;
+  setTimeout(()=>{ setMood('catbull-p2','normal'); nextParte2(); }, 1200);
+}
+
+/* ================== PARTE 3: corrige el error ================== */
+const PARTE3_DATA = [
+  {wrong:'bentana', template:'#entana', answer:'v', full:'ventana'},
+  {wrong:'vicicleta', template:'#icicleta', answer:'b', full:'bicicleta'},
+  {wrong:'baca', template:'#aca', answer:'v', full:'vaca'},
+  {wrong:'votella', template:'#otella', answer:'b', full:'botella'},
+  {wrong:'bibir', template:'#ivir', answer:'v', full:'vivir'},
+  {wrong:'berano', template:'#erano', answer:'v', full:'verano'}
+];
+function startParte3(){
+  lastGame='parte3'; p3 = { score:0, round:0, total:PARTE3_DATA.length, items: shuffle(PARTE3_DATA) };
+  showScreen('screen-parte3'); setMood('catbull-p3','normal'); nextParte3();
+}
+function nextParte3(){
+  document.getElementById('p3-feedback').textContent=''; document.getElementById('p3-feedback').className='feedback';
+  if(p3.round >= p3.total){ finishParte('p3', p3.score, p3.total, startParte4); return; }
+  const it = p3.items[p3.round]; p3.current = it;
+  document.getElementById('p3-wrong').textContent = it.wrong;
+  document.getElementById('p3-word').innerHTML = it.template.replace('#','<span class="blank">_</span>');
+  document.getElementById('p3-progress').textContent = (p3.round+1) + '/' + p3.total;
+  const bBtn=document.getElementById('p3-btn-b'), vBtn=document.getElementById('p3-btn-v');
+  [bBtn,vBtn].forEach(b=>{ b.disabled=false; b.classList.remove('correct','wrong'); });
+}
+function speakCurrentP3(){ if(p3 && p3.current) speak(p3.current.full); }
+function answerParte3(letter){
+  const it = p3.current;
+  const bBtn=document.getElementById('p3-btn-b'), vBtn=document.getElementById('p3-btn-v');
+  bBtn.disabled=true; vBtn.disabled=true;
+  const chosenBtn = letter==='b'?bBtn:vBtn; const correctBtn = it.answer==='b'?bBtn:vBtn;
+  const fb = document.getElementById('p3-feedback');
+  document.getElementById('p3-word').innerHTML = it.template.replace('#','<span class="blank">'+it.answer.toUpperCase()+'</span>');
+  if(letter===it.answer){
+    p3.score++; chosenBtn.classList.add('correct'); fb.textContent='¡Corregido! Es "'+it.full+'" 🎉'; fb.className='feedback ok';
+    setMood('catbull-p3','happy'); bounceCat('catbull-p3'); playTone(880,0.15);
+  } else {
+    chosenBtn.classList.add('wrong'); correctBtn.classList.add('correct');
+    fb.textContent='La palabra correcta es "' + it.full + '"'; fb.className='feedback bad';
+    setMood('catbull-p3','sad'); shakeCat('catbull-p3'); playTone(220,0.3);
+  }
+  p3.round++;
+  setTimeout(()=>{ setMood('catbull-p3','normal'); nextParte3(); }, 1200);
+}
+
+/* ================== PARTE 4: banco de palabras ================== */
+const PARTE4_DATA = [
+  {template:'En las vacaciones de ____ voy a la playa.', answer:'verano'},
+  {template:'La ____ da leche.', answer:'vaca'},
+  {template:'Guardé agua en una ____.', answer:'botella'},
+  {template:'Fuimos a la ____ para leer cuentos.', answer:'biblioteca'},
+  {template:'El ____ navegó por el mar.', answer:'barco'}
+];
+function startParte4(){
+  lastGame='parte4';
+  p4 = { placements:{}, selectedChip:null, bank: shuffle(['barco','vaca','biblioteca','verano','botella']), sentences: shuffle(PARTE4_DATA) };
+  showScreen('screen-parte4'); setMood('catbull-p4','normal');
+  renderParte4();
+  document.getElementById('p4-feedback').textContent='';
+}
+function renderParte4(){
+  const cont = document.getElementById('p4-sentences'); cont.innerHTML='';
+  p4.sentences.forEach((s,i)=>{
+    const div = document.createElement('div'); div.className='p4-sentence';
+    const placed = p4.placements[i];
+    const blankHtml = '<span class="p4-blank" id="p4-blank-'+i+'" onclick="clickBlank('+i+')">' + (placed ? placed : '_______') + '</span>';
+    div.innerHTML = s.template.replace('____', blankHtml);
+    cont.appendChild(div);
+  });
+  const bankDiv = document.getElementById('p4-bank'); bankDiv.innerHTML='';
+  const usedWords = Object.values(p4.placements);
+  p4.bank.forEach(word=>{
+    const btn = document.createElement('button'); btn.className='word-chip'; btn.textContent = word;
+    const isUsed = usedWords.includes(word);
+    if(isUsed) btn.classList.add('used');
+    if(p4.selectedChip===word && !isUsed) btn.classList.add('selected');
+    btn.onclick = ()=>selectChip(word);
+    bankDiv.appendChild(btn);
+  });
+}
+function selectChip(word){
+  const usedWords = Object.values(p4.placements);
+  if(usedWords.includes(word)) return;
+  p4.selectedChip = (p4.selectedChip === word) ? null : word;
+  renderParte4();
+}
+function clickBlank(i){
+  if(p4.placements[i]){
+    delete p4.placements[i];
+    renderParte4();
+    return;
+  }
+  if(p4.selectedChip){
+    p4.placements[i] = p4.selectedChip;
+    p4.selectedChip = null;
+    renderParte4();
+  }
+}
+function checkParte4(){
+  const total = p4.sentences.length;
+  if(Object.keys(p4.placements).length < total){
+    document.getElementById('p4-feedback').textContent = 'Completa todas las oraciones antes de revisar 🙂';
+    document.getElementById('p4-feedback').className = 'feedback bad';
+    return;
+  }
+  let correct = 0;
+  p4.sentences.forEach((s,i)=>{
+    const el = document.getElementById('p4-blank-'+i);
+    if(p4.placements[i] === s.answer){ el.classList.add('filled'); el.classList.remove('wrong'); correct++; }
+    else { el.classList.add('wrong'); el.classList.remove('filled'); }
+  });
+  if(correct === total){
+    setMood('catbull-p4','happy'); bounceCat('catbull-p4'); playTone(880,0.15);
+    finishParte('p4', correct, total, startParte5);
+  } else {
+    setMood('catbull-p4','sad'); shakeCat('catbull-p4'); playTone(220,0.3);
+    document.getElementById('p4-feedback').textContent = 'Tienes ' + correct + '/' + total + ' correctas. Corrige las rojas y vuelve a revisar 💪';
+    document.getElementById('p4-feedback').className = 'feedback bad';
+    // liberar las incorrectas para reintentar
+    p4.sentences.forEach((s,i)=>{ if(p4.placements[i] !== s.answer) delete p4.placements[i]; });
+    setTimeout(()=>{ setMood('catbull-p4','normal'); renderParte4(); }, 1200);
+  }
+}
+
+/* ================== PARTE 5: escribe un cuento ================== */
+const PARTE5_WORDS = ['bicicleta','ventana','abuela','biblioteca','verano','bosque','viento','botella','barco','valiente'];
+function startParte5(){
+  lastGame='parte5';
+  showScreen('screen-parte5'); setMood('catbull-p5','normal');
+  document.getElementById('p5-textarea').value='';
+  const cl = document.getElementById('p5-checklist');
+  cl.innerHTML = PARTE5_WORDS.map(w=>'<span id="chk-'+w+'">'+w+'</span>').join('');
+  updateStoryCheck();
+}
+function updateStoryCheck(){
+  const text = document.getElementById('p5-textarea').value.toLowerCase();
+  let count = 0;
+  PARTE5_WORDS.forEach(w=>{
+    const el = document.getElementById('chk-'+w);
+    if(text.includes(w)){ el.classList.add('used'); count++; }
+    else { el.classList.remove('used'); }
+  });
+  document.getElementById('p5-counter').textContent = count + '/10 palabras usadas';
+  return count;
+}
+function finishParte5(){
+  const count = updateStoryCheck();
+  const text = document.getElementById('p5-textarea').value.trim();
+  localStorage.setItem('catbull_cuento', text);
+  let starsEarned;
+  if(count>=8) starsEarned=3; else if(count>=5) starsEarned=2; else starsEarned=1;
+  cuadernoStars.p5 = starsEarned;
+  stars += starsEarned; saveStars();
+  setMood('catbull-p5', starsEarned>=2?'happy':'normal');
+  if(starsEarned>=2) confettiBurst();
+  setTimeout(()=>showDiploma(), 400);
+}
+
+/* ================== FLUJO GENERAL DEL CUADERNO ================== */
+function finishParte(key, score, total, nextFn){
+  const starsEarned = starsForScore(score, total);
+  cuadernoStars[key] = starsEarned;
+  stars += starsEarned; saveStars();
+  const partNum = {p1:1,p2:2,p3:3,p4:4}[key];
+  renderResult(starsEarned, score===total ? '¡Parte '+partNum+' perfecta!' : '¡Parte '+partNum+' completa!', 'Puntaje: ' + score + '/' + total,
+    'Siguiente parte ⟶', nextFn, 'Menú principal', ()=>goToMenu(), 'cat-result');
+}
+
+/* ================== DIPLOMA ================== */
+function showDiploma(){
+  const totalStars = cuadernoStars.p1+cuadernoStars.p2+cuadernoStars.p3+cuadernoStars.p4+cuadernoStars.p5;
+  const bestSoFar = best.cuaderno || 0;
+  if(totalStars > bestSoFar){ best.cuaderno = totalStars; localStorage.setItem('catbull_best', JSON.stringify(best)); renderBest(); }
+  document.getElementById('diploma-nombre').textContent = studentName || 'Futura crack de la ortografía';
+  const d = new Date();
+  document.getElementById('diploma-fecha').textContent = d.getDate() + ' de ' + MESES[d.getMonth()] + ' de ' + d.getFullYear();
+  document.getElementById('diploma-stars').textContent = '⭐'.repeat(totalStars) + '☆'.repeat(15-totalStars);
+  const badgeNames = ['Parte 1 ✅','Parte 2 ✅','Parte 3 ✅','Parte 4 ✅','Parte 5 ✅'];
+  document.getElementById('diploma-badges').innerHTML = badgeNames.map(b=>'<span>'+b+'</span>').join('');
+  showScreen('screen-diploma');
+  setMood('catbull-diploma','happy');
+  confettiBurst();
+}
+
+/* ================== MASCOTA CATBULL (SVG) - versión "cool" ================== */
+function catbullSVG(id){
+  return '' +
+  '<svg viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg" class="catbull-svg mood-normal" id="'+id+'">' +
+    '<path d="M170,182 Q208,150 186,108 Q174,86 152,98" stroke="#141018" stroke-width="15" fill="none" stroke-linecap="round"/>' +
+    '<circle cx="184" cy="106" r="5" fill="#ffd54d"/>' +
+    '<ellipse cx="100" cy="176" rx="54" ry="36" fill="#141018"/>' +
+    '<ellipse cx="70" cy="207" rx="13" ry="9" fill="#141018"/>' +
+    '<ellipse cx="130" cy="207" rx="13" ry="9" fill="#141018"/>' +
+    '<path d="M78,152 Q100,166 122,152" stroke="#ffd54d" stroke-width="5" fill="none" stroke-linecap="round"/>' +
+    '<path d="M100,159 L96,168 L104,168 Z" fill="#ffd54d"/>' +
+    '<ellipse cx="100" cy="103" rx="60" ry="58" fill="#141018"/>' +
+    '<polygon points="52,66 38,18 84,52" fill="#141018"/>' +
+    '<polygon points="148,66 162,18 116,52" fill="#141018"/>' +
+    '<polygon points="56,58 49,33 72,50" fill="#ff6fae"/>' +
+    '<polygon points="144,58 151,33 128,50" fill="#ff6fae"/>' +
+    '<circle cx="153" cy="45" r="3" fill="#ffd54d"/>' +
+    '<line x1="153" y1="45" x2="153" y2="52" stroke="#ffd54d" stroke-width="2.5"/>' +
+    '<ellipse cx="72" cy="118" rx="12" ry="8" fill="#ff8fc7" opacity="0.55"/>' +
+    '<ellipse cx="128" cy="118" rx="12" ry="8" fill="#ff8fc7" opacity="0.55"/>' +
+    '<g class="eyes-set eyes-normal">' +
+      '<ellipse cx="74" cy="102" rx="15" ry="18" fill="#c8ffe0"/>' +
+      '<ellipse cx="126" cy="102" rx="15" ry="18" fill="#c8ffe0"/>' +
+      '<circle cx="76" cy="105" r="8" fill="#2a1740"/>' +
+      '<circle cx="128" cy="105" r="8" fill="#2a1740"/>' +
+      '<circle cx="79" cy="100" r="3" fill="#fff"/>' +
+      '<circle cx="131" cy="100" r="3" fill="#fff"/>' +
+      '<path d="M60,88 Q74,78 90,87" stroke="#141018" stroke-width="3" fill="none" stroke-linecap="round"/>' +
+      '<path d="M110,87 Q126,78 140,88" stroke="#141018" stroke-width="3" fill="none" stroke-linecap="round"/>' +
+    '</g>' +
+    '<g class="eyes-set eyes-happy">' +
+      '<path d="M60,102 Q74,86 90,102" stroke="#141018" stroke-width="6" fill="none" stroke-linecap="round"/>' +
+      '<path d="M110,102 Q126,86 142,102" stroke="#141018" stroke-width="6" fill="none" stroke-linecap="round"/>' +
+      '<path d="M170,70 L173,78 L181,80 L173,82 L170,90 L167,82 L159,80 L167,78 Z" fill="#ffd54d"/>' +
+    '</g>' +
+    '<g class="eyes-set eyes-sad">' +
+      '<ellipse cx="74" cy="108" rx="13" ry="15" fill="#c8ffe0"/>' +
+      '<ellipse cx="126" cy="108" rx="13" ry="15" fill="#c8ffe0"/>' +
+      '<circle cx="74" cy="113" r="7" fill="#2a1740"/>' +
+      '<circle cx="126" cy="113" r="7" fill="#2a1740"/>' +
+      '<path d="M58,86 Q74,96 88,88" stroke="#141018" stroke-width="3" fill="none" stroke-linecap="round"/>' +
+      '<path d="M112,88 Q126,96 142,86" stroke="#141018" stroke-width="3" fill="none" stroke-linecap="round"/>' +
+    '</g>' +
+    '<polygon points="100,118 92,127 108,127" fill="#ff6fae"/>' +
+    '<g stroke="#e8e8e8" stroke-width="2.5" stroke-linecap="round">' +
+      '<line x1="30" y1="112" x2="68" y2="116"/>' +
+      '<line x1="28" y1="126" x2="68" y2="124"/>' +
+      '<line x1="170" y1="112" x2="132" y2="116"/>' +
+      '<line x1="172" y1="126" x2="132" y2="124"/>' +
+    '</g>' +
+    '<path class="mouth mouth-normal" d="M100,127 Q100,137 89,134 M100,127 Q100,137 111,134" stroke="#141018" stroke-width="3.5" fill="none" stroke-linecap="round"/>' +
+    '<path class="mouth mouth-happy" d="M78,129 Q100,154 122,129" stroke="#141018" stroke-width="4" fill="none" stroke-linecap="round"/>' +
+    '<path class="mouth mouth-sad" d="M80,144 Q100,127 120,144" stroke="#141018" stroke-width="4" fill="none" stroke-linecap="round"/>' +
+  '</svg>';
+}
+function injectCatbulls(){
+  const ids = ['catbull-home','catbull-reglas','g1-cat','g3-cat','catbull-intro','catbull-p1','catbull-p2','catbull-p3','catbull-p4','catbull-p5','cat-result','catbull-diploma'];
+  const wraps = {
+    'catbull-home':'catbull-home-wrap','catbull-reglas':'catbull-reglas-wrap','g1-cat':'catbull-g1-wrap','g3-cat':'catbull-g3-wrap',
+    'catbull-intro':'catbull-intro-wrap','catbull-p1':'catbull-p1-wrap','catbull-p2':'catbull-p2-wrap','catbull-p3':'catbull-p3-wrap',
+    'catbull-p4':'catbull-p4-wrap','catbull-p5':'catbull-p5-wrap','cat-result':'catbull-result-wrap','catbull-diploma':'catbull-diploma-wrap'
+  };
+  ids.forEach(id=>{
+    const wrapEl = document.getElementById(wraps[id]);
+    if(wrapEl) wrapEl.innerHTML = catbullSVG(id);
+  });
+}
+
+/* ================== DECORACIÓN FLOTANTE ================== */
+function initDecor(){
+  const layer = document.getElementById('floatingDecor');
+  const icons = ['🐾','⭐','✨','💫'];
+  for(let i=0;i<10;i++){
+    const span = document.createElement('span');
+    span.textContent = icons[i % icons.length];
+    span.style.left = (Math.random()*95) + 'vw';
+    span.style.animationDelay = (Math.random()*9) + 's';
+    span.style.animationDuration = (7 + Math.random()*5) + 's';
+    layer.appendChild(span);
+  }
+}
+
+/* ================== INIT ================== */
+function init(){
+  injectCatbulls();
+  document.getElementById('total-stars').textContent = stars;
+  renderBest();
+  renderRepasoCount();
+  initDecor();
+  if('speechSynthesis' in window){ window.speechSynthesis.getVoices(); window.speechSynthesis.onvoiceschanged = ()=>{}; }
+}
+init();
+</script>
+</body>
+</html>
