@@ -248,7 +248,7 @@
 
   <!-- HOME -->
   <section class="screen" id="screen-home">
-    <button class="btn-back" onclick="switchProfile()">⟵ Cambiar jugadora</button>
+    <button class="btn-back" onclick="switchProfile()">⟵ Cambiar jugador/a</button>
     <h1>Ortografía con <span class="highlight">Macarena</span></h1>
     <p class="subtitle" id="home-greeting">¡Hola! 🌸</p>
     <div class="cat-wrap" id="macarena-home-wrap"></div>
@@ -433,7 +433,7 @@
     <div class="cat-wrap small" id="macarena-intro-wrap"></div>
     <h2>Mi Cuaderno de Ortografía</h2>
     <div class="form-card">
-      <p style="margin-top:0;">¡Hola, <b id="intro-nombre">amiga</b>! Vas a completar 5 partes: llenar espacios, elegir la palabra correcta, corregir errores, un banco de palabras y ¡tu propio cuento! Ganarás patitas 🐾 en cada parte.</p>
+      <p style="margin-top:0;">¡Hola, <b id="intro-nombre">amigo/a</b>! Vas a completar 5 partes: llenar espacios, elegir la palabra correcta, corregir errores, un banco de palabras y ¡tu propio cuento! Ganarás patitas 🐾 en cada parte.</p>
     </div>
     <button class="btn-primary" onclick="startParte1M()">Comenzar Parte 1 ⟶</button>
   </section>
@@ -957,7 +957,7 @@ let p1=null, p2=null, p3=null, p4=null;
 
 function startCuaderno(){
   const nombreEl = document.getElementById('intro-nombre');
-  if(nombreEl) nombreEl.textContent = profileInfo(currentProfile).name || 'amiga';
+  if(nombreEl) nombreEl.textContent = profileInfo(currentProfile).name || 'amigo/a';
   cuadernoPaws = {p1:0,p2:0,p3:0,p4:0,p5:0};
   showScreen('screen-cuaderno-intro');
 }

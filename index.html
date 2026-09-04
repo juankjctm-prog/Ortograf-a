@@ -713,7 +713,7 @@
     </div>
     <div class="menu-card" onclick="openMarcador()" style="border-color:var(--accent2);">
       <div class="icon">🏆</div>
-      <div class="info"><h3>Marcador de Jugadoras</h3><p>¿Quién lleva la delantera?</p></div>
+      <div class="info"><h3>Marcador de Jugadores</h3><p>¿Quién lleva la delantera?</p></div>
     </div>
     <div class="menu-card" onclick="openVoiceSettings()">
       <div class="icon">🎙️</div>
@@ -1029,7 +1029,7 @@
   <!-- SCREEN: MARCADOR -->
   <section class="screen" id="screen-marcador">
     <button class="btn-back" onclick="showScreen('screen-hub')">⟵ Hub Principal</button>
-    <h2>🏆 Marcador de Jugadoras</h2>
+    <h2>🏆 Marcador de Jugadores</h2>
     <div class="marcador-grid" id="marcador-grid"></div>
     <p class="subtitle" id="marcador-msg"></p>
   </section>
@@ -1433,9 +1433,9 @@ function ownedForProfile(id){ return JSON.parse(localStorage.getItem('multi_owne
 
 function getProfileRank(paws){
   if(paws >= 300) return { title: 'Leyenda del Multiverso', badge: '⚡🏆', bg: 'linear-gradient(90deg, #8b5cf6, #ec4899)' };
-  if(paws >= 150) return { title: 'Maestra de las Tildes', badge: '👑', bg: 'linear-gradient(90deg, #ec4899, #f59e0b)' };
+  if(paws >= 150) return { title: 'Maestro/a de las Tildes', badge: '👑', bg: 'linear-gradient(90deg, #ec4899, #f59e0b)' };
   if(paws >= 50)  return { title: 'Aprendiz del Multiverso', badge: '⭐', bg: 'linear-gradient(90deg, #3b82f6, #14b8a6)' };
-  return { title: 'Exploradora Ortográfica', badge: '🌱', bg: 'linear-gradient(90deg, #10b981, #059669)' };
+  return { title: 'Explorador/a Ortográfico/a', badge: '🌱', bg: 'linear-gradient(90deg, #10b981, #059669)' };
 }
 
 function getTopicForMascot(mascotKey){
@@ -1953,7 +1953,7 @@ function openRegisterModal(editId = null){
     selectedRegisterMascot = p.mascot || 'macarena';
     selectedRegisterColor = p.themeColor || '#ec4899';
   } else {
-    if(titleEl) titleEl.textContent = '🌸 ¡Nueva Jugadora!';
+    if(titleEl) titleEl.textContent = '🌸 ¡Nuevo/a Jugador/a!';
     const nameEl = document.getElementById('input-profile-name');
     if(nameEl) nameEl.value = '';
     selectedRegisterEmoji = '🌸';
