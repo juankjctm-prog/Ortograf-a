@@ -247,57 +247,159 @@
 
   /* Shop & House */
   .shop-tabs{ display:flex; gap:8px; width:100%; overflow-x:auto; margin-bottom:14px; padding-bottom:4px; }
-  .shop-tab{ background:rgba(255,255,255,.18); backdrop-filter:blur(8px); color:#fff; border:none; border-radius:999px; padding:9px 18px; font-weight:700; font-size:.85rem; cursor:pointer; white-space:nowrap; font-family:inherit; }
-  .shop-tab.active{ background:var(--accent2); color:#422006; box-shadow:0 0 12px var(--accent2); }
+  .shop-tab{ background:rgba(255,255,255,.18); backdrop-filter:blur(8px); color:#fff; border:none; border-radius:999px; padding:9px 18px; font-weight:700; font-size:.85rem; cursor:pointer; white-space:nowrap; font-family:inherit; transition:all .18s ease; }
+  .shop-tab.active{ background:var(--accent2); color:#422006; box-shadow:0 0 14px var(--accent2); transform:scale(1.04); }
   .shop-grid{ display:grid; grid-template-columns:1fr 1fr; gap:12px; width:100%; margin-bottom:16px; }
-  .shop-item{ background:#fff; border-radius:20px; padding:14px 10px; text-align:center; box-shadow:var(--shadow-md); border:2px solid #f3e8ff; }
-  .shop-item .graphic-wrap{ width:72px; height:72px; margin:0 auto 8px; border-radius:50%; display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg,#f3e8ff,#e9d5ff); box-shadow:inset 0 0 0 3px #fff, var(--shadow-sm); }
-  .shop-item .name{ font-weight:700; color:var(--primary-dark); font-size:.88rem; margin-bottom:4px; min-height:2.2em; }
-  .shop-item .price{ font-size:.85rem; color:#d97706; font-weight:700; margin-bottom:8px; }
-  .shop-item button{ width:100%; border:none; border-radius:12px; padding:8px; font-weight:700; font-family:inherit; cursor:pointer; background:var(--primary); color:#fff; font-size:.82rem; }
-  .shop-item button:disabled{ background:#e2e8f0; color:#94a3b8; cursor:default; }
-  .shop-item.owned{ opacity:.75; }
+  .shop-item{ background:linear-gradient(145deg, #ffffff 0%, #faf5ff 100%); border-radius:22px; padding:16px 12px; text-align:center; box-shadow:var(--shadow-md); border:2.5px solid #f3e8ff; transition:transform .18s ease, box-shadow .18s ease; position:relative; overflow:hidden; }
+  .shop-item:hover{ transform:translateY(-4px); box-shadow:var(--shadow-lg), var(--glow); border-color:var(--primary-light); }
+  .shop-item .graphic-wrap{ width:80px; height:80px; margin:0 auto 10px; border-radius:20px; display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg,#f3e8ff 0%,#e9d5ff 100%); box-shadow:inset 0 0 0 2px rgba(255,255,255,0.8), var(--shadow-sm); padding:6px; transition:transform .2s ease; }
+  .shop-item:hover .graphic-wrap{ transform:scale(1.08) rotate(2deg); }
+  .shop-item .name{ font-weight:700; color:var(--primary-dark); font-size:.9rem; margin-bottom:4px; min-height:2.2em; line-height:1.2; }
+  .shop-item .price{ font-size:.9rem; color:#d97706; font-weight:800; margin-bottom:10px; display:inline-flex; align-items:center; gap:4px; background:#fef3c7; padding:4px 12px; border-radius:999px; border:1px solid #fde68a; }
+  .shop-item button{ width:100%; border:none; border-radius:14px; padding:10px; font-weight:700; font-family:inherit; cursor:pointer; background:linear-gradient(135deg, var(--primary-light), var(--primary-dark)); color:#fff; font-size:.88rem; box-shadow:0 4px 10px rgba(147,51,234,0.3); transition:all .15s ease; }
+  .shop-item button:hover:not(:disabled){ filter:brightness(1.1); transform:translateY(-1px); }
+  .shop-item button:disabled{ background:#e2e8f0; color:#94a3b8; box-shadow:none; cursor:default; }
+  .shop-item.owned{ opacity:.85; border-color:#cbd5e1; }
 
   .house-toggle{ display:flex; gap:10px; width:100%; margin-bottom:14px; }
-  .house-toggle button{ flex:1; background:rgba(255,255,255,.18); color:#fff; border:none; border-radius:999px; padding:10px 14px; font-weight:700; font-size:.9rem; cursor:pointer; font-family:inherit; }
-  .house-toggle button.active{ background:var(--accent2); color:#422006; box-shadow:0 0 12px var(--accent2); }
+  .house-toggle button{ flex:1; background:rgba(255,255,255,.18); backdrop-filter:blur(8px); color:#fff; border:1.5px solid rgba(255,255,255,0.3); border-radius:999px; padding:10px 14px; font-weight:700; font-size:.9rem; cursor:pointer; font-family:inherit; transition:all .18s ease; }
+  .house-toggle button.active{ background:var(--accent2); color:#422006; border-color:var(--accent2); box-shadow:0 0 14px var(--accent2); transform:scale(1.02); }
   .house-caption{ color:#e9d5ff; font-size:.86rem; text-align:center; margin:-4px 0 12px; font-weight:500; }
 
-  .exterior-scene{ position:relative; width:100%; height:320px; border-radius:24px; overflow:hidden; box-shadow:var(--shadow-lg); margin-bottom:16px; background:linear-gradient(180deg,#7dd3fc 0%,#bae6fd 52%,#86efac 52%,#22c55e 100%); }
-  .ext-sun{ position:absolute; top:14px; right:20px; font-size:2.4rem; filter:drop-shadow(0 0 14px #fde047); }
-  .ext-cloud{ position:absolute; font-size:1.6rem; opacity:.95; }
-  .ext-house{ position:absolute; left:50%; bottom:96px; transform:translateX(-50%); width:160px; z-index:2; }
-  .ext-roof{ width:0; height:0; margin:0 auto; border-left:90px solid transparent; border-right:90px solid transparent; border-bottom:56px solid #f43f5e; filter:drop-shadow(0 4px 4px rgba(0,0,0,0.25)); }
-  .ext-wall{ width:160px; height:100px; background:#fff7ed; border:4px solid #fed7aa; border-top:none; border-radius:0 0 14px 14px; position:relative; margin:0 auto; }
-  .ext-door{ position:absolute; bottom:0; left:50%; transform:translateX(-50%); width:36px; height:58px; background:#b45309; border-radius:10px 10px 0 0; }
-  .ext-window{ position:absolute; top:16px; width:30px; height:30px; background:#bae6fd; border:3px solid #fff; border-radius:50%; box-shadow:0 0 0 3px #fed7aa; }
+  /* Exterior Scene 2.5D */
+  .exterior-scene{ position:relative; width:100%; height:340px; border-radius:26px; overflow:hidden; box-shadow:var(--shadow-lg), 0 0 30px rgba(6,182,212,0.3); margin-bottom:16px; background:linear-gradient(180deg, #38bdf8 0%, #7dd3fc 40%, #bae6fd 60%, #4ade80 60%, #16a34a 100%); border:4px solid rgba(255,255,255,0.3); }
+  .ext-sun{ position:absolute; top:12px; right:20px; width:52px; height:52px; background:radial-gradient(circle, #fef08a 0%, #facc15 70%, #eab308 100%); border-radius:50%; box-shadow:0 0 24px #facc15, 0 0 48px #fde047; animation:pulseSun 3s ease-in-out infinite alternate; z-index:1; }
+  @keyframes pulseSun{ from{ transform:scale(1); box-shadow:0 0 20px #facc15; } to{ transform:scale(1.08); box-shadow:0 0 36px #fde047; } }
+  .ext-cloud{ position:absolute; font-size:1.8rem; opacity:.95; filter:drop-shadow(0 4px 6px rgba(0,0,0,0.1)); animation:floatCloud 12s linear infinite; z-index:1; }
+  @keyframes floatCloud{ 0%{ transform:translateX(-60px); } 100%{ transform:translateX(560px); } }
+  
+  .ext-hills{ position:absolute; top:140px; left:0; right:0; height:70px; z-index:1; }
+  .ext-hill-1{ position:absolute; width:280px; height:120px; background:#22c55e; border-radius:50%; top:10px; left:-40px; opacity:.9; }
+  .ext-hill-2{ position:absolute; width:320px; height:130px; background:#16a34a; border-radius:50%; top:0; right:-60px; }
+
+  /* House 2.5D Structure */
+  .ext-house{ position:absolute; left:50%; bottom:104px; transform:translateX(-50%); width:180px; z-index:2; filter:drop-shadow(0 12px 18px rgba(0,0,0,0.35)); }
+  .ext-chimney{ position:absolute; top:-20px; right:28px; width:22px; height:34px; background:linear-gradient(90deg, #b45309, #78350f); border-radius:4px; border:2px solid #451a03; z-index:1; }
+  .ext-smoke{ position:absolute; top:-16px; left:2px; font-size:1rem; opacity:0; animation:smokeRise 3s ease-out infinite; }
+  @keyframes smokeRise{ 0%{ opacity:0; transform:translateY(0) scale(0.6); } 50%{ opacity:0.7; } 100%{ opacity:0; transform:translateY(-30px) scale(1.4); } }
+  .ext-roof{ width:0; height:0; margin:0 auto; border-left:102px solid transparent; border-right:102px solid transparent; border-bottom:65px solid #e11d48; filter:drop-shadow(0 4px 6px rgba(0,0,0,0.2)); position:relative; z-index:2; }
+  .ext-roof::after{ content:''; position:absolute; bottom:-65px; left:-86px; width:172px; height:10px; background:#be123c; border-radius:6px; }
+  .ext-wall{ width:172px; height:110px; background:linear-gradient(180deg, #fff7ed 0%, #ffedd5 100%); border:4px solid #f97316; border-top:none; border-radius:0 0 16px 16px; position:relative; margin:0 auto; box-shadow:inset 0 -10px 20px rgba(0,0,0,0.05); }
+  .ext-door{ position:absolute; bottom:0; left:50%; transform:translateX(-50%); width:40px; height:64px; background:linear-gradient(180deg, #b45309, #78350f); border:2.5px solid #451a03; border-bottom:none; border-radius:14px 14px 0 0; box-shadow:inset 2px 2px 4px rgba(255,255,255,0.2); }
+  .ext-door-knob{ position:absolute; top:32px; right:6px; width:7px; height:7px; background:#facc15; border-radius:50%; box-shadow:0 0 4px #ca8a04; }
+  .ext-door-mat{ position:absolute; bottom:-6px; left:50%; transform:translateX(-50%); width:54px; height:8px; background:#ca8a04; border-radius:4px; font-size:6px; color:#fff; text-align:center; font-weight:bold; }
+  .ext-window{ position:absolute; top:18px; width:34px; height:34px; background:linear-gradient(135deg, #bae6fd, #38bdf8); border:3.5px solid #fff; border-radius:50%; box-shadow:0 0 0 3px #f97316, 0 0 12px rgba(56,189,248,0.5); overflow:hidden; }
+  .ext-window::before{ content:''; position:absolute; top:50%; left:0; right:0; height:2px; background:#fff; }
+  .ext-window::after{ content:''; position:absolute; left:50%; top:0; bottom:0; width:2px; background:#fff; }
   .ext-window.left{ left:16px; } .ext-window.right{ right:16px; }
-  .ext-cat{ position:absolute; bottom:90px; left:14px; width:64px; height:64px; z-index:3; }
-  .garden-bed{ position:absolute; bottom:0; left:0; right:0; height:96px; z-index:1; background:linear-gradient(180deg,#78350f 0%,#451a03 100%); border-radius:20px 20px 0 0; }
-  .garden-ground{ position:absolute; bottom:12px; left:0; right:0; height:86px; display:flex; align-items:flex-end; justify-content:center; gap:16px; flex-wrap:wrap; padding:0 16px; z-index:2; }
-  .garden-item{ font-size:2.4rem; filter:drop-shadow(0 3px 3px rgba(0,0,0,.3)); }
+  .ext-flowerbox{ position:absolute; top:52px; width:38px; height:10px; background:#15803d; border-radius:4px; font-size:10px; text-align:center; line-height:10px; }
+  .ext-flowerbox.left{ left:14px; } .ext-flowerbox.right{ right:14px; }
+  
+  .ext-cat{ position:absolute; bottom:96px; left:16px; width:70px; height:70px; z-index:3; filter:drop-shadow(0 6px 12px rgba(0,0,0,0.4)); animation:petFloat 4s ease-in-out infinite alternate; }
+  @keyframes petFloat{ from{ transform:translateY(0); } to{ transform:translateY(-6px); } }
 
-  .interior-scene{ position:relative; width:100%; min-height:350px; border-radius:24px; overflow:hidden; box-shadow:var(--shadow-lg); margin-bottom:16px; background:linear-gradient(180deg,#ffedd5 0%,#ffedd5 56%,#d97706 56%,#78350f 100%); }
-  .int-wallpaper{ position:absolute; top:0; left:0; right:0; height:56%; background-image: radial-gradient(rgba(255,255,255,.6) 2.5px, transparent 2.5px); background-size: 28px 28px; opacity:.7; z-index:1; }
-  .int-floor-planks{ position:absolute; bottom:0; left:0; right:0; height:44%; background-image: repeating-linear-gradient(90deg, rgba(0,0,0,.08) 0px, rgba(0,0,0,.08) 2px, transparent 2px, transparent 60px); z-index:1; }
-  .int-cat{ position:absolute; bottom:48px; left:20px; width:70px; height:70px; z-index:3; }
-  .interior-floor-row{ position:absolute; bottom:4px; left:0; right:0; height:96px; display:flex; align-items:flex-end; justify-content:center; gap:18px; flex-wrap:wrap; padding:0 88px 0 92px; z-index:2; }
-  .interior-floor-item{ font-size:2.5rem; filter:drop-shadow(0 4px 4px rgba(0,0,0,.35)); }
+  .garden-bed{ position:absolute; bottom:0; left:0; right:0; height:104px; z-index:1; background:linear-gradient(180deg, #15803d 0%, #166534 30%, #78350f 70%, #451a03 100%); border-radius:24px 24px 0 0; box-shadow:inset 0 6px 12px rgba(255,255,255,0.2); }
+  .ext-path{ position:absolute; bottom:0; left:50%; transform:translateX(-50%); width:64px; height:104px; background:radial-gradient(ellipse at center, #e2e8f0 0%, #cbd5e1 60%, #94a3b8 100%); clip-path: polygon(30% 0%, 70% 0%, 100% 100%, 0% 100%); z-index:1; border-top:2px solid #f8fafc; }
+  .garden-ground{ position:absolute; bottom:12px; left:0; right:0; height:90px; display:flex; align-items:flex-end; justify-content:space-around; padding:0 12px; z-index:2; }
+  .garden-item{ transition:transform .2s ease; filter:drop-shadow(0 6px 8px rgba(0,0,0,.35)); }
+  .garden-item:hover{ transform:scale(1.15) translateY(-4px); }
 
-  /* Profiles & Leaderboard */
-  .profile-grid{ display:flex; flex-direction:column; gap:14px; width:100%; margin-top:16px; }
-  .profile-card{ background:#fff; border-radius:22px; padding:18px 20px; display:flex; align-items:center; gap:16px; box-shadow:var(--shadow-md), var(--glow); cursor:pointer; border:2px solid #f3e8ff; transition:transform .15s ease; }
-  .profile-card:hover{ transform:translateY(-2px); border-color:var(--primary-light); }
-  .profile-card .avatar{ font-size:2.8rem; filter:drop-shadow(0 2px 4px rgba(0,0,0,0.15)); }
-  .profile-card .info h3{ margin:0 0 3px; color:var(--primary-dark); font-size:1.25rem; font-weight:700; }
-  .profile-card .info p{ margin:0; font-size:.88rem; color:#d97706; font-weight:700; }
-  .marcador-grid{ display:flex; gap:12px; width:100%; margin:14px 0; }
-  .marcador-card{ flex:1; background:#fff; border-radius:22px; padding:18px 12px; text-align:center; box-shadow:var(--shadow-md); position:relative; border:2px solid #f3e8ff; }
-  .marcador-card.leader{ box-shadow:var(--shadow-md), 0 0 0 4px var(--accent2); }
-  .marcador-card .crown{ position:absolute; top:-18px; left:50%; transform:translateX(-50%); font-size:1.8rem; filter:drop-shadow(0 2px 4px rgba(0,0,0,0.3)); }
-  .marcador-card .avatar{ font-size:2.4rem; margin-bottom:4px; }
-  .marcador-card h3{ margin:0 0 6px; color:var(--primary-dark); font-size:1.05rem; font-weight:700; }
-  .marcador-card .paws{ font-size:1.3rem; font-weight:700; color:#d97706; }
+  /* Interior Scene 2.5D */
+  .interior-scene{ position:relative; width:100%; min-height:360px; border-radius:26px; overflow:hidden; box-shadow:var(--shadow-lg), 0 0 30px rgba(168,85,247,0.3); margin-bottom:16px; background:linear-gradient(180deg, #fef3c7 0%, #fde68a 52%, #d97706 52%, #78350f 100%); border:4px solid rgba(255,255,255,0.3); }
+  .int-wallpaper{ position:absolute; top:0; left:0; right:0; height:52%; background-image: radial-gradient(rgba(245,158,11,0.25) 3px, transparent 3px); background-size: 24px 24px; opacity:.9; z-index:1; }
+  .int-molding{ position:absolute; top:52%; left:0; right:0; height:12px; background:linear-gradient(180deg, #fff7ed 0%, #fed7aa 100%); border-top:2px solid #f97316; border-bottom:2px solid #ea580c; z-index:2; box-shadow:0 3px 6px rgba(0,0,0,0.15); }
+  .int-floor-planks{ position:absolute; bottom:0; left:0; right:0; height:44%; background:linear-gradient(180deg, #b45309 0%, #78350f 100%); background-image: repeating-linear-gradient(90deg, rgba(0,0,0,.12) 0px, rgba(0,0,0,.12) 3px, transparent 3px, transparent 48px); z-index:1; }
+  .int-window{ position:absolute; top:18px; right:24px; width:76px; height:84px; background:linear-gradient(180deg, #38bdf8 0%, #bae6fd 100%); border:5px solid #fff; border-radius:14px; box-shadow:0 4px 12px rgba(0,0,0,0.2), inset 0 0 10px rgba(255,255,255,0.6); z-index:2; overflow:hidden; }
+  .int-window::after{ content:'🌸'; position:absolute; bottom:4px; right:4px; font-size:16px; }
+  .int-picture-frame{ position:absolute; top:22px; left:24px; width:70px; height:56px; background:#fff; border:4px solid #d97706; border-radius:10px; box-shadow:0 4px 10px rgba(0,0,0,0.25); z-index:2; display:flex; align-items:center; justify-content:center; font-size:26px; background:linear-gradient(135deg,#fbcfe8,#f472b6); }
+  .int-cat{ position:absolute; bottom:52px; left:18px; width:76px; height:76px; z-index:3; filter:drop-shadow(0 6px 12px rgba(0,0,0,0.4)); animation:petFloat 4s ease-in-out infinite alternate; }
+  .interior-floor-row{ position:absolute; bottom:8px; left:0; right:0; height:100px; display:flex; align-items:flex-end; justify-content:space-around; padding:0 12px 0 96px; z-index:2; }
+  .interior-floor-item{ transition:transform .2s ease; filter:drop-shadow(0 6px 8px rgba(0,0,0,.4)); }
+  .interior-floor-item:hover{ transform:scale(1.15) translateY(-4px); }
+
+
+  /* Login & Enhanced Profiles */
+  .login-hero { text-align:center; padding:10px 0 6px; }
+  .login-hero .logo-badge { font-size:3.2rem; filter:drop-shadow(0 4px 10px rgba(139,92,246,0.3)); animation:petFloat 3s ease-in-out infinite alternate; }
+  .login-actions { display:flex; gap:10px; margin-top:16px; flex-wrap:wrap; justify-content:center; }
+  
+  .login-card-box { background:linear-gradient(135deg, #ffffff 0%, #faf5ff 100%); border-radius:24px; padding:22px 20px; border:3px solid #f0abfc; box-shadow:0 10px 25px rgba(236,72,153,0.15), var(--glow); width:100%; max-width:440px; margin:14px auto 0; box-sizing:border-box; }
+  
+  .profile-grid { display:flex; flex-direction:column; gap:14px; width:100%; margin-top:12px; }
+  .profile-card { background:linear-gradient(135deg, #ffffff 0%, #faf5ff 100%); border-radius:24px; padding:16px 18px; display:flex; align-items:center; justify-content:space-between; gap:12px; box-shadow:var(--shadow-md); border:2px solid #f3e8ff; transition:all .2s ease; position:relative; overflow:hidden; }
+  .profile-card:hover { transform:translateY(-3px); box-shadow:var(--shadow-lg), 0 0 15px rgba(236,72,153,0.2); border-color:var(--primary-light); }
+  .profile-card-left { display:flex; align-items:center; gap:14px; flex:1; min-width:0; }
+  .profile-card .avatar-box { position:relative; width:60px; height:60px; border-radius:50%; background:linear-gradient(135deg, #fbcfe8, #e9d5ff); display:flex; align-items:center; justify-content:center; font-size:2.2rem; box-shadow:0 4px 8px rgba(0,0,0,0.1); border:2px solid #fff; flex-shrink:0; }
+  .profile-card .mascot-mini-badge { position:absolute; bottom:-4px; right:-4px; width:26px; height:26px; background:#fff; border-radius:50%; padding:2px; box-shadow:0 2px 4px rgba(0,0,0,0.2); border:1px solid #f0abfc; display:flex; align-items:center; justify-content:center; }
+  
+  .profile-card .info { flex:1; min-width:0; }
+  .profile-card .info h3 { margin:0 0 3px; color:var(--primary-dark); font-size:1.15rem; font-weight:800; display:flex; align-items:center; gap:6px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .profile-card .rank-pill { display:inline-flex; align-items:center; gap:4px; padding:2px 8px; border-radius:12px; font-size:.74rem; font-weight:700; color:#fff; box-shadow:0 2px 4px rgba(0,0,0,0.12); margin-bottom:4px; white-space:nowrap; }
+  .profile-card .paws-info { font-size:.85rem; color:#d97706; font-weight:700; display:flex; align-items:center; gap:6px; flex-wrap:wrap; }
+  .profile-card .pin-tag { font-size:.7rem; background:#fee2e2; color:#dc2626; font-weight:800; padding:1px 6px; border-radius:6px; display:inline-flex; align-items:center; gap:2px; }
+  
+  .profile-card-actions { display:flex; gap:6px; align-items:center; flex-shrink:0; }
+  .btn-play-card { background:linear-gradient(135deg, #10b981, #059669); color:#fff; border:none; padding:10px 16px; border-radius:16px; font-weight:800; font-size:.95rem; cursor:pointer; box-shadow:0 4px 10px rgba(16,185,129,0.3); transition:all .15s ease; white-space:nowrap; }
+  .btn-play-card:hover { transform:scale(1.05); box-shadow:0 6px 14px rgba(16,185,129,0.4); }
+  .btn-icon-card { background:#f3e8ff; color:var(--primary-dark); border:none; width:38px; height:38px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:1rem; cursor:pointer; transition:all .15s ease; }
+  .btn-icon-card:hover { background:var(--primary-light); color:#fff; transform:scale(1.08); }
+
+  /* User Hub Status Bar */
+  .user-hub-bar { display:flex; align-items:center; justify-content:space-between; background:linear-gradient(135deg, #ffffff 0%, #faf5ff 100%); border-radius:20px; padding:10px 16px; margin-bottom:16px; border:2px solid #f3e8ff; box-shadow:var(--shadow-sm); }
+  .user-hub-info { display:flex; align-items:center; gap:12px; }
+  .user-hub-avatar { position:relative; width:46px; height:46px; border-radius:50%; background:#fbcfe8; display:flex; align-items:center; justify-content:center; font-size:1.7rem; border:2px solid #fff; box-shadow:0 2px 6px rgba(0,0,0,0.12); flex-shrink:0; }
+  .user-hub-mascot { position:absolute; bottom:-3px; right:-3px; width:22px; height:22px; background:#fff; border-radius:50%; padding:1px; border:1px solid #f0abfc; display:flex; align-items:center; justify-content:center; }
+  .user-hub-details h4 { margin:0 0 2px; font-size:.98rem; color:var(--primary-dark); font-weight:800; display:flex; align-items:center; gap:6px; flex-wrap:wrap; }
+  .user-hub-rank { font-size:.7rem; font-weight:700; color:#fff; padding:2px 8px; border-radius:10px; }
+  .user-hub-actions { display:flex; gap:6px; }
+  .btn-hub-action { background:#f3e8ff; border:none; color:var(--primary-dark); padding:6px 12px; border-radius:12px; font-weight:700; font-size:.8rem; cursor:pointer; transition:all .15s ease; }
+  .btn-hub-action:hover { background:var(--primary-light); color:#fff; transform:scale(1.04); }
+
+  /* Modals (Registration, PIN & Leaderboard) */
+  .modal-overlay { position:fixed; inset:0; background:rgba(30,10,60,0.65); backdrop-filter:blur(8px); display:flex; align-items:center; justify-content:center; z-index:100; opacity:0; pointer-events:none; transition:opacity .25s ease; padding:16px; }
+  .modal-overlay.active { opacity:1; pointer-events:auto; }
+  .modal-card { background:#fff; border-radius:28px; width:100%; max-width:480px; max-height:90vh; overflow-y:auto; padding:24px 20px; box-shadow:0 20px 40px rgba(0,0,0,0.3), var(--glow); border:3px solid #f0abfc; position:relative; animation:modalPop .3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+  @keyframes modalPop { from { transform:scale(0.85); opacity:0; } to { transform:scale(1); opacity:1; } }
+  @keyframes shake { 0%,100%{transform:translateX(0);} 20%,60%{transform:translateX(-10px);} 40%,80%{transform:translateX(10px);} }
+  .modal-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; border-bottom:2px solid #f3e8ff; padding-bottom:10px; }
+  .modal-header h2 { margin:0; color:var(--primary-dark); font-size:1.3rem; font-weight:800; display:flex; align-items:center; gap:8px; }
+  .modal-close { background:#f1f5f9; border:none; width:34px; height:34px; border-radius:50%; font-size:1.1rem; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:background .15s ease; }
+  .modal-close:hover { background:#e2e8f0; }
+
+  /* Form Controls */
+  .form-group { margin-bottom:16px; }
+  .form-group label { display:block; font-weight:700; color:var(--primary-dark); margin-bottom:6px; font-size:.9rem; }
+  .form-control { width:100%; padding:10px 14px; border-radius:14px; border:2px solid #e9d5ff; font-size:.95rem; outline:none; font-family:inherit; transition:border-color .15s ease; box-sizing:border-box; }
+  .form-control:focus { border-color:var(--primary-light); box-shadow:0 0 0 3px rgba(236,72,153,0.15); }
+  
+  .emoji-picker-grid { display:flex; gap:6px; flex-wrap:wrap; margin-top:4px; }
+  .emoji-opt { width:40px; height:40px; border-radius:12px; background:#f8fafc; border:2px solid #e2e8f0; font-size:1.4rem; display:flex; align-items:center; justify-content:center; cursor:pointer; transition:all .15s ease; }
+  .emoji-opt.selected, .emoji-opt:hover { background:#fbcfe8; border-color:#ec4899; transform:scale(1.1); }
+
+  .mascot-picker-grid { display:grid; grid-template-columns:repeat(4, 1fr); gap:8px; margin-top:6px; }
+  .mascot-opt-card { background:#f8fafc; border:2px solid #e2e8f0; border-radius:16px; padding:8px 4px; text-align:center; cursor:pointer; transition:all .15s ease; }
+  .mascot-opt-card.selected, .mascot-opt-card:hover { background:#faf5ff; border-color:#8b5cf6; transform:translateY(-2px); box-shadow:0 4px 10px rgba(139,92,246,0.2); }
+  .mascot-opt-card .svg-wrap { width:40px; height:40px; margin:0 auto 2px; }
+  .mascot-opt-card span { font-size:.72rem; font-weight:700; color:var(--primary-dark); display:block; }
+
+  .color-picker-grid { display:flex; gap:8px; margin-top:6px; }
+  .color-swatch { width:32px; height:32px; border-radius:50%; border:3px solid #fff; box-shadow:0 2px 6px rgba(0,0,0,0.2); cursor:pointer; transition:transform .15s ease; }
+  .color-swatch.selected, .color-swatch:hover { transform:scale(1.2); box-shadow:0 0 0 3px var(--primary-dark); }
+
+  /* Keypad PIN Modal */
+  .pin-display { display:flex; justify-content:center; gap:12px; margin:16px 0; }
+  .pin-dot { width:18px; height:18px; border-radius:50%; border:3px solid #8b5cf6; background:transparent; transition:all .15s ease; }
+  .pin-dot.filled { background:#8b5cf6; transform:scale(1.15); box-shadow:0 0 8px rgba(139,92,246,0.4); }
+  .pin-keypad { display:grid; grid-template-columns:repeat(3, 1fr); gap:10px; max-width:260px; margin:0 auto; }
+  .pin-btn { background:#faf5ff; border:2px solid #e9d5ff; border-radius:16px; padding:12px; font-size:1.3rem; font-weight:800; color:var(--primary-dark); cursor:pointer; transition:all .15s ease; }
+  .pin-btn:hover { background:#f0abfc; color:#fff; transform:scale(1.05); }
+  .pin-btn:active { transform:scale(0.95); }
+  .pin-btn.action { font-size:.9rem; background:#fee2e2; border-color:#fca5a5; color:#dc2626; }
+  .pin-btn.ok { font-size:.9rem; background:#dcfce7; border-color:#86efac; color:#166534; }
+
+  .marcador-grid{ display:flex; flex-direction:column; gap:10px; width:100%; margin:14px 0; }
+  .marcador-card{ background:#fff; border-radius:20px; padding:14px 16px; text-align:center; box-shadow:var(--shadow-md); position:relative; border:2px solid #f3e8ff; }
+  .marcador-card.leader{ box-shadow:var(--shadow-md), 0 0 0 3px var(--accent2); background:linear-gradient(135deg, #fff 0%, #fef3c7 100%); }
 
   .confetti-layer{ position:fixed; inset:0; pointer-events:none; z-index:50; overflow:hidden; }
   .confetti-piece{ position:absolute; top:-30px; font-size:22px; animation:fall 1.4s ease-in forwards; }
@@ -311,17 +413,48 @@
 
 <div class="app">
 
-  <!-- SCREEN: PROFILE SELECT -->
+  <!-- SCREEN: PROFILE SELECT & LOGIN -->
   <section class="screen active" id="screen-profile">
-    <h1>Ortografía <span class="highlight">Multiverso</span></h1>
-    <p class="subtitle">¿Quién jugará hoy? 🐾</p>
-    <div class="profile-grid" id="profile-grid"></div>
-    <button class="btn-secondary" style="margin-top:16px;" onclick="promptNewProfile()">+ Nuevo perfil de jugadora</button>
+    <div class="login-hero">
+      <div class="logo-badge">🌸🐱🔑</div>
+      <h1>Ortografía <span class="highlight">Multiverso</span></h1>
+      <p class="subtitle">¡Ingreso de Jugadoras! 🐾</p>
+    </div>
+    
+    <!-- LOGIN FORM BOX -->
+    <div class="login-card-box" id="login-card-box">
+      <form onsubmit="handleDirectLogin(event)">
+        <div class="form-group" style="text-align:left;">
+          <label for="login-username">👤 Nombre de Usuaria:</label>
+          <input type="text" id="login-username" class="form-control" placeholder="Ej: Ángela, Margarita..." required autocomplete="off">
+        </div>
+        
+        <div class="form-group" style="text-align:left;">
+          <label for="login-password">🔑 Contraseña (Es tu mismo nombre):</label>
+          <input type="password" id="login-password" class="form-control" placeholder="Escribe tu nombre aquí..." required autocomplete="off">
+          <small style="color:#d97706; font-weight:700; font-size:.78rem; display:block; margin-top:4px;">💡 Ejemplo: Si tu nombre es <b>Ángela</b>, tu contraseña es <b>Ángela</b>.</small>
+        </div>
+
+        <div id="login-error-msg" style="display:none; color:#dc2626; background:#fee2e2; padding:8px 12px; border-radius:12px; font-weight:700; font-size:.82rem; margin-bottom:12px; border:1px solid #fca5a5;"></div>
+
+        <button type="submit" class="btn-primary" style="width:100%; padding:12px; font-size:1.05rem;">🚀 ¡Iniciar Sesión!</button>
+      </form>
+    </div>
+
+    <div style="margin-top:20px; width:100%;">
+      <h3 style="color:var(--primary-dark); margin:0 0 8px; font-size:1.05rem; text-align:center;">o selecciona tu tarjeta registrada:</h3>
+      <div class="profile-grid" id="profile-grid"></div>
+    </div>
+    
+    <div class="login-actions" style="margin-top:16px;">
+      <button class="btn-primary" onclick="openRegisterModal()">+ Registrar nueva jugadora 🌸</button>
+      <button class="btn-secondary" onclick="openLeaderboard()">🏆 Tabla de Posiciones</button>
+    </div>
   </section>
 
   <!-- SCREEN: HUB PRINCIPAL DE MINI-APPS -->
   <section class="screen" id="screen-hub">
-    <button class="btn-back" onclick="switchProfile()">⟵ Cambiar jugadora</button>
+    <div class="user-hub-bar" id="user-hub-bar"></div>
     <h1>Aprende con <span class="highlight">Macarena y Amigos</span></h1>
     <p class="subtitle" id="hub-greeting">¡Hola! 🌸 Elige un tema para explorar:</p>
     <div class="paws-total">🐾 <span id="hub-total-paws">0</span> patitas ganadas</div>
@@ -618,24 +751,39 @@
     <div class="house-caption" id="house-caption"></div>
 
     <div class="exterior-scene" id="exterior-scene">
-      <div class="ext-sun">☀️</div>
-      <div class="ext-cloud" style="top:14px; left:14px;">☁️</div>
-      <div class="ext-cloud" style="top:36px; left:58%;">☁️</div>
+      <div class="ext-sun"></div>
+      <div class="ext-cloud" style="top:12px; left:-20px; animation-duration:14s;">☁️</div>
+      <div class="ext-cloud" style="top:32px; left:120px; animation-duration:18s; animation-delay:4s;">☁️</div>
+      <div class="ext-hills">
+        <div class="ext-hill-1"></div>
+        <div class="ext-hill-2"></div>
+      </div>
       <div class="pet-wrap ext-cat" id="house-ext-pet"></div>
       <div class="ext-house">
+        <div class="ext-chimney"><span class="ext-smoke">💨</span></div>
         <div class="ext-roof"></div>
         <div class="ext-wall">
           <div class="ext-window left"></div>
+          <div class="ext-flowerbox left">🌸🌷</div>
           <div class="ext-window right"></div>
-          <div class="ext-door"></div>
+          <div class="ext-flowerbox right">🌷🌸</div>
+          <div class="ext-door">
+            <div class="ext-door-knob"></div>
+            <div class="ext-door-mat">HOLA</div>
+          </div>
         </div>
       </div>
-      <div class="garden-bed"></div>
+      <div class="garden-bed">
+        <div class="ext-path"></div>
+      </div>
       <div class="garden-ground" id="garden-ground"></div>
     </div>
 
     <div class="interior-scene" id="interior-scene" style="display:none;">
       <div class="int-wallpaper"></div>
+      <div class="int-picture-frame">🖼️</div>
+      <div class="int-window"></div>
+      <div class="int-molding"></div>
       <div class="int-floor-planks"></div>
       <div class="pet-wrap int-cat" id="house-int-pet"></div>
       <div class="interior-floor-row" id="interior-floor-row"></div>
@@ -1019,19 +1167,45 @@ const TOPICS = [
 
 /* ================== PERFILES DE JUGADORAS ================== */
 let profiles = JSON.parse(localStorage.getItem('multiverso_profiles') || 'null');
-if(!profiles){
+if(!profiles || !Array.isArray(profiles) || profiles.length === 0){
   profiles = [
-    {id:'angela', name:'Ángela', emoji:'🌸'},
-    {id:'margarita', name:'Margarita', emoji:'🌼'}
+    {id:'angela', name:'Ángela', emoji:'🌸', mascot:'macarena', pin:'', themeColor:'#ec4899'},
+    {id:'margarita', name:'Margarita', emoji:'🌼', mascot:'bullcat', pin:'', themeColor:'#8b5cf6'}
   ];
   localStorage.setItem('multiverso_profiles', JSON.stringify(profiles));
 }
-let currentProfile = localStorage.getItem('multiverso_current_profile') || 'angela';
+let currentProfile = localStorage.getItem('multiverso_current_profile') || profiles[0].id;
 
 function keyFor(base){ return 'multi_' + base + '_' + currentProfile; }
-function profileInfo(id){ return profiles.find(p=>p.id===id) || {id:id, name:id, emoji:'🐾'}; }
+function profileInfo(id){
+  const p = profiles.find(item=>item.id===id);
+  if(!p) return { id:id, name:id, emoji:'🌸', mascot:'macarena', pin:'', themeColor:'#ec4899' };
+  return {
+    id: p.id,
+    name: p.name,
+    emoji: p.emoji || '🌸',
+    mascot: p.mascot || 'macarena',
+    pin: p.pin || '',
+    themeColor: p.themeColor || '#ec4899'
+  };
+}
 function pawsForProfile(id){ return parseInt(localStorage.getItem('multi_paws_'+id)||'0',10); }
 function ownedForProfile(id){ return JSON.parse(localStorage.getItem('multi_owned_'+id)||'[]'); }
+
+function getProfileRank(paws){
+  if(paws >= 300) return { title: 'Leyenda del Multiverso', badge: '⚡🏆', bg: 'linear-gradient(90deg, #8b5cf6, #ec4899)' };
+  if(paws >= 150) return { title: 'Maestra de las Tildes', badge: '👑', bg: 'linear-gradient(90deg, #ec4899, #f59e0b)' };
+  if(paws >= 50)  return { title: 'Aprendiz del Multiverso', badge: '⭐', bg: 'linear-gradient(90deg, #3b82f6, #14b8a6)' };
+  return { title: 'Exploradora Ortográfica', badge: '🌱', bg: 'linear-gradient(90deg, #10b981, #059669)' };
+}
+
+function getTopicForMascot(mascotKey){
+  const map = {
+    'macarena':'cksz', 'bullcat':'bv', 'gaspar':'gj', 'jack':'h',
+    'lula':'yll', 'emma':'tilde', 'spock':'rrr', 'sirah':'mn'
+  };
+  return map[mascotKey] || 'cksz';
+}
 
 /* ================== ESTADO GLOBAL ================== */
 let paws = 0;
@@ -1367,13 +1541,15 @@ function getPetSVGVector(topicId, svgId){
 }
 
 function accessoryMarkup(){
+  const hasCrown = owned.includes('Corona Real de Oro');
   const hasHat = owned.includes('Sombrero de fiesta');
   const hasBow = owned.includes('Moño rosa');
   const hasCollarBell = owned.includes('Collar con campana');
   let s = '';
-  if(hasHat) s += '<g transform="translate(100,25)"><polygon points="-16,20 16,20 0,-18" fill="#facc15" stroke="#ec4899" stroke-width="2"/><circle cx="0" cy="-18" r="5" fill="#ec4899"/></g>';
-  else if(hasBow) s += '<g transform="translate(100,34)"><path d="M-20,-8 L-2,8 L-20,24 Z" fill="#ec4899"/><path d="M20,-8 L2,8 L20,24 Z" fill="#ec4899"/><circle cx="0" cy="8" r="7" fill="#be185d"/></g>';
-  if(hasCollarBell) s += '<circle cx="100" cy="163" r="6" fill="#facc15" stroke="#b45309" stroke-width="1.5"/>';
+  if(hasCrown) s += '<g transform="translate(100,18)"><path d="M-22,20 L-16,-6 L-4,8 L0,-12 L4,8 L16,-6 L22,20 Z" fill="#facc15" stroke="#b45309" stroke-width="2"/><rect x="-22" y="20" width="44" height="6" rx="2" fill="#eab308" stroke="#b45309" stroke-width="1"/><circle cx="-16" cy="-6" r="3" fill="#ef4444"/><circle cx="0" cy="-12" r="4" fill="#10b981"/><circle cx="16" cy="-6" r="3" fill="#ef4444"/></g>';
+  else if(hasHat) s += '<g transform="translate(100,25)"><polygon points="-16,20 16,20 0,-18" fill="#facc15" stroke="#ec4899" stroke-width="2"/><path d="-12,12 L12,12 M-8,4 L8,4" stroke="#ec4899" stroke-width="2.5"/><circle cx="0" cy="-18" r="5" fill="#ec4899"/></g>';
+  else if(hasBow) s += '<g transform="translate(100,34)"><path d="M-20,-8 L-2,8 L-20,24 Z" fill="#ec4899" stroke="#be185d" stroke-width="1.5"/><path d="M20,-8 L2,8 L20,24 Z" fill="#ec4899" stroke="#be185d" stroke-width="1.5"/><circle cx="0" cy="8" r="7" fill="#f472b6" stroke="#be185d" stroke-width="1.5"/></g>';
+  if(hasCollarBell) s += '<g transform="translate(100,163)"><rect x="-28" y="-4" width="56" height="8" rx="4" fill="#ef4444" stroke="#991b1b" stroke-width="1"/><circle cx="0" cy="2" r="6" fill="#facc15" stroke="#b45309" stroke-width="1.5"/><line x1="0" y1="5" x2="0" y2="8" stroke="#78350f" stroke-width="1.5"/></g>';
   return s;
 }
 
@@ -1389,34 +1565,374 @@ function showScreen(id){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
 }
+let pendingPinProfileId = null;
+let enteredPin = '';
+function normalizeText(str){
+  if(!str) return '';
+  return str.trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+}
+
+function handleDirectLogin(e){
+  if(e) e.preventDefault();
+  const usernameInput = document.getElementById('login-username').value;
+  const passwordInput = document.getElementById('login-password').value;
+  const errorEl = document.getElementById('login-error-msg');
+  if(errorEl) errorEl.style.display = 'none';
+
+  if(!usernameInput.trim()){
+    showLoginError('Por favor ingresa tu nombre de usuaria.');
+    return;
+  }
+
+  const normUser = normalizeText(usernameInput);
+  const normPass = normalizeText(passwordInput);
+
+  let profile = profiles.find(p => normalizeText(p.name) === normUser);
+
+  if(!profile){
+    if(confirm('No encontramos a la jugadora "' + usernameInput + '". ¿Deseas registrarla ahora mismo?')){
+      openRegisterModal();
+      document.getElementById('input-profile-name').value = usernameInput;
+    }
+    return;
+  }
+
+  // Contraseña es el mismo nombre de la usuaria
+  const expectedPass = normalizeText(profile.name);
+
+  if(normPass === expectedPass || (profile.pin && passwordInput.trim() === profile.pin)){
+    selectProfile(profile.id);
+  } else {
+    showLoginError('❌ Contraseña incorrecta. Recuerda que tu contraseña es tu mismo nombre (' + profile.name + ').');
+  }
+}
+
+function showLoginError(msg){
+  const errorEl = document.getElementById('login-error-msg');
+  if(errorEl){
+    errorEl.textContent = msg;
+    errorEl.style.display = 'block';
+    const box = document.getElementById('login-card-box');
+    if(box){
+      box.style.animation = 'none';
+      box.offsetHeight;
+      box.style.animation = 'shake .3s ease';
+    }
+  }
+}
+
+function fillLoginFields(name){
+  document.getElementById('login-username').value = name;
+  document.getElementById('login-password').value = name;
+  handleDirectLogin();
+}
+
+function attemptLogin(id){
+  const p = profileInfo(id);
+  fillLoginFields(p.name);
+}
+
+function typePinDigit(digit){
+  if(enteredPin.length < 4){
+    enteredPin += digit;
+    updatePinDots();
+    if(enteredPin.length === 4){
+      setTimeout(submitPin, 150);
+    }
+  }
+}
+
+function clearPin(){
+  enteredPin = '';
+  updatePinDots();
+}
+
+function updatePinDots(){
+  for(let i=0; i<4; i++){
+    const dot = document.getElementById('pin-dot-'+i);
+    if(dot){
+      if(i < enteredPin.length) dot.classList.add('filled');
+      else dot.classList.remove('filled');
+    }
+  }
+}
+
+function submitPin(){
+  if(!pendingPinProfileId) return;
+  const p = profileInfo(pendingPinProfileId);
+  if(enteredPin === p.pin){
+    closeModal('modal-pin-entry');
+    selectProfile(pendingPinProfileId);
+    pendingPinProfileId = null;
+  } else {
+    speakText('PIN incorrecto. Intenta de nuevo.');
+    const card = document.querySelector('#modal-pin-entry .modal-card');
+    if(card){
+      card.style.animation = 'none';
+      card.offsetHeight;
+      card.style.animation = 'shake .3s ease';
+    }
+    clearPin();
+  }
+}
+
 function selectProfile(id){
   currentProfile = id;
   localStorage.setItem('multiverso_current_profile', id);
   loadProfileData();
+  const p = profileInfo(id);
   const greet = document.getElementById('hub-greeting');
-  if(greet) greet.textContent = '¡Hola, ' + profileInfo(id).name + '! ' + profileInfo(id).emoji + ' Elige un tema:';
+  if(greet) greet.textContent = '¡Hola, ' + p.name + '! ' + p.emoji + ' Elige un tema para explorar:';
+  
+  renderUserHubBar();
   renderHub();
   showScreen('screen-hub');
   savePaws();
+  speakText('¡Hola ' + p.name + '! Macarena y sus amigos te dan la bienvenida.');
 }
-function switchProfile(){ renderProfileCards(); showScreen('screen-profile'); }
-function promptNewProfile(){
-  const name = prompt('Escribe el nombre de la nueva jugadora:');
-  if(!name || !name.trim()) return;
-  const emojis = ['🌸','🌼','⭐','🦋','🐾','🎨','🚀'];
-  const newP = { id: 'p_'+Date.now(), name: name.trim(), emoji: emojis[Math.floor(Math.random()*emojis.length)] };
-  profiles.push(newP);
-  localStorage.setItem('multiverso_profiles', JSON.stringify(profiles));
-  selectProfile(newP.id);
+
+function switchProfile(){
+  renderProfileCards();
+  showScreen('screen-profile');
 }
-function renderProfileCards(){
-  const grid = document.getElementById('profile-grid');
-  grid.innerHTML = profiles.map(p=>
-    '<div class="profile-card" onclick="selectProfile(\''+p.id+'\')">' +
-      '<div class="avatar">'+p.emoji+'</div>' +
-      '<div class="info"><h3>'+p.name+'</h3><p>🐾 '+pawsForProfile(p.id)+' patitas</p></div>' +
+
+function closeModal(modalId){
+  const el = document.getElementById(modalId);
+  if(el) el.classList.remove('active');
+}
+
+function openRegisterModal(editId = null){
+  editingProfileId = editId;
+  const titleEl = document.getElementById('modal-editor-title');
+  
+  if(editId){
+    const p = profileInfo(editId);
+    titleEl.textContent = '✏️ Editar Perfil de ' + p.name;
+    document.getElementById('input-profile-name').value = p.name;
+    document.getElementById('input-profile-pin').value = p.pin || '';
+    selectedRegisterEmoji = p.emoji || '🌸';
+    selectedRegisterMascot = p.mascot || 'macarena';
+    selectedRegisterColor = p.themeColor || '#ec4899';
+  } else {
+    titleEl.textContent = '🌸 ¡Nueva Jugadora!';
+    document.getElementById('input-profile-name').value = '';
+    document.getElementById('input-profile-pin').value = '';
+    selectedRegisterEmoji = '🌸';
+    selectedRegisterMascot = 'macarena';
+    selectedRegisterColor = '#ec4899';
+  }
+  
+  renderEmojiPicker();
+  renderMascotPicker();
+  renderColorPicker();
+  document.getElementById('modal-profile-editor').classList.add('active');
+}
+
+function renderEmojiPicker(){
+  const container = document.getElementById('emoji-picker-container');
+  if(!container) return;
+  const emojis = ['🌸','🌼','⭐','🦋','🐾','🎨','🚀','👑','🐱','🦊','🦉','🐶','⚡','🦁','🐼'];
+  container.innerHTML = emojis.map(e => 
+    '<div class="emoji-opt '+(e===selectedRegisterEmoji?'selected':'')+'" onclick="selectRegisterEmoji(\''+e+'\')">'+e+'</div>'
+  ).join('');
+}
+
+function selectRegisterEmoji(e){
+  selectedRegisterEmoji = e;
+  renderEmojiPicker();
+}
+
+function renderMascotPicker(){
+  const container = document.getElementById('mascot-picker-container');
+  if(!container) return;
+  const mascots = [
+    { key:'macarena', name:'Macarena', topic:'cksz' },
+    { key:'bullcat', name:'Bullcat', topic:'bv' },
+    { key:'gaspar', name:'Gaspar', topic:'gj' },
+    { key:'jack', name:'Jack', topic:'h' },
+    { key:'lula', name:'Lula', topic:'yll' },
+    { key:'emma', name:'Emma', topic:'tilde' },
+    { key:'spock', name:'Spock', topic:'rrr' },
+    { key:'sirah', name:'Sirah', topic:'mn' }
+  ];
+  
+  container.innerHTML = mascots.map(m =>
+    '<div class="mascot-opt-card '+(m.key===selectedRegisterMascot?'selected':'')+'" onclick="selectRegisterMascot(\''+m.key+'\')">' +
+      '<div class="svg-wrap">'+getPetSVG(m.topic, 'picker-'+m.key)+'</div>' +
+      '<span>'+m.name+'</span>' +
     '</div>'
   ).join('');
+}
+
+function selectRegisterMascot(key){
+  selectedRegisterMascot = key;
+  renderMascotPicker();
+}
+
+function renderColorPicker(){
+  const container = document.getElementById('color-picker-container');
+  if(!container) return;
+  const colors = ['#ec4899','#8b5cf6','#3b82f6','#14b8a6','#10b981','#f59e0b'];
+  container.innerHTML = colors.map(c =>
+    '<div class="color-swatch '+(c===selectedRegisterColor?'selected':'')+'" style="background:'+c+'" onclick="selectRegisterColor(\''+c+'\')"></div>'
+  ).join('');
+}
+
+function selectRegisterColor(c){
+  selectedRegisterColor = c;
+  renderColorPicker();
+}
+
+function saveProfileForm(){
+  const nameInput = document.getElementById('input-profile-name').value.trim();
+  const pinInput = document.getElementById('input-profile-pin').value.trim();
+  
+  if(!nameInput){
+    alert('Por favor escribe un nombre para la jugadora.');
+    return;
+  }
+  
+  if(pinInput && !/^\d{4}$/.test(pinInput)){
+    alert('El PIN debe ser un código de 4 números exactos (o déjalo vacío).');
+    return;
+  }
+  
+  let targetId = editingProfileId;
+  if(editingProfileId){
+    const index = profiles.findIndex(p => p.id === editingProfileId);
+    if(index !== -1){
+      profiles[index].name = nameInput;
+      profiles[index].emoji = selectedRegisterEmoji;
+      profiles[index].mascot = selectedRegisterMascot;
+      profiles[index].themeColor = selectedRegisterColor;
+      profiles[index].pin = pinInput;
+    }
+  } else {
+    targetId = 'p_' + Date.now();
+    const newP = {
+      id: targetId,
+      name: nameInput,
+      emoji: selectedRegisterEmoji,
+      mascot: selectedRegisterMascot,
+      themeColor: selectedRegisterColor,
+      pin: pinInput,
+      createdDate: new Date().toISOString().split('T')[0]
+    };
+    profiles.push(newP);
+  }
+  
+  localStorage.setItem('multiverso_profiles', JSON.stringify(profiles));
+  closeModal('modal-profile-editor');
+  renderProfileCards();
+  
+  if(targetId){
+    selectProfile(targetId);
+  }
+}
+
+function deleteProfile(id){
+  const p = profileInfo(id);
+  if(confirm('¿Eliminar el perfil de ' + p.name + '? Se perderán sus patitas y recompensas.')){
+    profiles = profiles.filter(item => item.id !== id);
+    localStorage.setItem('multiverso_profiles', JSON.stringify(profiles));
+    if(currentProfile === id && profiles.length > 0){
+      currentProfile = profiles[0].id;
+    }
+    renderProfileCards();
+  }
+}
+
+function renderProfileCards(){
+  const grid = document.getElementById('profile-grid');
+  if(!grid) return;
+  
+  if(profiles.length === 0){
+    grid.innerHTML = '<div style="text-align:center; padding:30px; color:#64748b;">No hay perfiles creados. ¡Registra la primera jugadora! 🌸</div>';
+    return;
+  }
+  
+  grid.innerHTML = profiles.map(p => {
+    const pPaws = pawsForProfile(p.id);
+    const rank = getProfileRank(pPaws);
+    const mascotKey = p.mascot || 'macarena';
+    const topicIdForMascot = getTopicForMascot(mascotKey);
+    const hasPin = p.pin && p.pin.trim().length > 0;
+    
+    return '<div class="profile-card" onclick="fillLoginFields(\''+p.name+'\')">' +
+      '<div class="profile-card-left">' +
+        '<div class="avatar-box" style="border-color:'+(p.themeColor||'#ec4899')+'">' +
+          p.emoji +
+          '<div class="mascot-mini-badge">'+getPetSVG(topicIdForMascot, 'mini-p-'+p.id)+'</div>' +
+        '</div>' +
+        '<div class="info">' +
+          '<h3>'+p.name+'</h3>' +
+          '<div class="rank-pill" style="background:'+rank.bg+'">'+rank.badge+' '+rank.title+'</div>' +
+          '<div class="paws-info">🐾 '+pPaws+' patitas</div>' +
+        '</div>' +
+      '</div>' +
+      '<div class="profile-card-actions" onclick="event.stopPropagation()">' +
+        '<button class="btn-play-card" onclick="fillLoginFields(\''+p.name+'\')">¡Entrar! ▶</button>' +
+        '<button class="btn-icon-card" title="Editar Perfil" onclick="openRegisterModal(\''+p.id+'\')">✏️</button>' +
+        '<button class="btn-icon-card" title="Eliminar Perfil" onclick="deleteProfile(\''+p.id+'\')">🗑️</button>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+}
+
+function renderUserHubBar(){
+  const bar = document.getElementById('user-hub-bar');
+  if(!bar) return;
+  const p = profileInfo(currentProfile);
+  const pPaws = pawsForProfile(currentProfile);
+  const rank = getProfileRank(pPaws);
+  const topicId = getTopicForMascot(p.mascot);
+  
+  bar.innerHTML = 
+    '<div class="user-hub-info">' +
+      '<div class="user-hub-avatar" style="border-color:'+p.themeColor+'">' +
+        p.emoji +
+        '<div class="user-hub-mascot">'+getPetSVG(topicId, 'hub-user-pet')+'</div>' +
+      '</div>' +
+      '<div class="user-hub-details">' +
+        '<h4>'+p.name+' <span class="user-hub-rank" style="background:'+rank.bg+'">'+rank.badge+' '+rank.title+'</span></h4>' +
+        '<div style="font-size:.82rem; color:#d97706; font-weight:700;">🐾 '+pPaws+' patitas acumuladas</div>' +
+      '</div>' +
+    '</div>' +
+    '<div class="user-hub-actions">' +
+      '<button class="btn-hub-action" onclick="openRegisterModal(\''+p.id+'\')">⚙️ Mi Perfil</button>' +
+      '<button class="btn-hub-action" onclick="switchProfile()">🚪 Salir</button>' +
+    '</div>';
+}
+
+function openLeaderboard(){
+  const grid = document.getElementById('leaderboard-list');
+  if(!grid) return;
+  
+  const sorted = profiles.slice().sort((a,b) => pawsForProfile(b.id) - pawsForProfile(a.id));
+  
+  grid.innerHTML = sorted.map((p, idx) => {
+    const pawsCount = pawsForProfile(p.id);
+    const rank = getProfileRank(pawsCount);
+    const topicId = getTopicForMascot(p.mascot);
+    const crown = idx === 0 ? '👑' : (idx === 1 ? '🥈' : (idx === 2 ? '🥉' : ''));
+    
+    return '<div class="marcador-card '+(idx===0?'leader':'')+'" style="display:flex; align-items:center; justify-content:space-between; text-align:left; padding:14px 16px;">' +
+      '<div style="display:flex; align-items:center; gap:12px;">' +
+        '<div style="font-weight:800; font-size:1.1rem; width:28px; color:var(--primary-dark);">#'+(idx+1)+'</div>' +
+        '<div class="avatar-box" style="width:48px; height:48px; border-radius:50%; background:#fbcfe8; display:flex; align-items:center; justify-content:center; font-size:1.8rem; position:relative; border:2px solid #fff;">' +
+          p.emoji +
+          '<div style="position:absolute; bottom:-2px; right:-2px; width:20px; height:20px; background:#fff; border-radius:50%; padding:1px; border:1px solid #f0abfc;">'+getPetSVG(topicId, 'lead-'+p.id)+'</div>' +
+        '</div>' +
+        '<div>' +
+          '<h3 style="margin:0; font-size:1rem;">'+crown+' '+p.name+'</h3>' +
+          '<div class="rank-pill" style="background:'+rank.bg+'; font-size:.7rem; padding:1px 6px;">'+rank.badge+' '+rank.title+'</div>' +
+        '</div>' +
+      '</div>' +
+      '<div class="paws" style="font-size:1.1rem; font-weight:800; color:#d97706;">🐾 '+pawsCount+'</div>' +
+    '</div>';
+  }).join('');
+  
+  document.getElementById('modal-leaderboard').classList.add('active');
 }
 
 function renderHub(){
@@ -2179,16 +2695,19 @@ function finishSpeedChallenge(){
 
 /* ================== TIENDA Y CASA CON GRÁFICOS SVG DETALLADOS ================== */
 const SHOP_ITEMS = [
-  {cat:'sala', emoji:'🛋️', svg:'<svg viewBox="0 0 64 64"><rect x="6" y="24" width="52" height="24" rx="8" fill="#f43f5e"/><rect x="10" y="32" width="44" height="14" rx="6" fill="#e11d48"/><rect x="10" y="46" width="6" height="10" rx="3" fill="#881337"/><rect x="48" y="46" width="6" height="10" rx="3" fill="#881337"/></svg>', name:'Sofá rosa de lujo', price:15},
-  {cat:'sala', emoji:'🟪', svg:'<svg viewBox="0 0 64 64"><rect x="6" y="16" width="52" height="32" rx="10" fill="#a855f7"/><rect x="12" y="22" width="40" height="20" rx="6" fill="#c084fc" stroke="#fff" stroke-width="2" stroke-dasharray="4,4"/></svg>', name:'Alfombra floreada', price:12},
-  {cat:'sala', emoji:'💡', svg:'<svg viewBox="0 0 64 64"><path d="M32,10 Q46,10 46,26 Q46,34 38,40 L38,48 L26,48 L26,40 Q18,34 18,26 Q18,10 32,10 Z" fill="#facc15"/><rect x="28" y="48" width="8" height="12" fill="#d97706"/></svg>', name:'Lámpara dorada', price:20},
-  {cat:'sala', emoji:'📺', svg:'<svg viewBox="0 0 64 64"><rect x="4" y="10" width="56" height="36" rx="6" fill="#1e293b"/><rect x="8" y="14" width="48" height="28" rx="4" fill="#38bdf8"/><rect x="28" y="46" width="8" height="10" fill="#0f172a"/><rect x="20" y="56" width="24" height="4" fill="#0f172a"/></svg>', name:'Televisor 4K', price:30},
-  {cat:'jardin', emoji:'⛲', svg:'<svg viewBox="0 0 64 64"><ellipse cx="32" cy="50" rx="26" ry="10" fill="#94a3b8"/><rect x="28" y="24" width="8" height="26" fill="#64748b"/><ellipse cx="32" cy="24" rx="16" ry="6" fill="#38bdf8"/><path d="M32,8 Q24,18 32,24 Q40,18 32,8 Z" fill="#7dd3fc"/></svg>', name:'Fuente de agua', price:40},
-  {cat:'jardin', emoji:'🌷', svg:'<svg viewBox="0 0 64 64"><path d="M32,56 L32,28 M20,42 Q32,36 32,28 M44,42 Q32,36 32,28" stroke="#16a34a" stroke-width="4"/><path d="M22,14 Q32,6 42,14 Q44,28 32,34 Q20,28 22,14 Z" fill="#f43f5e"/></svg>', name:'Jardín de Tulipanes', price:10},
-  {cat:'jardin', emoji:'🌳', svg:'<svg viewBox="0 0 64 64"><rect x="28" y="34" width="8" height="24" rx="3" fill="#78350f"/><circle cx="32" cy="24" r="20" fill="#22c55e"/><circle cx="24" cy="18" r="4" fill="#ef4444"/><circle cx="40" cy="26" r="4" fill="#ef4444"/></svg>', name:'Árbol Mágico', price:25},
-  {cat:'accesorios', emoji:'🎀', svg:'<svg viewBox="0 0 64 64"><path d="M12,18 Q32,32 12,46 Z" fill="#ec4899"/><path d="M52,18 Q32,32 52,46 Z" fill="#ec4899"/><circle cx="32" cy="32" r="8" fill="#be185d"/></svg>', name:'Moño rosa', price:15},
-  {cat:'accesorios', emoji:'🔔', svg:'<svg viewBox="0 0 64 64"><rect x="8" y="20" width="48" height="8" rx="4" fill="#ef4444"/><path d="M22,34 Q32,24 42,34 L46,46 L18,46 Z" fill="#facc15"/><circle cx="32" cy="48" r="4" fill="#b45309"/></svg>', name:'Collar con campana', price:18},
-  {cat:'accesorios', emoji:'🎩', svg:'<svg viewBox="0 0 64 64"><polygon points="16,48 48,48 32,10" fill="#facc15"/><rect x="8" y="48" width="48" height="6" rx="3" fill="#ec4899"/><circle cx="32" cy="10" r="5" fill="#ec4899"/></svg>', name:'Sombrero de fiesta', price:25}
+  {cat:'sala', emoji:'🛋️', svg:'<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="sofa-g" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#f472b6"/><stop offset="100%" stop-color="#db2777"/></linearGradient></defs><rect x="4" y="24" width="56" height="24" rx="8" fill="url(#sofa-g)" stroke="#9d174d" stroke-width="2"/><rect x="8" y="16" width="48" height="18" rx="7" fill="#ec4899"/><circle cx="16" cy="24" r="2" fill="#be185d"/><circle cx="32" cy="24" r="2" fill="#be185d"/><circle cx="48" cy="24" r="2" fill="#be185d"/><rect x="8" y="32" width="23" height="12" rx="4" fill="#fbcfe8"/><rect x="33" y="32" width="23" height="12" rx="4" fill="#fbcfe8"/><path d="M10,48 L8,56 M54,48 L56,56" stroke="#78350f" stroke-width="4" stroke-linecap="round"/></svg>', name:'Sofá rosa de lujo', price:15},
+  {cat:'sala', emoji:'🟪', svg:'<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><ellipse cx="32" cy="32" rx="28" ry="18" fill="#a855f7" stroke="#6b21a8" stroke-width="2"/><ellipse cx="32" cy="32" rx="22" ry="13" fill="#c084fc"/><circle cx="32" cy="32" r="5" fill="#facc15"/><path d="M32,20 C35,26 35,38 32,44 M20,32 C26,35 38,35 44,32" stroke="#fff" stroke-width="1.5" fill="none"/><path d="M4,32 L0,32 M60,32 L64,32 M32,14 L32,10 M32,50 L32,54" stroke="#fef08a" stroke-width="2" stroke-linecap="round"/></svg>', name:'Alfombra floreada', price:12},
+  {cat:'sala', emoji:'💡', svg:'<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><ellipse cx="32" cy="18" rx="22" ry="10" fill="#fef08a" opacity="0.4"/><path d="M22,18 L42,18 L38,30 L26,30 Z" fill="#facc15" stroke="#ca8a04" stroke-width="2"/><line x1="32" y1="30" x2="32" y2="54" stroke="#eab308" stroke-width="4" stroke-linecap="round"/><ellipse cx="32" cy="54" rx="14" ry="4" fill="#ca8a04"/></svg>', name:'Lámpara dorada', price:20},
+  {cat:'sala', emoji:'📺', svg:'<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="10" width="56" height="34" rx="6" fill="#0f172a" stroke="#334155" stroke-width="2"/><rect x="7" y="13" width="50" height="28" rx="4" fill="#38bdf8"/><path d="M12,35 C20,20 30,38 42,22 L52,35 Z" fill="#4ade80"/><circle cx="44" cy="19" r="4" fill="#facc15"/><rect x="28" y="44" width="8" height="10" fill="#1e293b"/><ellipse cx="32" cy="56" rx="18" ry="4" fill="#0f172a"/></svg>', name:'Televisor 4K', price:30},
+  {cat:'sala', emoji:'🛏️', svg:'<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><ellipse cx="32" cy="38" rx="26" ry="16" fill="#38bdf8" stroke="#0284c7" stroke-width="2"/><ellipse cx="32" cy="36" rx="20" ry="11" fill="#bae6fd"/><path d="M26,34 Q32,40 38,34 Q32,28 26,34 Z" fill="#ec4899"/></svg>', name:'Cama de gato acolchada', price:18},
+  {cat:'jardin', emoji:'⛲', svg:'<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><ellipse cx="32" cy="48" rx="28" ry="10" fill="#94a3b8" stroke="#475569" stroke-width="2"/><ellipse cx="32" cy="46" rx="24" ry="7" fill="#38bdf8"/><rect x="28" y="24" width="8" height="24" fill="#cbd5e1"/><ellipse cx="32" cy="24" rx="16" ry="6" fill="#94a3b8"/><ellipse cx="32" cy="23" rx="13" ry="4.5" fill="#7dd3fc"/><path d="M32,8 Q24,18 32,23 Q40,18 32,8 Z" fill="#38bdf8" opacity="0.9"/><circle cx="32" cy="8" r="3" fill="#e0f2fe"/></svg>', name:'Fuente de agua', price:40},
+  {cat:'jardin', emoji:'🌷', svg:'<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><rect x="8" y="40" width="48" height="18" rx="4" fill="#78350f" stroke="#451a03" stroke-width="2"/><path d="M18,40 L18,22 M32,40 L32,16 M46,40 L46,24" stroke="#16a34a" stroke-width="3" stroke-linecap="round"/><path d="M13,20 Q18,12 23,20 Q24,28 18,30 Q12,28 13,20 Z" fill="#f43f5e"/><path d="M27,14 Q32,6 37,14 Q38,22 32,24 Q26,22 27,14 Z" fill="#facc15"/><path d="M41,22 Q46,14 51,22 Q52,30 46,32 Q40,30 41,22 Z" fill="#a855f7"/></svg>', name:'Jardín de Tulipanes', price:10},
+  {cat:'jardin', emoji:'🌳', svg:'<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><rect x="26" y="32" width="12" height="26" rx="4" fill="#78350f" stroke="#451a03" stroke-width="2"/><circle cx="32" cy="24" r="22" fill="#22c55e" stroke="#15803d" stroke-width="2"/><circle cx="20" cy="20" r="14" fill="#4ade80" opacity="0.5"/><circle cx="22" cy="26" r="3.5" fill="#ef4444"/><circle cx="40" cy="20" r="3.5" fill="#ef4444"/><circle cx="34" cy="32" r="3.5" fill="#ef4444"/><polygon points="16,14 18,18 14,18" fill="#facc15"/><polygon points="44,28 46,32 42,32" fill="#facc15"/></svg>', name:'Árbol Mágico', price:25},
+  {cat:'jardin', emoji:'🐟', svg:'<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><ellipse cx="32" cy="34" rx="28" ry="18" fill="#64748b" stroke="#334155" stroke-width="2"/><ellipse cx="32" cy="34" rx="24" ry="14" fill="#0284c7"/><circle cx="20" cy="30" r="6" fill="#15803d"/><path d="M38,36 Q44,32 42,40 Q34,40 38,36 Z" fill="#f97316"/></svg>', name:'Estanque Koi', price:35},
+  {cat:'accesorios', emoji:'👑', svg:'<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><path d="M8,46 L14,20 L26,34 L32,14 L38,34 L50,20 L56,46 Z" fill="#facc15" stroke="#b45309" stroke-width="2"/><rect x="8" y="46" width="48" height="8" rx="2" fill="#eab308" stroke="#b45309" stroke-width="1.5"/><circle cx="14" cy="20" r="3.5" fill="#ef4444"/><circle cx="32" cy="14" r="4.5" fill="#10b981"/><circle cx="50" cy="20" r="3.5" fill="#ef4444"/><circle cx="20" cy="50" r="2.5" fill="#38bdf8"/><circle cx="32" cy="50" r="2.5" fill="#ef4444"/><circle cx="44" cy="50" r="2.5" fill="#38bdf8"/></svg>', name:'Corona Real de Oro', price:50},
+  {cat:'accesorios', emoji:'🎀', svg:'<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><path d="M10,20 Q32,34 10,48 Z" fill="#ec4899" stroke="#be185d" stroke-width="2"/><path d="M54,20 Q32,34 54,48 Z" fill="#ec4899" stroke="#be185d" stroke-width="2"/><circle cx="32" cy="34" r="9" fill="#f472b6" stroke="#be185d" stroke-width="2"/><circle cx="32" cy="34" r="4" fill="#fff"/></svg>', name:'Moño rosa', price:15},
+  {cat:'accesorios', emoji:'🔔', svg:'<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><rect x="6" y="24" width="52" height="10" rx="5" fill="#ef4444" stroke="#991b1b" stroke-width="2"/><rect x="46" y="22" width="8" height="14" rx="2" fill="#cbd5e1" stroke="#475569" stroke-width="1.5"/><circle cx="32" cy="42" r="9" fill="#facc15" stroke="#b45309" stroke-width="2"/><line x1="32" y1="46" x2="32" y2="50" stroke="#78350f" stroke-width="2"/></svg>', name:'Collar con campana', price:18},
+  {cat:'accesorios', emoji:'🎩', svg:'<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><polygon points="12,50 52,50 32,10" fill="#facc15" stroke="#d97706" stroke-width="2"/><path d="M18,42 L46,42 M24,32 L40,32 M30,22 L34,22" stroke="#ec4899" stroke-width="3"/><circle cx="32" cy="10" r="6" fill="#ec4899"/></svg>', name:'Sombrero de fiesta', price:25}
 ];
 let shopCat = 'sala';
 function openShop(){ showScreen('screen-shop'); document.getElementById('shop-paws').textContent = paws; renderShopTabs(); renderShopGrid(); }
@@ -2382,5 +2901,99 @@ function init(){
 }
 init();
 </script>
+<!-- MODAL: REGISTRO / EDICIÓN DE PERFIL -->
+<div class="modal-overlay" id="modal-profile-editor">
+  <div class="modal-card">
+    <div class="modal-header">
+      <h2 id="modal-editor-title">🌸 Configura tu Perfil</h2>
+      <button class="modal-close" onclick="closeModal('modal-profile-editor')">✕</button>
+    </div>
+    
+    <div class="form-group">
+      <label for="input-profile-name">Nombre o Apodo de la Jugadora:</label>
+      <input type="text" id="input-profile-name" class="form-control" placeholder="Ej: Ángela, Sofia, Mateo..." maxlength="18">
+    </div>
+
+    <div class="form-group">
+      <label>Elige tu Avatar Emoji:</label>
+      <div class="emoji-picker-grid" id="emoji-picker-container"></div>
+    </div>
+
+    <div class="form-group">
+      <label>Elige tu Mascota Acompañante Favorita:</label>
+      <div class="mascot-picker-grid" id="mascot-picker-container"></div>
+    </div>
+
+    <div class="form-group">
+      <label>Color de Tema Preferido:</label>
+      <div class="color-picker-grid" id="color-picker-container"></div>
+    </div>
+
+    <div class="form-group">
+      <small style="color:#d97706; font-weight:700; font-size:.82rem; display:block; background:#fffbeb; padding:8px 12px; border-radius:10px; border:1px solid #fef3c7;">💡 Recordatorio: Tu contraseña para iniciar sesión es tu mismo <b>Nombre de Usuaria</b> (ej: Ángela / angela).</small>
+    </div>
+
+    <div style="display:flex; gap:10px; margin-top:20px;">
+      <button class="btn-primary" style="flex:1;" onclick="saveProfileForm()">💾 Guardar Perfil</button>
+      <button class="btn-secondary" onclick="closeModal('modal-profile-editor')">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: INGRESO DE PIN -->
+<div class="modal-overlay" id="modal-pin-entry">
+  <div class="modal-card" style="max-width:340px; text-align:center;">
+    <div class="modal-header" style="justify-content:center; border:none; margin-bottom:8px;">
+      <h2>🔒 Ingresa tu PIN</h2>
+    </div>
+    
+    <div style="margin-bottom:12px;">
+      <div class="avatar-box" id="pin-profile-avatar" style="width:64px; height:64px; margin:0 auto 6px; font-size:2.4rem; background:#fbcfe8; border-radius:50%; display:flex; align-items:center; justify-content:center; border:2px solid #fff; box-shadow:0 4px 8px rgba(0,0,0,0.1);"></div>
+      <h3 id="pin-profile-name" style="margin:0; color:var(--primary-dark); font-size:1.2rem;"></h3>
+      <p style="margin:4px 0 0; font-size:.85rem; color:#64748b;">Escribe tu código secreto de 4 dígitos:</p>
+    </div>
+
+    <div class="pin-display">
+      <div class="pin-dot" id="pin-dot-0"></div>
+      <div class="pin-dot" id="pin-dot-1"></div>
+      <div class="pin-dot" id="pin-dot-2"></div>
+      <div class="pin-dot" id="pin-dot-3"></div>
+    </div>
+
+    <div class="pin-keypad">
+      <button class="pin-btn" onclick="typePinDigit('1')">1</button>
+      <button class="pin-btn" onclick="typePinDigit('2')">2</button>
+      <button class="pin-btn" onclick="typePinDigit('3')">3</button>
+      <button class="pin-btn" onclick="typePinDigit('4')">4</button>
+      <button class="pin-btn" onclick="typePinDigit('5')">5</button>
+      <button class="pin-btn" onclick="typePinDigit('6')">6</button>
+      <button class="pin-btn" onclick="typePinDigit('7')">7</button>
+      <button class="pin-btn" onclick="typePinDigit('8')">8</button>
+      <button class="pin-btn" onclick="typePinDigit('9')">9</button>
+      <button class="pin-btn action" onclick="clearPin()">⌫ Borrar</button>
+      <button class="pin-btn" onclick="typePinDigit('0')">0</button>
+      <button class="pin-btn ok" onclick="submitPin()">✔️ Entrar</button>
+    </div>
+
+    <button class="btn-secondary" style="margin-top:16px; width:100%;" onclick="closeModal('modal-pin-entry')">Cancelar</button>
+  </div>
+</div>
+
+<!-- MODAL: TABLA DE POSICIONES -->
+<div class="modal-overlay" id="modal-leaderboard">
+  <div class="modal-card">
+    <div class="modal-header">
+      <h2>🏆 Tabla de Posiciones</h2>
+      <button class="modal-close" onclick="closeModal('modal-leaderboard')">✕</button>
+    </div>
+    
+    <p style="margin:0 0 12px; color:#64748b; font-size:.88rem;">Ranking de jugadoras del Multiverso según sus patitas ganadas 🐾</p>
+    
+    <div class="marcador-grid" id="leaderboard-list"></div>
+    
+    <button class="btn-primary" style="width:100%; margin-top:14px;" onclick="closeModal('modal-leaderboard')">Cerrar</button>
+  </div>
+</div>
+
 </body>
 </html>
